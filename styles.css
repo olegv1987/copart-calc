@@ -322,6 +322,54 @@ h1 {
   white-space: nowrap;
 }
 
+/* Timeline / estimated duration */
+.timeline {
+  padding: 14px 18px 16px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.tl-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.tl-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.tl-row .dur {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.tl-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 11px;
+  border-top: 1.5px solid var(--line);
+  font-weight: 700;
+}
+.tl-total .tag { font-size: 13px; }
+.tl-total .dur {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ocean);
+  white-space: nowrap;
+}
+
 /* Exchange-rate note */
 .fx {
   margin-top: 12px;

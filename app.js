@@ -22,6 +22,33 @@
   // (e.g. offline). Approximate ECB rate as of 2026-06-18.
   const FALLBACK_EUR_USD = 1.15;
 
+  // ---- Timing configuration --------------------------------------
+  // Ocean transit by departure port, in weeks. [min, max].
+  const OCEAN_WEEKS = {
+    "NEWARK":           [5, 5],   // near Atlantic ports ("like New York")
+    "NORFOLK":          [5, 5],
+    "SAVANNAH":         [5, 5],
+    "MIAMI":            [5, 5],
+    "HOUSTON":          [6, 6],
+    "CHICAGO":          [6, 6],
+    "LOS ANGELES":      [7, 8],
+    "SEATTLE":          [8, 10],
+    "TORONTO":          [8, 10],  // Canada
+    "PORT OF HONOLULU": [12, 12], // Hawaii, Honolulu
+  };
+  const DEFAULT_OCEAN_WEEKS = [6, 8];
+
+  // Weeks to buy at auction and deliver the car to the US port.
+  // Canada (Toronto) feeds a distant port, so its inland leg is longer.
+  const TO_PORT_WEEKS = { "TORONTO": 2 };
+  const DEFAULT_TO_PORT_WEEKS = 1;
+
+  // Dispatch / vessel loading at the port (weeks), constant.
+  const DISPATCH_WEEKS = 2;
+
+  // Average weeks per month (52 / 12) for the months estimate.
+  const WEEKS_PER_MONTH = 4.345;
+
   // Frankfurter: ECB reference rates, HTTPS, CORS-enabled, no API key.
   const FX_URL = "https://api.frankfurter.app/latest?from=EUR&to=USD";
 
@@ -94,6 +121,65 @@
     if (!iso || iso.length < 10) return iso || "";
     const [y, m, d] = iso.split("-");
     return d + "." + m + "." + y;
+  }
+
+  // ---- Ports & timing --------------------------------------------
+
+  // Title-case a port name, keeping small words lowercase.
+  // "PORT OF HONOLULU" -> "Port of Honolulu", "LOS ANGELES" -> "Los Angeles".
+  function portName(raw) {
+    const small = { of: 1, the: 1, and: 1 };
+    return raw.toLowerCase().split(" ").map((w, i) => {
+      if (i > 0 && small[w]) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    }).join(" ");
+  }
+
+  // Format a [min, max] week range: "5 тижнів" or "8–10 тижнів".
+  function weeks(range) {
+    const [a, b] = range;
+    const n = a === b ? String(a) : a + "\u2013" + b;
+    return n + " " + pluralWeeks(b);
+  }
+  function pluralWeeks(n) {
+    // Ukrainian plural: тиждень / тижні / тижнів
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return "тиждень";
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return "тижні";
+    return "тижнів";
+  }
+
+  // Round to the nearest half (0.5).
+  function roundHalf(x) { return Math.round(x * 2) / 2; }
+
+  // Format months: "≈2 місяці" or "2.5–3 місяці".
+  function monthsLabel(minW, maxW) {
+    const lo = roundHalf(minW / WEEKS_PER_MONTH);
+    const hi = roundHalf(maxW / WEEKS_PER_MONTH);
+    const fmt = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
+    const range = lo === hi ? "\u2248" + fmt(lo) : fmt(lo) + "\u2013" + fmt(hi);
+    return range + " " + pluralMonths(hi);
+  }
+  function pluralMonths(n) {
+    const whole = Math.floor(n);
+    const m10 = whole % 10, m100 = whole % 100;
+    if (m10 === 1 && m100 !== 11) return "місяць";
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return "місяці";
+    return "місяців";
+  }
+
+  // Compute the full timeline for a given departure port.
+  function timeline(port) {
+    const ocean = OCEAN_WEEKS[port] || DEFAULT_OCEAN_WEEKS;
+    const toPort = TO_PORT_WEEKS[port] || DEFAULT_TO_PORT_WEEKS;
+    const minW = toPort + DISPATCH_WEEKS + ocean[0];
+    const maxW = toPort + DISPATCH_WEEKS + ocean[1];
+    return {
+      toPort: [toPort, toPort],
+      dispatch: [DISPATCH_WEEKS, DISPATCH_WEEKS],
+      ocean: ocean,
+      totalMonths: monthsLabel(minW, maxW),
+    };
   }
 
   // ---- Cargo-type segmented control ------------------------------
@@ -192,6 +278,9 @@
 
     const freight = FREIGHT[state.yard][state.type];
     const typeLabel = CARGO_TYPES.find((t) => t.id === state.type).label;
+    const port = YARD_PORT[state.yard] || "";
+    const portLabel = port ? portName(port) : "Порт США";
+    const t = timeline(port);
 
     // Cost components (all converted to USD for the grand total).
     const klaipedaEur = COSTS.klaipedaUnloadingEur;
@@ -207,11 +296,11 @@
         <div class="node origin">
           <span class="marker"></span>
           <div class="place">${escapeHtml(state.yard)}<small>Площадка Copart</small></div>
-          <div class="leg"><span class="mode">🚚</span> Доставка до порту США</div>
+          <div class="leg"><span class="mode">🚚</span> Доставка до порту</div>
         </div>
         <div class="node port">
           <span class="marker"></span>
-          <div class="place">Порт США<small>Відправлення</small></div>
+          <div class="place">${escapeHtml(portLabel)}<small>Порт відправлення</small></div>
           <div class="leg"><span class="mode">🚢</span> Морський фрахт</div>
         </div>
         <div class="node sea">
@@ -227,7 +316,7 @@
 
       <div class="breakdown">
         <div class="b-row road">
-          <span class="tag"><span class="swatch"></span>Доставка до порту США</span>
+          <span class="tag"><span class="swatch"></span>Доставка до порту (${escapeHtml(portLabel)})</span>
           <span class="amount">${usd(freight.towing)}</span>
         </div>
         <div class="b-row sea">
@@ -251,6 +340,26 @@
       <div class="total-row">
         <span class="tag">Разом<small>${escapeHtml(typeLabel)}</small></span>
         <span class="amount">${usd(grandTotal)}</span>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-head">Орієнтовні терміни</div>
+        <div class="tl-row">
+          <span class="tag">Купівля та доставка в порт</span>
+          <span class="dur">${weeks(t.toPort)}</span>
+        </div>
+        <div class="tl-row">
+          <span class="tag">Відправлення (завантаження)</span>
+          <span class="dur">${weeks(t.dispatch)}</span>
+        </div>
+        <div class="tl-row">
+          <span class="tag">Морський фрахт (${escapeHtml(portLabel)})</span>
+          <span class="dur">${weeks(t.ocean)}</span>
+        </div>
+        <div class="tl-total">
+          <span class="tag">Загальний термін</span>
+          <span class="dur">${t.totalMonths}</span>
+        </div>
       </div>
     `;
 

@@ -1,11 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- App icon: amber field with an ink container-ship mark -->
-  <rect width="512" height="512" rx="96" fill="#16202b"/>
-  <rect x="96" y="300" width="320" height="70" rx="10" fill="#d99413"/>
-  <rect x="120" y="232" width="80" height="68" fill="#f4f6f4"/>
-  <rect x="208" y="232" width="80" height="68" fill="#0f766e"/>
-  <rect x="296" y="232" width="80" height="68" fill="#f4f6f4"/>
-  <rect x="120" y="200" width="80" height="32" fill="#0f766e"/>
-  <rect x="208" y="200" width="80" height="32" fill="#f4f6f4"/>
-  <path d="M96 372 Q256 420 416 372 L416 392 Q256 440 96 392 Z" fill="#0f766e"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vehicle import delivery, verified">
+  <!-- App icon: a car transported in a container/truck profile with
+       motion lines and an upward arrow, topped by an orange shield + check.
+       Palette: deep blue -> teal gradient, electric-orange shield. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B2C5A"/>
+      <stop offset="0.55" stop-color="#11589C"/>
+      <stop offset="1" stop-color="#16C0AE"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="300" y1="300" x2="430" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF8A1E"/>
+      <stop offset="1" stop-color="#F5610B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+
+  <!-- Motion lines (movement to the right) -->
+  <g fill="#FFFFFF" opacity="0.30">
+    <rect x="44"  y="214" width="78" height="13" rx="6.5"/>
+    <rect x="30"  y="252" width="104" height="13" rx="6.5"/>
+    <rect x="44"  y="290" width="78" height="13" rx="6.5"/>
+  </g>
+
+  <!-- Upward arrow (growth / dispatch) -->
+  <g stroke="#BFEFE8" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M404 196 V120"/>
+    <path d="M376 150 L404 118 L432 150"/>
+  </g>
+
+  <!-- Truck + container carrying a car (centered profile) -->
+  <g>
+    <!-- Trailer / container body -->
+    <rect x="120" y="196" width="196" height="118" rx="18" fill="#EAF4F3"/>
+    <!-- Container ridges -->
+    <g stroke="#C5D9D7" stroke-width="6" stroke-linecap="round">
+      <path d="M150 214 V296"/>
+      <path d="M178 214 V296"/>
+    </g>
+    <!-- Car silhouette loaded inside the container -->
+    <path d="M196 288
+             L196 270
+             Q196 266 200 265
+             L226 260
+             L242 242
+             Q246 238 252 238
+             L274 238
+             Q280 238 283 243
+             L293 261
+             L298 263
+             Q302 264 302 269
+             L302 288 Z"
+          fill="#0B2C5A"/>
+    <circle cx="222" cy="290" r="12" fill="#0B2C5A"/>
+    <circle cx="280" cy="290" r="12" fill="#0B2C5A"/>
+
+    <!-- Cab -->
+    <path d="M324 224
+             L372 224
+             Q386 224 392 236
+             L408 270
+             Q412 278 412 288
+             L412 314
+             L324 314 Z"
+          fill="#0E8C80"/>
+    <!-- Cab window -->
+    <path d="M352 240 L376 240 Q382 240 385 247 L394 266 L352 266 Z" fill="#CFF1EC"/>
+
+    <!-- Wheels -->
+    <g>
+      <circle cx="180" cy="320" r="30" fill="#0B2540"/>
+      <circle cx="180" cy="320" r="13" fill="#9FB6CC"/>
+      <circle cx="372" cy="320" r="30" fill="#0B2540"/>
+      <circle cx="372" cy="320" r="13" fill="#9FB6CC"/>
+    </g>
+  </g>
+
+  <!-- Shield + checkmark overlay (on top of everything) -->
+  <g>
+    <path d="M366 308
+             L432 330
+             V392
+             Q432 444 366 470
+             Q300 444 300 392
+             V330 Z"
+          fill="url(#shield)"
+          stroke="#FFFFFF" stroke-width="10" stroke-linejoin="round"/>
+    <path d="M334 392 L356 414 L398 366"
+          fill="none" stroke="#FFFFFF" stroke-width="20"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
