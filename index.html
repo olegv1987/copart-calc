@@ -41,6 +41,26 @@
       <div class="segment" id="type-segment" role="group" aria-label="Тип авто"></div>
     </div>
 
+    <!-- Copart purchase price + title type -->
+    <div class="field">
+      <label for="price-input">Ціна покупки на Copart, $</label>
+      <input
+        id="price-input"
+        class="text-input"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="напр. 5500"
+      />
+    </div>
+
+    <div class="field">
+      <label class="check">
+        <input id="clean-title" type="checkbox" />
+        <span>Чисті документи (Clean Title)</span>
+      </label>
+    </div>
+
     <!-- Result: route + cost breakdown (signature element) -->
     <section class="manifest" id="manifest" aria-live="polite">
       <div class="manifest-empty" id="manifest-empty">

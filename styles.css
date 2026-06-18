@@ -152,6 +152,45 @@ h1 {
 }
 
 /* Segmented cargo-type selector */
+/* Plain text input (Copart price) */
+.text-input {
+  width: 100%;
+  padding: 13px 14px;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.text-input::placeholder { color: #9aa6a0; }
+.text-input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px var(--road-soft);
+}
+
+/* Checkbox row */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+.check input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--ocean);
+  cursor: pointer;
+  margin: 0;
+}
+
 .segment {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -322,47 +361,35 @@ h1 {
   white-space: nowrap;
 }
 
-/* Timeline / estimated duration */
-.timeline {
-  padding: 14px 18px 16px;
-  background: var(--paper);
-  border-top: 1px solid var(--line);
+/* Route leg duration tag */
+.node .leg .dur {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+  white-space: nowrap;
 }
-.tl-head {
+.node .leg { gap: 7px; }
+
+/* Estimated total term highlight */
+.term {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background: var(--ocean-soft);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.term-label {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 8px;
+  color: var(--ocean);
 }
-.tl-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
-  font-size: 13px;
-  color: var(--ink-soft);
-}
-.tl-row .dur {
-  font-family: var(--mono);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  color: var(--ink);
-}
-.tl-total {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 8px;
-  padding-top: 11px;
-  border-top: 1.5px solid var(--line);
-  font-weight: 700;
-}
-.tl-total .tag { font-size: 13px; }
-.tl-total .dur {
+.term-val {
   font-family: var(--mono);
   font-size: 16px;
   font-weight: 700;
