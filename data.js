@@ -5,10 +5,11 @@
 // ============================================================
 
 // Vehicle cargo types supported in this version.
+// Internal ids stay English; labels are shown in the Ukrainian UI.
 const CARGO_TYPES = [
-  { id: "regular",  label: "Regular Car" },
-  { id: "large",    label: "Large Car" },
-  { id: "oversize", label: "Oversize Car" },
+  { id: "regular",  label: "Седан" },
+  { id: "large",    label: "Кросовер" },
+  { id: "oversize", label: "Пікап / Великий Кросовер" },
 ];
 
 // Sorted list of auction yard names ("CITY - State").

@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#16202b" />
-  <title>Copart → Klaipeda · Freight Estimate</title>
+  <title>Copart → Черкаси · Кошторис доставки</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="app">
     <!-- Header -->
-    <p class="eyebrow">Copart <span class="arrow">→</span> Klaipeda</p>
-    <h1>Freight estimate</h1>
-    <p class="lede">Delivery cost from a Copart auction yard to the port of Klaipeda — road haul plus ocean freight.</p>
+    <p class="eyebrow">Copart <span class="arrow">→</span> Черкаси</p>
+    <h1>Кошторис доставки</h1>
+    <p class="lede">Повна вартість доставки авто з аукціону Copart до Черкас: суша до порту, океан, розвантаження в Клайпеді, логістика та брокер.</p>
 
     <!-- Yard selector: searchable combobox -->
     <div class="field">
-      <label id="yard-label" for="yard-input">Auction yard</label>
+      <label id="yard-label" for="yard-input">Аукціонна площадка</label>
       <div class="combo">
         <input
           id="yard-input"
@@ -28,27 +28,31 @@
           aria-controls="yard-list"
           aria-autocomplete="list"
           autocomplete="off"
-          placeholder="Search a yard, e.g. Dallas"
+          placeholder="Знайдіть площадку, напр. Dallas"
         />
-        <span class="combo-caret">▾</span>
+        <span class="combo-caret">&#9662;</span>
         <ul id="yard-list" class="combo-list" role="listbox" aria-labelledby="yard-label"></ul>
       </div>
     </div>
 
     <!-- Cargo type: segmented control -->
     <div class="field">
-      <label>Vehicle type</label>
-      <div class="segment" id="type-segment" role="group" aria-label="Vehicle type"></div>
+      <label>Тип авто</label>
+      <div class="segment" id="type-segment" role="group" aria-label="Тип авто"></div>
     </div>
 
-    <!-- Result: route + cost manifest (signature element) -->
+    <!-- Result: route + cost breakdown (signature element) -->
     <section class="manifest" id="manifest" aria-live="polite">
       <div class="manifest-empty" id="manifest-empty">
-        Pick a yard and a vehicle type to see the estimate.
+        Оберіть площадку й тип авто, щоб побачити кошторис.
       </div>
     </section>
 
-    <p class="footnote">Estimate to Klaipeda port only — excludes auction fees and customs.</p>
+    <!-- Owner / contact -->
+    <footer class="credit">
+      <p>&copy; <span id="year"></span> Oleh Vizirenko. Усі права захищено.</p>
+      <p><a href="mailto:olegv1987@gmail.com">olegv1987@gmail.com</a></p>
+    </footer>
   </main>
 
   <!-- Data first, then logic -->

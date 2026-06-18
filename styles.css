@@ -177,7 +177,7 @@ h1 {
   border-color: var(--amber);
 }
 
-/* ---------- Manifest / route readout (signature) ---------- */
+/* ---------- Manifest: route + cost breakdown (signature) ---------- */
 .manifest {
   margin-top: 26px;
   background: var(--panel);
@@ -192,28 +192,46 @@ h1 {
   font-size: 14px;
 }
 
-/* Route line: yard --truck--> US port --ship--> Klaipeda */
+/* Vertical route: Yard -> US Port -> Klaipeda -> Cherkasy.
+   A left rail of nodes connected by a continuous line; transport
+   icons sit on the connecting segments. Handles long yard names. */
 .route {
-  display: flex;
-  align-items: flex-start;
-  padding: 20px 18px 8px;
+  padding: 18px 18px 10px;
 }
-.stop { flex: 1; text-align: center; min-width: 0; }
-.stop .dot {
-  width: 12px; height: 12px;
+.node {
+  position: relative;
+  padding-left: 30px;
+  min-height: 26px;
+}
+.node:not(:last-child) { padding-bottom: 4px; }
+/* the connecting line runs through the marker column */
+.node::before {
+  content: "";
+  position: absolute;
+  left: 6px; top: 16px; bottom: -4px;
+  width: 2px;
+  background: var(--line);
+}
+.node:last-child::before { display: none; }
+.marker {
+  position: absolute;
+  left: 0; top: 2px;
+  width: 14px; height: 14px;
   border-radius: 50%;
   background: var(--ink);
-  margin: 0 auto 8px;
+  border: 3px solid var(--panel);
+  box-shadow: 0 0 0 1.5px var(--ink);
 }
-.stop.port .dot { background: var(--amber); }
-.stop.dest .dot { background: var(--ocean); }
-.stop .place {
-  font-size: 12px;
+.node.port .marker   { background: var(--amber); box-shadow: 0 0 0 1.5px var(--amber); }
+.node.sea  .marker   { background: var(--ocean); box-shadow: 0 0 0 1.5px var(--ocean); }
+.node.dest .marker   { background: var(--ocean); box-shadow: 0 0 0 1.5px var(--ocean); }
+.node .place {
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  line-height: 1.25;
   word-break: break-word;
 }
-.stop .place small {
+.node .place small {
   display: block;
   font-weight: 500;
   color: var(--ink-soft);
@@ -222,59 +240,60 @@ h1 {
   font-size: 9px;
   margin-top: 2px;
 }
-.leg {
-  flex: 0 0 64px;
-  position: relative;
-  padding-top: 5px;
+/* transport label on the segment between two nodes */
+.node .leg {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 7px 0 9px;
+  font-size: 11px;
+  color: var(--ink-soft);
 }
-.leg .bar {
-  height: 2px;
-  border-radius: 2px;
-  margin-top: 0;
-}
-.leg.road .bar { background: var(--amber); }
-.leg.sea  .bar { background: var(--ocean); }
-.leg .mode {
-  display: block;
-  text-align: center;
-  font-size: 14px;
-  margin-top: 6px;
-}
+.node .leg .mode { font-size: 14px; }
 
-/* Cost rows */
-.lines {
+/* Cost breakdown list */
+.breakdown {
   border-top: 1px solid var(--line);
   padding: 6px 18px 4px;
 }
-.cost-row {
+.b-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  gap: 12px;
   padding: 11px 0;
   border-bottom: 1px dashed var(--line);
 }
-.cost-row .tag {
+.b-row:last-child { border-bottom: none; }
+.b-row .tag {
   display: flex;
   align-items: center;
   gap: 9px;
   font-size: 14px;
   color: var(--ink-soft);
 }
-.cost-row .swatch {
-  width: 9px; height: 9px; border-radius: 2px;
-}
-.cost-row.road .swatch { background: var(--amber); }
-.cost-row.sea  .swatch { background: var(--ocean); }
-.cost-row .amount {
+.b-row .swatch { width: 9px; height: 9px; border-radius: 2px; flex: 0 0 auto; background: var(--line); }
+.b-row.road .swatch { background: var(--amber); }
+.b-row.sea  .swatch { background: var(--ocean); }
+.b-row .amount {
   font-family: var(--mono);
   font-size: 15px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-align: right;
+}
+.b-row .amount .eur {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
 }
 
+/* Grand total bar */
 .total-row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   padding: 16px 18px 18px;
   background: var(--ink);
@@ -300,14 +319,37 @@ h1 {
   font-size: 26px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.footnote {
-  margin-top: 18px;
+/* Exchange-rate note */
+.fx {
+  margin-top: 12px;
   font-size: 12px;
   color: var(--ink-soft);
   text-align: center;
 }
+.fx .src { color: #9aa6a0; }
+
+.footnote {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* Owner / contact */
+.credit {
+  margin-top: 32px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.credit p { margin: 2px 0; }
+.credit a { color: var(--amber-deep); text-decoration: none; }
+.credit a:hover { text-decoration: underline; }
 
 /* ---------- Accessibility & motion ---------- */
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }

@@ -1,23 +1,45 @@
 // ============================================================
-// app.js — UI logic for the Copart → Klaipeda freight estimate
+// app.js — UI logic for the Copart → Cherkasy cost estimate
 // Depends on globals from data.js: YARDS, CARGO_TYPES, FREIGHT
 // ============================================================
 
 (function () {
   "use strict";
 
+  // ---- Cost configuration ----------------------------------------
+  // Extra costs added on top of freight-to-Klaipeda (towing + ocean).
+  const COSTS = {
+    klaipedaUnloadingEur: 260,          // unloading / forwarder in Klaipeda, billed in EUR
+    cherkasyByType: {                   // road logistics Klaipeda -> Cherkasy, by vehicle type
+      regular: 1000,
+      large: 1000,
+      oversize: 1400,                   // pickup / oversize
+    },
+    broker: 100,                        // customs broker fee
+  };
+
+  // Fallback EUR->USD rate used when the live API is unreachable
+  // (e.g. offline). Approximate ECB rate as of 2026-06-18.
+  const FALLBACK_EUR_USD = 1.15;
+
+  // Frankfurter: ECB reference rates, HTTPS, CORS-enabled, no API key.
+  const FX_URL = "https://api.frankfurter.app/latest?from=EUR&to=USD";
+
   // ---- App state -------------------------------------------------
   const state = {
-    yard: null,          // selected yard name, or null
-    type: CARGO_TYPES[0].id, // default to first cargo type
+    yard: null,                         // selected yard name, or null
+    type: CARGO_TYPES[0].id,            // default to first cargo type
+    eurUsd: FALLBACK_EUR_USD,           // current EUR->USD rate
+    fxSource: "приблизний курс",        // label describing the rate source
   };
 
   // ---- DOM references --------------------------------------------
-  const input       = document.getElementById("yard-input");
-  const list        = document.getElementById("yard-list");
-  const segment     = document.getElementById("type-segment");
-  const manifest    = document.getElementById("manifest");
-  const emptyState  = document.getElementById("manifest-empty");
+  const input      = document.getElementById("yard-input");
+  const list       = document.getElementById("yard-list");
+  const segment    = document.getElementById("type-segment");
+  const manifest   = document.getElementById("manifest");
+  const emptyState = document.getElementById("manifest-empty");
+  const yearEl     = document.getElementById("year");
 
   // ---- Helpers ---------------------------------------------------
 
@@ -26,9 +48,14 @@
     return "$" + Math.round(n).toLocaleString("en-US");
   }
 
+  // Format a number as EUR, e.g. 260 -> "€260".
+  function eur(n) {
+    return "€" + Math.round(n).toLocaleString("en-US");
+  }
+
   // Escape user text before inserting into innerHTML.
   function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, (c) => ({
+    return String(s).replace(/[&<>"']/g, (c) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     }[c]));
   }
@@ -43,6 +70,30 @@
     const hit    = escapeHtml(text.slice(idx, idx + query.length));
     const after  = escapeHtml(text.slice(idx + query.length));
     return before + '<span class="match">' + hit + "</span>" + after;
+  }
+
+  // ---- Exchange rate ---------------------------------------------
+  // Fetch the live EUR->USD rate; on failure keep the fallback.
+  function loadExchangeRate() {
+    fetch(FX_URL, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        const rate = data && data.rates && data.rates.USD;
+        if (typeof rate === "number" && rate > 0) {
+          state.eurUsd = rate;
+          // data.date is the ECB reference date (YYYY-MM-DD)
+          state.fxSource = "ЄЦБ, " + formatDate(data.date);
+          render();
+        }
+      })
+      .catch(() => { /* offline / blocked: keep fallback rate */ });
+  }
+
+  // Convert "YYYY-MM-DD" to "DD.MM.YYYY".
+  function formatDate(iso) {
+    if (!iso || iso.length < 10) return iso || "";
+    const [y, m, d] = iso.split("-");
+    return d + "." + m + "." + y;
   }
 
   // ---- Cargo-type segmented control ------------------------------
@@ -96,7 +147,7 @@
     if (filtered.length === 0) {
       const empty = document.createElement("li");
       empty.className = "combo-empty";
-      empty.textContent = "No yard matches that search.";
+      empty.textContent = "Площадку не знайдено.";
       list.appendChild(empty);
       return;
     }
@@ -125,9 +176,7 @@
 
   function highlightActive() {
     const options = list.querySelectorAll(".combo-option");
-    options.forEach((o, i) => {
-      o.classList.toggle("active", i === activeIndex);
-    });
+    options.forEach((o, i) => o.classList.toggle("active", i === activeIndex));
     if (activeIndex >= 0 && options[activeIndex]) {
       options[activeIndex].scrollIntoView({ block: "nearest" });
     }
@@ -141,52 +190,86 @@
       return;
     }
 
-    const data = FREIGHT[state.yard][state.type];
+    const freight = FREIGHT[state.yard][state.type];
     const typeLabel = CARGO_TYPES.find((t) => t.id === state.type).label;
 
-    // Split "CITY - State" for display.
-    const yardName = state.yard;
+    // Cost components (all converted to USD for the grand total).
+    const klaipedaEur = COSTS.klaipedaUnloadingEur;
+    const klaipedaUsd = klaipedaEur * state.eurUsd;
+    const cherkasyUsd = COSTS.cherkasyByType[state.type];
+    const brokerUsd   = COSTS.broker;
+
+    const grandTotal =
+      freight.total + klaipedaUsd + cherkasyUsd + brokerUsd;
 
     manifest.innerHTML = `
       <div class="route">
-        <div class="stop origin">
-          <div class="dot"></div>
-          <div class="place">${escapeHtml(yardName)}<small>Yard</small></div>
+        <div class="node origin">
+          <span class="marker"></span>
+          <div class="place">${escapeHtml(state.yard)}<small>Площадка Copart</small></div>
+          <div class="leg"><span class="mode">🚚</span> Доставка до порту США</div>
         </div>
-        <div class="leg road">
-          <div class="bar"></div>
-          <span class="mode">🚚</span>
+        <div class="node port">
+          <span class="marker"></span>
+          <div class="place">Порт США<small>Відправлення</small></div>
+          <div class="leg"><span class="mode">🚢</span> Морський фрахт</div>
         </div>
-        <div class="stop port">
-          <div class="dot"></div>
-          <div class="place">US Port<small>Export</small></div>
+        <div class="node sea">
+          <span class="marker"></span>
+          <div class="place">Клайпеда, Литва<small>Розвантаження</small></div>
+          <div class="leg"><span class="mode">🚛</span> Логістика до Черкас</div>
         </div>
-        <div class="leg sea">
-          <div class="bar"></div>
-          <span class="mode">🚢</span>
-        </div>
-        <div class="stop dest">
-          <div class="dot"></div>
-          <div class="place">Klaipeda<small>Lithuania</small></div>
+        <div class="node dest">
+          <span class="marker"></span>
+          <div class="place">Черкаси, Україна<small>Призначення</small></div>
         </div>
       </div>
 
-      <div class="lines">
-        <div class="cost-row road">
-          <span class="tag"><span class="swatch"></span>Road haul to port</span>
-          <span class="amount">${usd(data.towing)}</span>
+      <div class="breakdown">
+        <div class="b-row road">
+          <span class="tag"><span class="swatch"></span>Доставка до порту США</span>
+          <span class="amount">${usd(freight.towing)}</span>
         </div>
-        <div class="cost-row sea">
-          <span class="tag"><span class="swatch"></span>Ocean freight to Klaipeda</span>
-          <span class="amount">${usd(data.ocean)}</span>
+        <div class="b-row sea">
+          <span class="tag"><span class="swatch"></span>Морський фрахт до Клайпеди</span>
+          <span class="amount">${usd(freight.ocean)}</span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Розвантаження / експедитор (Клайпеда)</span>
+          <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Логістика до Черкас</span>
+          <span class="amount">${usd(cherkasyUsd)}</span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
+          <span class="amount">${usd(brokerUsd)}</span>
         </div>
       </div>
 
       <div class="total-row">
-        <span class="tag">To Klaipeda port<small>${escapeHtml(typeLabel)}</small></span>
-        <span class="amount">${usd(data.total)}</span>
+        <span class="tag">Разом<small>${escapeHtml(typeLabel)}</small></span>
+        <span class="amount">${usd(grandTotal)}</span>
       </div>
     `;
+
+    // Append the exchange-rate note after the manifest card.
+    renderFxNote();
+  }
+
+  // Show which EUR->USD rate was used and where it came from.
+  function renderFxNote() {
+    let note = document.getElementById("fx-note");
+    if (!note) {
+      note = document.createElement("p");
+      note.id = "fx-note";
+      note.className = "fx";
+      manifest.insertAdjacentElement("afterend", note);
+    }
+    note.innerHTML =
+      "Курс: €1 = $" + state.eurUsd.toFixed(4) +
+      ' <span class="src">(' + escapeHtml(state.fxSource) + ")</span>";
   }
 
   // ---- Event wiring ----------------------------------------------
@@ -196,8 +279,7 @@
   });
 
   input.addEventListener("input", () => {
-    // Typing invalidates the previous selection until reconfirmed.
-    state.yard = null;
+    state.yard = null;   // typing invalidates the previous selection
     activeIndex = -1;
     renderOptions(input.value);
     openList();
@@ -231,8 +313,10 @@
   });
 
   // ---- Init ------------------------------------------------------
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
   buildTypeSegment();
   render();
+  loadExchangeRate();
 
   // Register the service worker for offline use (ignored on file://).
   if ("serviceWorker" in navigator) {
