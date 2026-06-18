@@ -23,50 +23,82 @@
   const FALLBACK_EUR_USD = 1.15;
 
   // ============================================================
-  // COPART FEES — EDIT THIS BLOCK TO MATCH YOUR ACCOUNT'S TABLES
-  // ------------------------------------------------------------
-  // SOURCE: public US non-licensed "Secured Payment" schedule (2026).
-  // A licensed/dealer account uses LOWER tables (e.g. $5,000 bid ->
-  // $675 buyer fee, live bid $125 instead of $775 / $109 below).
-  // To match a licensed invoice, replace BUYER_FEE_* and VIRTUAL_BID_LIVE
-  // with the exact tables from the member-fees page.
+  // COPART FEES — licensed-account schedule, Secured Payment.
+  // Verified against a real non-clean invoice: $5,500 bid ->
+  // buyer $675 + virtual $125 + gate $95 + env $15 + title $20 = $930.
   // Each tier = { upTo: <inclusive upper bound>, fee: <USD> }.
   // The final tier uses { upTo: Infinity, pct: <fraction of price> }.
   // ============================================================
 
-  // Buyer fee — Non-Clean (salvage) Title, Secured Payment.
+  // Buyer fee — Non-Clean (salvage) Title.
   const BUYER_FEE_NONCLEAN = [
-    { upTo: 49.99, fee: 25 },     { upTo: 99.99, fee: 45 },
-    { upTo: 199.99, fee: 80 },    { upTo: 299.99, fee: 130 },
-    { upTo: 349.99, fee: 132.5 }, { upTo: 399.99, fee: 135 },
-    { upTo: 449.99, fee: 170 },   { upTo: 499.99, fee: 180 },
-    { upTo: 549.99, fee: 200 },   { upTo: 599.99, fee: 205 },
-    { upTo: 699.99, fee: 235 },   { upTo: 799.99, fee: 260 },
-    { upTo: 899.99, fee: 280 },   { upTo: 999.99, fee: 305 },
-    { upTo: 1199.99, fee: 355 },  { upTo: 1299.99, fee: 380 },
-    { upTo: 1399.99, fee: 400 },  { upTo: 1499.99, fee: 410 },
-    { upTo: 1599.99, fee: 420 },  { upTo: 1699.99, fee: 440 },
-    { upTo: 1799.99, fee: 450 },  { upTo: 1999.99, fee: 465 },
-    { upTo: 2399.99, fee: 500 },  { upTo: 2499.99, fee: 525 },
-    { upTo: 2999.99, fee: 550 },  { upTo: 3499.99, fee: 650 },
-    { upTo: 3999.99, fee: 700 },  { upTo: 4499.99, fee: 725 },
-    { upTo: 4999.99, fee: 750 },  { upTo: 5999.99, fee: 775 },
-    { upTo: 6999.99, fee: 800 },  { upTo: 7999.99, fee: 825 },
-    { upTo: 9999.99, fee: 850 },  { upTo: 14999.99, fee: 900 },
-    { upTo: Infinity, pct: 0.075 },
+    { upTo: 49.99, fee: 1 },     { upTo: 99.99, fee: 1 },
+    { upTo: 199.99, fee: 25 },   { upTo: 299.99, fee: 60 },
+    { upTo: 349.99, fee: 85 },   { upTo: 399.99, fee: 100 },
+    { upTo: 449.99, fee: 125 },  { upTo: 499.99, fee: 135 },
+    { upTo: 549.99, fee: 145 },  { upTo: 599.99, fee: 155 },
+    { upTo: 699.99, fee: 170 },  { upTo: 799.99, fee: 195 },
+    { upTo: 899.99, fee: 215 },  { upTo: 999.99, fee: 230 },
+    { upTo: 1199.99, fee: 250 }, { upTo: 1299.99, fee: 270 },
+    { upTo: 1399.99, fee: 285 }, { upTo: 1499.99, fee: 300 },
+    { upTo: 1599.99, fee: 315 }, { upTo: 1699.99, fee: 330 },
+    { upTo: 1799.99, fee: 350 }, { upTo: 1999.99, fee: 370 },
+    { upTo: 2399.99, fee: 390 }, { upTo: 2499.99, fee: 425 },
+    { upTo: 2999.99, fee: 460 }, { upTo: 3499.99, fee: 505 },
+    { upTo: 3999.99, fee: 555 }, { upTo: 4499.99, fee: 600 },
+    { upTo: 4999.99, fee: 625 }, { upTo: 5499.99, fee: 650 },
+    { upTo: 5999.99, fee: 675 }, { upTo: 6499.99, fee: 700 },
+    { upTo: 6999.99, fee: 720 }, { upTo: 7499.99, fee: 755 },
+    { upTo: 7999.99, fee: 775 }, { upTo: 8499.99, fee: 800 },
+    { upTo: 8999.99, fee: 820 }, { upTo: 9999.99, fee: 820 },
+    { upTo: 10499.99, fee: 850 },{ upTo: 10999.99, fee: 850 },
+    { upTo: 11499.99, fee: 850 },{ upTo: 11999.99, fee: 860 },
+    { upTo: 12499.99, fee: 875 },{ upTo: 14999.99, fee: 890 },
+    { upTo: Infinity, pct: 0.06 },
   ];
 
-  // Buyer fee — Clean Title, Secured Payment.
-  // PLACEHOLDER: same as non-clean until the official clean-title table
-  // is supplied; clean-title fees are normally a bit lower.
-  const BUYER_FEE_CLEAN = BUYER_FEE_NONCLEAN;
+  // Buyer fee — Clean Title.
+  const BUYER_FEE_CLEAN = [
+    { upTo: 49.99, fee: 1 },     { upTo: 99.99, fee: 1 },
+    { upTo: 199.99, fee: 25 },   { upTo: 299.99, fee: 50 },
+    { upTo: 349.99, fee: 75 },   { upTo: 399.99, fee: 75 },
+    { upTo: 449.99, fee: 110 },  { upTo: 499.99, fee: 110 },
+    { upTo: 549.99, fee: 125 },  { upTo: 599.99, fee: 130 },
+    { upTo: 699.99, fee: 140 },  { upTo: 799.99, fee: 155 },
+    { upTo: 899.99, fee: 170 },  { upTo: 999.99, fee: 185 },
+    { upTo: 1199.99, fee: 200 }, { upTo: 1299.99, fee: 225 },
+    { upTo: 1399.99, fee: 240 }, { upTo: 1499.99, fee: 250 },
+    { upTo: 1599.99, fee: 260 }, { upTo: 1699.99, fee: 275 },
+    { upTo: 1799.99, fee: 285 }, { upTo: 1999.99, fee: 300 },
+    { upTo: 2399.99, fee: 325 }, { upTo: 2499.99, fee: 335 },
+    { upTo: 2999.99, fee: 350 }, { upTo: 3499.99, fee: 400 },
+    { upTo: 3999.99, fee: 455 }, { upTo: 4499.99, fee: 600 },
+    { upTo: 4999.99, fee: 625 }, { upTo: 5499.99, fee: 625 },
+    { upTo: 5999.99, fee: 625 }, { upTo: 6499.99, fee: 675 },
+    { upTo: 6999.99, fee: 675 }, { upTo: 7499.99, fee: 675 },
+    { upTo: 7999.99, fee: 690 }, { upTo: 8499.99, fee: 715 },
+    { upTo: 8999.99, fee: 715 }, { upTo: 9999.99, fee: 715 },
+    { upTo: 10499.99, fee: 720 },{ upTo: 10999.99, fee: 720 },
+    { upTo: 11499.99, fee: 720 },{ upTo: 11999.99, fee: 720 },
+    { upTo: 12499.99, fee: 720 },{ upTo: 14999.99, fee: 720 },
+    { upTo: Infinity, pct: 0.0575 },
+  ];
 
-  // Virtual Bid Fee — Live Bid (online), by final bid.
-  const VIRTUAL_BID_LIVE = [
-    { upTo: 99.99, fee: 0 },     { upTo: 499.99, fee: 49 },
-    { upTo: 999.99, fee: 59 },   { upTo: 1499.99, fee: 79 },
-    { upTo: 1999.99, fee: 89 },  { upTo: 3999.99, fee: 99 },
-    { upTo: 5999.99, fee: 109 }, { upTo: 7999.99, fee: 139 },
+  // Virtual Bid Fee (Live Bid) — Non-Clean Title.
+  const VIRTUAL_BID_NONCLEAN = [
+    { upTo: 100, fee: 0 },    { upTo: 500, fee: 50 },
+    { upTo: 1000, fee: 65 },  { upTo: 1500, fee: 85 },
+    { upTo: 2000, fee: 95 },  { upTo: 4000, fee: 110 },
+    { upTo: 6000, fee: 125 }, { upTo: 8000, fee: 145 },
+    { upTo: Infinity, fee: 160 },
+  ];
+
+  // Virtual Bid Fee (Live Bid) — Clean Title.
+  const VIRTUAL_BID_CLEAN = [
+    { upTo: 99.99, fee: 0 },    { upTo: 499.99, fee: 49 },
+    { upTo: 999.99, fee: 59 },  { upTo: 1499.99, fee: 79 },
+    { upTo: 1999.99, fee: 89 }, { upTo: 3999.99, fee: 99 },
+    { upTo: 5999.99, fee: 109 },{ upTo: 7999.99, fee: 139 },
     { upTo: Infinity, fee: 149 },
   ];
 
@@ -80,29 +112,26 @@
 
   // ---- Timing configuration --------------------------------------
   // Ocean transit per departure port, in weeks [min, max].
-  // Tuned so the total term matches the agreed targets:
-  //   Houston/Chicago 2.5 mo, Los Angeles 3 mo, Seattle 3-3.5 mo,
-  //   Honolulu 3.5-4 mo. Atlantic ports and Toronto are estimates.
   const OCEAN_WEEKS = {
-    "NEWARK":           [6, 8],   // Atlantic east coast (estimate)
-    "NORFOLK":          [6, 8],
-    "SAVANNAH":         [6, 8],
-    "MIAMI":            [6, 8],
-    "HOUSTON":          [8, 8],   // Texas -> 2.5 months total
-    "CHICAGO":          [8, 8],   // -> 2.5 months total
-    "LOS ANGELES":      [10, 10], // California -> 3 months total
-    "SEATTLE":          [10, 12], // -> 3-3.5 months total
-    "TORONTO":          [9, 11],  // Canada (estimate)
-    "PORT OF HONOLULU": [12, 14], // Hawaii -> 3.5-4 months total
+    "NEWARK":           [5, 5],   // Atlantic east coast ("near New York")
+    "NORFOLK":          [5, 5],
+    "SAVANNAH":         [5, 5],
+    "MIAMI":            [5, 5],
+    "HOUSTON":          [6, 6],
+    "CHICAGO":          [6, 6],
+    "LOS ANGELES":      [7, 8],
+    "SEATTLE":          [8, 10],
+    "TORONTO":          [8, 10],  // Canada
+    "PORT OF HONOLULU": [12, 12], // Hawaii, Honolulu
   };
   const DEFAULT_OCEAN_WEEKS = [8, 10];
 
-  // Weeks to buy at auction and deliver the car to the US port.
-  const TO_PORT_WEEKS = { "TORONTO": 2 };   // Canada inland leg is longer
+  // Other fixed stages (weeks).
+  const TO_PORT_WEEKS = { "TORONTO": 2 };   // auction purchase + road to US port
   const DEFAULT_TO_PORT_WEEKS = 1;
-
-  // Dispatch / vessel loading at the port (weeks), folded into the sea leg.
-  const DISPATCH_WEEKS = 2;
+  const DISPATCH_WEEKS = 2;                  // loading into container + dispatch
+  const UNLOADING_WEEKS = 1;                 // unloading at Klaipeda
+  const LOGISTICS_WEEKS = 1;                 // road Klaipeda -> Cherkasy
 
   // Average weeks per month (52 / 12) for the months estimate.
   const WEEKS_PER_MONTH = 4.345;
@@ -111,8 +140,8 @@
   const state = {
     yard: null,
     type: CARGO_TYPES[0].id,
-    copartPrice: 0,                     // entered purchase price (USD)
-    cleanTitle: false,                  // clean-title checkbox
+    copartPrice: 0,
+    cleanTitle: false,
     eurUsd: FALLBACK_EUR_USD,
     fxSource: "приблизний курс",
   };
@@ -149,12 +178,9 @@
   }
 
   // ---- Copart fee engine -----------------------------------------
-  // Find the matching tier and return its fee for the given price.
   function tierFee(table, price) {
     for (const t of table) {
-      if (price <= t.upTo) {
-        return typeof t.pct === "number" ? price * t.pct : t.fee;
-      }
+      if (price <= t.upTo) return typeof t.pct === "number" ? price * t.pct : t.fee;
     }
     return 0;
   }
@@ -163,7 +189,7 @@
   function copartCommission(price, clean) {
     if (!(price > 0)) return 0;
     const buyer   = tierFee(clean ? BUYER_FEE_CLEAN : BUYER_FEE_NONCLEAN, price);
-    const virtual = tierFee(VIRTUAL_BID_LIVE, price);
+    const virtual = tierFee(clean ? VIRTUAL_BID_CLEAN : VIRTUAL_BID_NONCLEAN, price);
     const gate    = clean ? COPART_FIXED.gateClean : COPART_FIXED.gateNonClean;
     return buyer + virtual + gate + COPART_FIXED.environmental + COPART_FIXED.titleFee;
   }
@@ -176,7 +202,7 @@
         const rate = data && data.rates && data.rates.USD;
         if (typeof rate === "number" && rate > 0) {
           state.eurUsd = rate;
-          state.fxSource = "\u0404\u0426\u0411, " + formatDate(data.date);
+          state.fxSource = "ЄЦБ, " + formatDate(data.date);
           render();
         }
       })
@@ -197,11 +223,11 @@
     ).join(" ");
   }
 
-  // Compact weeks label for a route leg: "~10 тиж" / "~12–14 тиж".
+  // Compact weeks label for a route leg: "~5 тиж" / "~7–8 тиж".
   function weeksShort(range) {
     const [a, b] = range;
     const n = a === b ? String(a) : a + "\u2013" + b;
-    return "~" + n + " \u0442\u0438\u0436";
+    return "~" + n + " тиж";
   }
 
   function roundHalf(x) { return Math.round(x * 2) / 2; }
@@ -215,20 +241,23 @@
   }
   function pluralMonths(n) {
     const whole = Math.floor(n), m10 = whole % 10, m100 = whole % 100;
-    if (m10 === 1 && m100 !== 11) return "\u043C\u0456\u0441\u044F\u0446\u044C";
-    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return "\u043C\u0456\u0441\u044F\u0446\u0456";
-    return "\u043C\u0456\u0441\u044F\u0446\u0456\u0432";
+    if (m10 === 1 && m100 !== 11) return "місяць";
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return "місяці";
+    return "місяців";
   }
 
-  // Build the timeline for a given departure port.
+  // Build the timeline stages for a given departure port.
   function timeline(port) {
     const ocean = OCEAN_WEEKS[port] || DEFAULT_OCEAN_WEEKS;
     const toPort = TO_PORT_WEEKS[port] || DEFAULT_TO_PORT_WEEKS;
-    const sea = [DISPATCH_WEEKS + ocean[0], DISPATCH_WEEKS + ocean[1]];
-    const totalMin = toPort + sea[0], totalMax = toPort + sea[1];
+    const totalMin = toPort + DISPATCH_WEEKS + ocean[0] + UNLOADING_WEEKS + LOGISTICS_WEEKS;
+    const totalMax = toPort + DISPATCH_WEEKS + ocean[1] + UNLOADING_WEEKS + LOGISTICS_WEEKS;
     return {
       toPort: [toPort, toPort],
-      sea: sea,
+      dispatch: [DISPATCH_WEEKS, DISPATCH_WEEKS],
+      ocean: ocean,
+      unloading: [UNLOADING_WEEKS, UNLOADING_WEEKS],
+      logistics: [LOGISTICS_WEEKS, LOGISTICS_WEEKS],
       months: monthsLabel(totalMin, totalMax),
     };
   }
@@ -241,18 +270,13 @@
       btn.textContent = t.label;
       btn.dataset.type = t.id;
       btn.setAttribute("aria-pressed", String(t.id === state.type));
-      btn.addEventListener("click", () => {
-        state.type = t.id;
-        syncTypeButtons();
-        render();
-      });
+      btn.addEventListener("click", () => { state.type = t.id; syncTypeButtons(); render(); });
       segment.appendChild(btn);
     });
   }
   function syncTypeButtons() {
-    segment.querySelectorAll("button").forEach((b) => {
-      b.setAttribute("aria-pressed", String(b.dataset.type === state.type));
-    });
+    segment.querySelectorAll("button").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.type === state.type)));
   }
 
   // ---- Searchable combobox ---------------------------------------
@@ -273,7 +297,7 @@
     if (filtered.length === 0) {
       const empty = document.createElement("li");
       empty.className = "combo-empty";
-      empty.textContent = "\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0443 \u043D\u0435 \u0437\u043D\u0430\u0439\u0434\u0435\u043D\u043E.";
+      empty.textContent = "Площадку не знайдено.";
       list.appendChild(empty);
       return;
     }
@@ -308,7 +332,7 @@
     const freight = FREIGHT[state.yard][state.type];
     const typeLabel = CARGO_TYPES.find((t) => t.id === state.type).label;
     const port = YARD_PORT[state.yard] || "";
-    const portLabel = port ? portName(port) : "\u041F\u043E\u0440\u0442 \u0421\u0428\u0410";
+    const portLabel = port ? portName(port) : "Порт США";
     const t = timeline(port);
 
     const hasPrice = state.copartPrice > 0;
@@ -328,67 +352,69 @@
       <div class="route">
         <div class="node origin">
           <span class="marker"></span>
-          <div class="place">${escapeHtml(state.yard)}<small>\u041F\u043B\u043E\u0449\u0430\u0434\u043A\u0430 Copart</small></div>
-          <div class="leg"><span class="mode">\uD83D\uDE9A</span> \u0414\u043E\u0441\u0442\u0430\u0432\u043A\u0430 \u0434\u043E \u043F\u043E\u0440\u0442\u0443 <span class="dur">${weeksShort(t.toPort)}</span></div>
+          <div class="place">${escapeHtml(state.yard)}<small>Площадка Copart</small></div>
+          <div class="leg"><span class="mode">🚚</span> Доставка до порту <span class="dur">${weeksShort(t.toPort)}</span></div>
+          <div class="leg"><span class="mode">📦</span> Завантаження та відправлення <span class="dur">${weeksShort(t.dispatch)}</span></div>
         </div>
         <div class="node port">
           <span class="marker"></span>
-          <div class="place">${escapeHtml(portLabel)}<small>\u041F\u043E\u0440\u0442 \u0432\u0456\u0434\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043D\u044F</small></div>
-          <div class="leg"><span class="mode">\uD83D\uDEA2</span> \u041C\u043E\u0440\u0441\u044C\u043A\u0438\u0439 \u0444\u0440\u0430\u0445\u0442 <span class="dur">${weeksShort(t.sea)}</span></div>
+          <div class="place">${escapeHtml(portLabel)}<small>Порт відправлення</small></div>
+          <div class="leg"><span class="mode">🚢</span> Морський фрахт <span class="dur">${weeksShort(t.ocean)}</span></div>
         </div>
         <div class="node sea">
           <span class="marker"></span>
-          <div class="place">\u041A\u043B\u0430\u0439\u043F\u0435\u0434\u0430, \u041B\u0438\u0442\u0432\u0430<small>\u0420\u043E\u0437\u0432\u0430\u043D\u0442\u0430\u0436\u0435\u043D\u043D\u044F</small></div>
-          <div class="leg"><span class="mode">\uD83D\uDE9B</span> \u041B\u043E\u0433\u0456\u0441\u0442\u0438\u043A\u0430 \u0434\u043E \u0427\u0435\u0440\u043A\u0430\u0441</div>
+          <div class="place">Клайпеда, Литва<small>Порт прибуття</small></div>
+          <div class="leg"><span class="mode">⚓</span> Розвантаження <span class="dur">${weeksShort(t.unloading)}</span></div>
+          <div class="leg"><span class="mode">🚛</span> Логістика до Черкас <span class="dur">${weeksShort(t.logistics)}</span></div>
         </div>
         <div class="node dest">
           <span class="marker"></span>
-          <div class="place">\u0427\u0435\u0440\u043A\u0430\u0441\u0438, \u0423\u043A\u0440\u0430\u0457\u043D\u0430<small>\u041F\u0440\u0438\u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F</small></div>
+          <div class="place">Черкаси, Україна<small>Призначення</small></div>
         </div>
       </div>
 
       <div class="term">
-        <span class="term-label">\u041E\u0440\u0456\u0454\u043D\u0442\u043E\u0432\u043D\u0438\u0439 \u0442\u0435\u0440\u043C\u0456\u043D \u0443 \u0434\u043E\u0440\u043E\u0437\u0456</span>
+        <span class="term-label">Орієнтовний термін у дорозі</span>
         <span class="term-val">${t.months}</span>
       </div>
 
       <div class="breakdown">
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u0410\u0432\u0442\u043E (\u0446\u0456\u043D\u0430 \u043D\u0430 Copart)</span>
+          <span class="tag"><span class="swatch"></span>Авто (ціна на Copart)</span>
           <span class="amount">${usdOrDash(carUsd, hasPrice)}</span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u0410\u0443\u043A\u0446\u0456\u043E\u043D\u043D\u0456 \u0437\u0431\u043E\u0440\u0438 Copart${state.cleanTitle ? " \u00B7 clean" : ""}</span>
+          <span class="tag"><span class="swatch"></span>Аукціонні збори Copart${state.cleanTitle ? " · clean" : ""}</span>
           <span class="amount">${usdOrDash(commissionUsd, hasPrice)}</span>
         </div>
         <div class="b-row road">
-          <span class="tag"><span class="swatch"></span>\u0414\u043E\u0441\u0442\u0430\u0432\u043A\u0430 \u0434\u043E \u043F\u043E\u0440\u0442\u0443 (${escapeHtml(portLabel)})</span>
+          <span class="tag"><span class="swatch"></span>Доставка до порту (${escapeHtml(portLabel)})</span>
           <span class="amount">${usd(freight.towing)}</span>
         </div>
         <div class="b-row sea">
-          <span class="tag"><span class="swatch"></span>\u041C\u043E\u0440\u0441\u044C\u043A\u0438\u0439 \u0444\u0440\u0430\u0445\u0442 \u0434\u043E \u041A\u043B\u0430\u0439\u043F\u0435\u0434\u0438</span>
+          <span class="tag"><span class="swatch"></span>Морський фрахт до Клайпеди</span>
           <span class="amount">${usd(freight.ocean)}</span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u0420\u043E\u0437\u0432\u0430\u043D\u0442\u0430\u0436\u0435\u043D\u043D\u044F / \u0435\u043A\u0441\u043F\u0435\u0434\u0438\u0442\u043E\u0440 (\u041A\u043B\u0430\u0439\u043F\u0435\u0434\u0430)</span>
+          <span class="tag"><span class="swatch"></span>Розвантаження / експедитор (Клайпеда)</span>
           <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u041B\u043E\u0433\u0456\u0441\u0442\u0438\u043A\u0430 \u0434\u043E \u0427\u0435\u0440\u043A\u0430\u0441</span>
+          <span class="tag"><span class="swatch"></span>Логістика до Черкас</span>
           <span class="amount">${usd(cherkasyUsd)}</span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u0411\u0440\u043E\u043A\u0435\u0440\u0441\u044C\u043A\u0456 \u043F\u043E\u0441\u043B\u0443\u0433\u0438</span>
+          <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
           <span class="amount">${usd(brokerUsd)}</span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>\u0421\u0443\u043F\u0440\u043E\u0432\u0456\u0434 \u0442\u0430 \u043E\u0440\u0433\u0430\u043D\u0456\u0437\u0430\u0446\u0456\u044F \u0456\u043C\u043F\u043E\u0440\u0442\u0443</span>
+          <span class="tag"><span class="swatch"></span>Супровід та організація імпорту</span>
           <span class="amount">${usd(serviceUsd)}</span>
         </div>
       </div>
 
       <div class="total-row">
-        <span class="tag">\u0420\u0430\u0437\u043E\u043C<small>${escapeHtml(typeLabel)}</small></span>
+        <span class="tag">Разом<small>${escapeHtml(typeLabel)}</small></span>
         <span class="amount">${usd(grandTotal)}</span>
       </div>
     `;
@@ -404,7 +430,7 @@
       note.className = "fx";
       manifest.insertAdjacentElement("afterend", note);
     }
-    note.innerHTML = "\u041A\u0443\u0440\u0441: \u20AC1 = $" + state.eurUsd.toFixed(4) +
+    note.innerHTML = "Курс: €1 = $" + state.eurUsd.toFixed(4) +
       ' <span class="src">(' + escapeHtml(state.fxSource) + ")</span>";
   }
   function removeFxNote() {
