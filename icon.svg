@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- App icon: amber field with an ink container-ship mark -->
+  <rect width="512" height="512" rx="96" fill="#16202b"/>
+  <rect x="96" y="300" width="320" height="70" rx="10" fill="#d99413"/>
+  <rect x="120" y="232" width="80" height="68" fill="#f4f6f4"/>
+  <rect x="208" y="232" width="80" height="68" fill="#0f766e"/>
+  <rect x="296" y="232" width="80" height="68" fill="#f4f6f4"/>
+  <rect x="120" y="200" width="80" height="32" fill="#0f766e"/>
+  <rect x="208" y="200" width="80" height="32" fill="#f4f6f4"/>
+  <path d="M96 372 Q256 420 416 372 L416 392 Q256 440 96 392 Z" fill="#0f766e"/>
+</svg>

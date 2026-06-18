@@ -1,0 +1,316 @@
+/* ============================================================
+   styles.css — Copart → Klaipeda freight estimate
+   Aesthetic: a freight-document "instrument readout".
+   Light working surface, ink navy structure, port-crane amber
+   accent, ocean teal for the sea leg. Numbers set in mono for
+   a tabular, instrument feel (also keeps the app font-free and
+   fully offline-capable).
+   ============================================================ */
+
+:root {
+  /* Palette */
+  --ink:        #16202b; /* deep ink navy — text & structure */
+  --ink-soft:   #3a4a5a; /* secondary text */
+  --paper:      #f4f6f4; /* working surface */
+  --panel:      #ffffff; /* raised cards */
+  --line:       #d8ddd9; /* hairline dividers */
+  --amber:      #d99413; /* port-crane amber — road / accent */
+  --amber-deep: #b67a09;
+  --ocean:      #0f766e; /* ocean teal — sea leg */
+  --ocean-soft: #e3f0ee;
+  --road-soft:  #faeccf;
+
+  /* Type */
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+
+  /* Geometry */
+  --r: 10px;
+  --maxw: 540px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+.app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+/* ---------- Header ---------- */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow .arrow { color: var(--ink-soft); }
+
+h1 {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  line-height: 1.1;
+}
+.lede {
+  margin: 0 0 24px;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+/* ---------- Controls ---------- */
+.field { margin-bottom: 18px; }
+.field > label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+/* Searchable combobox */
+.combo { position: relative; }
+.combo-input {
+  width: 100%;
+  padding: 13px 40px 13px 14px;
+  font-family: var(--sans);
+  font-size: 16px; /* >=16px prevents iOS zoom-on-focus */
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.combo-input::placeholder { color: #9aa6a0; }
+.combo-input:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px var(--road-soft);
+}
+.combo-caret {
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.combo-list {
+  position: absolute;
+  z-index: 20;
+  left: 0; right: 0;
+  margin-top: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: 0 12px 28px rgba(22,32,43,0.14);
+  display: none;
+}
+.combo-list.open { display: block; }
+.combo-list, .combo-list li { list-style: none; margin: 0; }
+.combo-list { padding: 0; }
+.combo-option {
+  padding: 11px 14px;
+  font-size: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--paper);
+}
+.combo-option:last-child { border-bottom: none; }
+.combo-option:hover,
+.combo-option.active {
+  background: var(--road-soft);
+}
+.combo-option .match { /* highlighted matched substring */
+  background: #ffe49a;
+  border-radius: 2px;
+}
+.combo-empty {
+  padding: 14px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* Segmented cargo-type selector */
+.segment {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.segment button {
+  appearance: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  padding: 12px 6px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.segment button:hover { border-color: #b9c2bb; }
+.segment button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--road-soft);
+  border-color: var(--amber);
+}
+
+/* ---------- Manifest / route readout (signature) ---------- */
+.manifest {
+  margin-top: 26px;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.manifest-empty {
+  padding: 34px 22px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* Route line: yard --truck--> US port --ship--> Klaipeda */
+.route {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 18px 8px;
+}
+.stop { flex: 1; text-align: center; min-width: 0; }
+.stop .dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--ink);
+  margin: 0 auto 8px;
+}
+.stop.port .dot { background: var(--amber); }
+.stop.dest .dot { background: var(--ocean); }
+.stop .place {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  word-break: break-word;
+}
+.stop .place small {
+  display: block;
+  font-weight: 500;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 9px;
+  margin-top: 2px;
+}
+.leg {
+  flex: 0 0 64px;
+  position: relative;
+  padding-top: 5px;
+}
+.leg .bar {
+  height: 2px;
+  border-radius: 2px;
+  margin-top: 0;
+}
+.leg.road .bar { background: var(--amber); }
+.leg.sea  .bar { background: var(--ocean); }
+.leg .mode {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* Cost rows */
+.lines {
+  border-top: 1px solid var(--line);
+  padding: 6px 18px 4px;
+}
+.cost-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.cost-row .tag {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.cost-row .swatch {
+  width: 9px; height: 9px; border-radius: 2px;
+}
+.cost-row.road .swatch { background: var(--amber); }
+.cost-row.sea  .swatch { background: var(--ocean); }
+.cost-row .amount {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.total-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 16px 18px 18px;
+  background: var(--ink);
+  color: #fff;
+}
+.total-row .tag {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.total-row .tag small {
+  display: block;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #9fb0bf;
+  font-size: 11px;
+  margin-top: 3px;
+}
+.total-row .amount {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.footnote {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---------- Accessibility & motion ---------- */
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Copart → Klaipeda Freight Estimate",
+  "short_name": "Freight Est.",
+  "description": "Estimate vehicle delivery cost from Copart auction yards to the port of Klaipeda.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6f4",
+  "theme_color": "#16202b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}
