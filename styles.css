@@ -426,8 +426,115 @@ h1 {
 .credit a { color: var(--amber-deep); text-decoration: none; }
 .credit a:hover { text-decoration: underline; }
 
+
+/* ---------- Results: summary at top, route at bottom ---------- */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px 18px;
+  background: var(--ink);
+  color: #fff;
+}
+.summary-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.summary-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.summary-total {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.summary-sub { font-size: 12px; color: #9fb0bf; }
+
+/* Breakdown row that stacks a main line + fine print */
+.b-row.col { flex-direction: column; align-items: stretch; gap: 4px; }
+.b-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.b-row .sub { font-size: 11px; color: var(--ink-soft); padding-left: 18px; }
+
+/* Route now sits below the breakdown */
+.route { border-top: 1px solid var(--line); }
+
+/* Two-column field row (volume + year) */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
+.two-col > div { min-width: 0; }
+.two-col label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+/* Engine-volume stepper */
+.stepper { display: flex; align-items: stretch; gap: 8px; }
+.stepper button {
+  flex: 0 0 46px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r);
+  cursor: pointer;
+  line-height: 1;
+  transition: border-color .15s ease;
+}
+.stepper button:hover { border-color: #b9c2bb; }
+.stepper .text-input { text-align: center; }
+
+/* 2-column segmented control (fuel) */
+.segment.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
 /* ---------- Accessibility & motion ---------- */
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* Electric-only controls hidden until the electric type is chosen */
+#electric-group { display: none; }
+
+/* Motorcycle-only controls hidden until motorcycle is chosen */
+#moto-group { display: none; }
+
+/* 4-column compact type segment (single-line labels) */
+.segment.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.segment.cols-4 button { padding: 11px 4px; font-size: 13px; }
+.segment button { white-space: nowrap; }
+
+/* Small hint text (examples) inside a checkbox label */
+.hint { display: block; font-size: 11px; font-weight: 500; color: var(--ink-soft); white-space: normal; }
+
+/* Inline note under freight rows (Canada / approximate tariff) */
+.b-note {
+  font-size: 11px;
+  color: var(--amber-deep);
+  background: var(--road-soft);
+  border-radius: 8px;
+  padding: 7px 10px;
+  margin: 2px 0 6px;
+  line-height: 1.35;
+}
+
+/* Wrapping segmented control (5 transport types, single-line labels) */
+.segment.wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+.segment.wrap button { flex: 1 1 28%; padding: 11px 6px; font-size: 13px; }
+
+/* ATV-only controls hidden until ATV is chosen */
+#atv-group { display: none; }
+
+/* Jet ski-only controls hidden until jet ski is chosen */
+#jetski-group { display: none; }

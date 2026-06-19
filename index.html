@@ -13,7 +13,7 @@
     <!-- Header -->
     <p class="eyebrow">Copart <span class="arrow">→</span> Черкаси</p>
     <h1>Кошторис доставки</h1>
-    <p class="lede">Повна вартість доставки авто з аукціону Copart до Черкас: суша до порту, океан, розвантаження в Клайпеді, логістика та брокер.</p>
+    <p class="lede">Авто, мото, квадро та гідроцикли з Copart до Черкас — повна вартість доставки й розмитнення.</p>
 
     <!-- Yard selector: searchable combobox -->
     <div class="field">
@@ -37,28 +37,130 @@
 
     <!-- Cargo type: segmented control -->
     <div class="field">
-      <label>Тип авто</label>
-      <div class="segment" id="type-segment" role="group" aria-label="Тип авто"></div>
+      <label>Тип транспорту</label>
+      <div class="segment wrap" id="type-segment" role="group" aria-label="Тип транспорту"></div>
     </div>
 
     <!-- Copart purchase price + title type -->
     <div class="field">
       <label for="price-input">Ціна покупки на Copart, $</label>
-      <input
-        id="price-input"
-        class="text-input"
-        type="text"
-        inputmode="numeric"
-        autocomplete="off"
-        placeholder="напр. 5500"
-      />
+      <div class="stepper">
+        <button type="button" id="price-minus" aria-label="Менше">−</button>
+        <input id="price-input" class="text-input" type="text" inputmode="numeric" autocomplete="off" placeholder="напр. 5500" />
+        <button type="button" id="price-plus" aria-label="Більше">+</button>
+      </div>
     </div>
 
-    <div class="field">
+    <div class="field" id="cleantitle-field">
       <label class="check">
         <input id="clean-title" type="checkbox" />
         <span>Чисті документи (Clean Title)</span>
       </label>
+    </div>
+
+    <!-- Powertrain -->
+    <div class="field" id="powertrain-field">
+      <label>Тип пального</label>
+      <div class="segment" id="fuel-segment" role="group" aria-label="Тип пального"></div>
+    </div>
+
+    <!-- Customs inputs -->
+    <div id="combustion-group">
+      <div class="field">
+        <label class="check">
+          <input id="hybrid" type="checkbox" />
+          <span>Гібрид</span>
+        </label>
+      </div>
+
+      <div class="field two-col">
+        <div>
+          <label for="vol-input">Об'єм двигуна, л</label>
+          <div class="stepper">
+            <button type="button" id="vol-minus" aria-label="Менше">−</button>
+            <input id="vol-input" class="text-input" type="text" inputmode="decimal" autocomplete="off" />
+            <button type="button" id="vol-plus" aria-label="Більше">+</button>
+          </div>
+        </div>
+        <div>
+          <label for="year-input">Рік випуску</label>
+          <div class="stepper">
+            <button type="button" id="year-minus" aria-label="Менше">−</button>
+            <input id="year-input" class="text-input" type="text" inputmode="numeric" autocomplete="off" />
+            <button type="button" id="year-plus" aria-label="Більше">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="electric-group">
+      <div class="field">
+        <label for="batt-input">Ємність батареї, кВт·год</label>
+        <div class="stepper">
+          <button type="button" id="batt-minus" aria-label="Менше">−</button>
+          <input id="batt-input" class="text-input" type="text" inputmode="numeric" autocomplete="off" />
+          <button type="button" id="batt-plus" aria-label="Більше">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="moto-group">
+      <div class="field">
+        <label class="check">
+          <input id="crashedtoys" type="checkbox" checked />
+          <span>Аукціон CrashedToys</span>
+        </label>
+      </div>
+      <div class="field">
+        <label class="check">
+          <input id="big-moto" type="checkbox" />
+          <span>Великий мотоцикл <span class="hint">(напр. Honda Gold Wing, Harley Electra Glide)</span></span>
+        </label>
+      </div>
+      <div class="field">
+        <label for="cc-input">Об'єм двигуна, л</label>
+        <div class="stepper">
+          <button type="button" id="cc-minus" aria-label="Менше">−</button>
+          <input id="cc-input" class="text-input" type="text" inputmode="decimal" autocomplete="off" />
+          <button type="button" id="cc-plus" aria-label="Більше">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="atv-group">
+      <div class="field">
+        <label class="check">
+          <input id="atv-crashedtoys" type="checkbox" checked />
+          <span>Аукціон CrashedToys</span>
+        </label>
+      </div>
+      <div class="field two-col">
+        <div>
+          <label for="atv-cc-input">Об'єм двигуна, л</label>
+          <div class="stepper">
+            <button type="button" id="atv-cc-minus" aria-label="Менше">−</button>
+            <input id="atv-cc-input" class="text-input" type="text" inputmode="decimal" autocomplete="off" />
+            <button type="button" id="atv-cc-plus" aria-label="Більше">+</button>
+          </div>
+        </div>
+        <div>
+          <label for="atv-year-input">Рік випуску</label>
+          <div class="stepper">
+            <button type="button" id="atv-year-minus" aria-label="Менше">−</button>
+            <input id="atv-year-input" class="text-input" type="text" inputmode="numeric" autocomplete="off" />
+            <button type="button" id="atv-year-plus" aria-label="Більше">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="jetski-group">
+      <div class="field">
+        <label class="check">
+          <input id="jetski-trailer" type="checkbox" />
+          <span>З причепом <span class="hint">(Jet Ski w/trailer — інший тариф фрахту)</span></span>
+        </label>
+      </div>
     </div>
 
     <!-- Result: route + cost breakdown (signature element) -->

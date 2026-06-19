@@ -14,6 +14,9 @@
       regular: 1000,
       large: 1000,
       oversize: 1400,                   // pickup / oversize
+      motorcycle: 550,                  // motorcycle
+      atv: 550,                         // ATV (same as motorcycle by default)
+      jetski: 1000,                     // jet ski (like a car / sedan)
     },
     broker: 100,                        // customs broker fee (USD)
     service: 300,                       // owner's import-organization service (USD)
@@ -21,6 +24,74 @@
 
   // Fallback EUR->USD rate used when the live API is unreachable.
   const FALLBACK_EUR_USD = 1.15;
+
+  // Money-transfer commission on (car + Copart fees + delivery to Klaipeda).
+  const TRANSFER_PCT = 0.04;
+  const TRANSFER_FIXED = 4;
+
+  // Ukrainian customs clearance (2026 rules).
+  const CUSTOMS = {
+    deliveryAdd: 1600,   // amount customs adds to the value for delivery (USD)
+    deliveryAddMoto: 800,// same, for motorcycles
+    dutyRate: 0.10,      // import duty: 10% of customs value
+    vatRate: 0.20,       // VAT: 20%
+    // Excise base rates in EUR by fuel and engine-size threshold (cm3).
+    excise: {
+      petrol: { threshold: 3000, low: 50, high: 100 },
+      diesel: { threshold: 3500, low: 75, high: 150 },
+    },
+    // Motorcycle excise: fixed EUR per cm3, no age coefficient.
+    motoExcise: [
+      { upTo: 500, perCc: 0.062 },
+      { upTo: 800, perCc: 0.443 },
+      { upTo: Infinity, perCc: 0.447 },
+    ],
+    ageMin: 1, ageMax: 15,
+  };
+
+  // Engine-volume input bounds (litres).
+  const VOL_MIN = 0.6, VOL_MAX = 8.5, VOL_STEP = 0.1, VOL_DEFAULT = 2.0;
+  // Motorcycle displacement bounds (litres).
+  const CC_MIN = 0.1, CC_MAX = 2.5, CC_STEP = 0.1, CC_DEFAULT = 0.8;
+  // ATV (quadricycle) displacement bounds (litres).
+  const ATV_CC_MIN = 0.1, ATV_CC_MAX = 2.0, ATV_CC_STEP = 0.1, ATV_CC_DEFAULT = 1.0;
+  const CURRENT_YEAR = new Date().getFullYear();
+
+  // Copart bid increments by current bid value (USD). The +/- on the price
+  // field steps by the increment for the current band.
+  const BID_INCREMENTS = [
+    { upTo: 9.99, step: 1 },
+    { upTo: 99.99, step: 10 },
+    { upTo: 999.99, step: 25 },
+    { upTo: 4999.99, step: 50 },
+    { upTo: 24999.99, step: 100 },
+    { upTo: Infinity, step: 250 },
+  ];
+  function bidStep(price) {
+    for (const b of BID_INCREMENTS) if (price <= b.upTo) return b.step;
+    return 250;
+  }
+
+  // Default auction yard prefilled on load.
+  const DEFAULT_YARD = "ATLANTA EAST - Georgia";
+
+  // Default purchase price by transport type: cars 5000, other tech 3000.
+  const CAR_TYPES = ["regular", "large", "oversize"];
+  function defaultPrice(type) { return CAR_TYPES.includes(type) ? 5000 : 3000; }
+
+  // Battery-capacity input bounds (kWh) for electric cars.
+  const BATT_MIN = 10, BATT_MAX = 250, BATT_DEFAULT = 82;
+  const YEAR_MIN = 1980;
+
+  // Dangerous-goods surcharges for electric or hybrid vehicles.
+  const DANGEROUS_OCEAN_USD = 150;     // added to ocean freight
+  const DANGEROUS_KLAIPEDA_EUR = 50;   // added to Klaipeda unloading
+
+  // Electric excise: EUR per kWh of battery capacity.
+  const EV_EXCISE_EUR_PER_KWH = 1;
+
+  // Display overrides for departure port names.
+  const PORT_DISPLAY = { "NEWARK": "New York" };
 
   // ============================================================
   // COPART FEES — licensed-account schedule, Secured Payment.
@@ -102,6 +173,30 @@
     { upTo: Infinity, fee: 149 },
   ];
 
+  // Buyer fee — CrashedToys (motorcycles / powersports), Secured Payment.
+  // Verified against a CrashedToys invoice: $4,250 bid -> buyer $710.
+  const BUYER_FEE_CRASHEDTOYS = [
+    { upTo: 49.99, fee: 30 },    { upTo: 99.99, fee: 45 },
+    { upTo: 199.99, fee: 70 },   { upTo: 299.99, fee: 105 },
+    { upTo: 349.99, fee: 130 },  { upTo: 399.99, fee: 132.5 },
+    { upTo: 449.99, fee: 145 },  { upTo: 499.99, fee: 150 },
+    { upTo: 549.99, fee: 165 },  { upTo: 599.99, fee: 170 },
+    { upTo: 699.99, fee: 190 },  { upTo: 799.99, fee: 225 },
+    { upTo: 899.99, fee: 250 },  { upTo: 999.99, fee: 270 },
+    { upTo: 1199.99, fee: 300 }, { upTo: 1299.99, fee: 335 },
+    { upTo: 1399.99, fee: 335 }, { upTo: 1499.99, fee: 360 },
+    { upTo: 1599.99, fee: 370 }, { upTo: 1699.99, fee: 400 },
+    { upTo: 1799.99, fee: 415 }, { upTo: 1999.99, fee: 465 },
+    { upTo: 2399.99, fee: 500 }, { upTo: 2499.99, fee: 510 },
+    { upTo: 2999.99, fee: 570 }, { upTo: 3499.99, fee: 695 },
+    { upTo: 3999.99, fee: 710 }, { upTo: 4499.99, fee: 710 },
+    { upTo: 4999.99, fee: 720 }, { upTo: 5499.99, fee: 780 },
+    { upTo: 5999.99, fee: 815 }, { upTo: 6499.99, fee: 850 },
+    { upTo: 6999.99, fee: 880 }, { upTo: 7499.99, fee: 900 },
+    { upTo: 7999.99, fee: 1020 },{ upTo: 8999.99, fee: 1025 },
+    { upTo: 9999.99, fee: 1050 },{ upTo: Infinity, pct: 0.105 },
+  ];
+
   // Fixed per-purchase Copart fees (USD).
   const COPART_FIXED = {
     environmental: 15,
@@ -138,10 +233,22 @@
 
   // ---- App state -------------------------------------------------
   const state = {
-    yard: null,
+    yard: DEFAULT_YARD,
     type: CARGO_TYPES[0].id,
-    copartPrice: 0,
+    copartPrice: 5000,                  // default car price
+    priceIsDefault: true,              // true until the user edits the price
     cleanTitle: false,
+    fuel: "petrol",                     // "petrol" | "diesel" | "electric"
+    hybrid: false,                      // hybrid flag (petrol/diesel only)
+    engineVol: VOL_DEFAULT,             // litres
+    batteryKwh: BATT_DEFAULT,           // kWh (electric only)
+    year: CURRENT_YEAR - 5,             // year of manufacture (car)
+    crashedToys: true,                  // CrashedToys auction (moto/ATV), default on
+    bigMoto: false,                     // large motorcycle
+    motoCc: CC_DEFAULT,                 // motorcycle displacement (litres)
+    atvCc: ATV_CC_DEFAULT,              // ATV displacement (litres)
+    atvYear: CURRENT_YEAR - 5,          // ATV year of manufacture
+    jetskiTrailer: false,               // jet ski shipped with trailer
     eurUsd: FALLBACK_EUR_USD,
     fxSource: "приблизний курс",
   };
@@ -151,7 +258,40 @@
   const list       = document.getElementById("yard-list");
   const segment    = document.getElementById("type-segment");
   const priceInput = document.getElementById("price-input");
+  const priceMinus = document.getElementById("price-minus");
+  const pricePlus  = document.getElementById("price-plus");
   const cleanCheck = document.getElementById("clean-title");
+  const fuelSeg    = document.getElementById("fuel-segment");
+  const hybridCheck= document.getElementById("hybrid");
+  const volInput   = document.getElementById("vol-input");
+  const volMinus   = document.getElementById("vol-minus");
+  const volPlus    = document.getElementById("vol-plus");
+  const yearInput  = document.getElementById("year-input");
+  const yearMinus  = document.getElementById("year-minus");
+  const yearPlus   = document.getElementById("year-plus");
+  const battInput  = document.getElementById("batt-input");
+  const battMinus  = document.getElementById("batt-minus");
+  const battPlus   = document.getElementById("batt-plus");
+  const combustionGroup = document.getElementById("combustion-group");
+  const electricGroup   = document.getElementById("electric-group");
+  const motoGroup       = document.getElementById("moto-group");
+  const cleantitleField = document.getElementById("cleantitle-field");
+  const powertrainField = document.getElementById("powertrain-field");
+  const crashedCheck    = document.getElementById("crashedtoys");
+  const bigMotoCheck    = document.getElementById("big-moto");
+  const ccInput   = document.getElementById("cc-input");
+  const ccMinus   = document.getElementById("cc-minus");
+  const ccPlus    = document.getElementById("cc-plus");
+  const atvGroup       = document.getElementById("atv-group");
+  const atvCrashed     = document.getElementById("atv-crashedtoys");
+  const atvCcInput = document.getElementById("atv-cc-input");
+  const atvCcMinus = document.getElementById("atv-cc-minus");
+  const atvCcPlus  = document.getElementById("atv-cc-plus");
+  const atvYearInput = document.getElementById("atv-year-input");
+  const atvYearMinus = document.getElementById("atv-year-minus");
+  const atvYearPlus  = document.getElementById("atv-year-plus");
+  const jetskiGroup    = document.getElementById("jetski-group");
+  const jetskiTrailer  = document.getElementById("jetski-trailer");
   const manifest   = document.getElementById("manifest");
   const emptyState = document.getElementById("manifest-empty");
   const yearEl     = document.getElementById("year");
@@ -186,12 +326,100 @@
   }
 
   // Total Copart commission (all fees combined), for price > 0.
-  function copartCommission(price, clean) {
+  // opts: { moto, crashedToys, clean }
+  function copartCommission(price, opts) {
     if (!(price > 0)) return 0;
-    const buyer   = tierFee(clean ? BUYER_FEE_CLEAN : BUYER_FEE_NONCLEAN, price);
-    const virtual = tierFee(clean ? VIRTUAL_BID_CLEAN : VIRTUAL_BID_NONCLEAN, price);
-    const gate    = clean ? COPART_FIXED.gateClean : COPART_FIXED.gateNonClean;
+    let buyer, virtual, gate;
+    if (opts.powersport && opts.crashedToys) {
+      // CrashedToys (motorcycles / ATVs): same fees regardless of title.
+      buyer = tierFee(BUYER_FEE_CRASHEDTOYS, price);
+      virtual = tierFee(VIRTUAL_BID_NONCLEAN, price);
+      gate = COPART_FIXED.gateNonClean;
+    } else {
+      // Cars and non-CrashedToys powersports: clean vs non-clean.
+      buyer = tierFee(opts.clean ? BUYER_FEE_CLEAN : BUYER_FEE_NONCLEAN, price);
+      virtual = tierFee(opts.clean ? VIRTUAL_BID_CLEAN : VIRTUAL_BID_NONCLEAN, price);
+      gate = opts.clean ? COPART_FIXED.gateClean : COPART_FIXED.gateNonClean;
+    }
     return buyer + virtual + gate + COPART_FIXED.environmental + COPART_FIXED.titleFee;
+  }
+
+  // ---- Money transfer & customs ----------------------------------
+  // Commission for wiring money for (car + Copart fees + delivery to Klaipeda).
+  function transferFee(car, commission, deliveryToKlaipeda) {
+    const base = car + commission + deliveryToKlaipeda;
+    return Math.ceil(base * TRANSFER_PCT + TRANSFER_FIXED);
+  }
+
+  // Excise age coefficient: full years since manufacture, clamped to [1, 15].
+  function ageCoef(year) {
+    const age = CURRENT_YEAR - year;
+    return Math.min(CUSTOMS.ageMax, Math.max(CUSTOMS.ageMin, age));
+  }
+
+  // Excise base rate in EUR by fuel type and engine volume (litres).
+  function exciseRateEur(fuel, volL) {
+    const cfg = CUSTOMS.excise[fuel] || CUSTOMS.excise.petrol;
+    return volL * 1000 <= cfg.threshold ? cfg.low : cfg.high;
+  }
+
+  // Motorcycle excise rate (EUR per cm3) by displacement.
+  function motoExcisePerCc(cc) {
+    for (const t of CUSTOMS.motoExcise) if (cc <= t.upTo) return t.perCc;
+    return 0.447;
+  }
+
+  // Ukrainian customs clearance, returned in USD (excise also kept in EUR).
+  // opts: { moto, electric, fuel, volL, ccL, year, batteryKwh, car, commission, eurUsd }
+  function customs(opts) {
+    const add = (opts.moto || opts.atv || opts.jetski) ? CUSTOMS.deliveryAddMoto : CUSTOMS.deliveryAdd;
+    const value = opts.car + opts.commission + add;
+    let duty, exciseEur;
+    if (opts.moto) {
+      duty = value * CUSTOMS.dutyRate;
+      const cc = opts.ccL * 1000;
+      exciseEur = motoExcisePerCc(cc) * cc;          // no age coefficient
+    } else if (opts.atv) {
+      // ATV is classified under HS 8703 (taxed like a petrol car).
+      duty = value * CUSTOMS.dutyRate;
+      exciseEur = exciseRateEur("petrol", opts.volL) * opts.volL * ageCoef(opts.year);
+    } else if (opts.jetski) {
+      // Jet ski / personal watercraft (HS 8903): duty + VAT, no excise.
+      duty = value * CUSTOMS.dutyRate;
+      exciseEur = 0;
+    } else if (opts.electric) {
+      duty = 0;
+      exciseEur = EV_EXCISE_EUR_PER_KWH * opts.batteryKwh;
+    } else {
+      duty = value * CUSTOMS.dutyRate;
+      exciseEur = exciseRateEur(opts.fuel, opts.volL) * opts.volL * ageCoef(opts.year);
+    }
+    const exciseUsd = exciseEur * opts.eurUsd;
+    const vat = (value + duty + exciseUsd) * CUSTOMS.vatRate;
+    return { value, duty, exciseEur, exciseUsd, vat, total: duty + exciseUsd + vat };
+  }
+
+  // Clamp + format engine volume (keeps cc precision when typed manually).
+  function clampVol(v) {
+    if (!(v > 0)) v = VOL_DEFAULT;
+    return Math.min(VOL_MAX, Math.max(VOL_MIN, v));
+  }
+  function formatVol(v) {
+    return Number.isInteger(v * 10) ? v.toFixed(1) : String(Math.round(v * 1000) / 1000);
+  }
+  function clampBatt(v) {
+    if (!(v > 0)) v = BATT_DEFAULT;
+    return Math.min(BATT_MAX, Math.max(BATT_MIN, Math.round(v)));
+  }
+  function clampYear(v) {
+    let y = Math.round(v);
+    if (!(y >= YEAR_MIN)) y = YEAR_MIN;
+    if (y > CURRENT_YEAR) y = CURRENT_YEAR;
+    return y;
+  }
+  function clampCc(v) {
+    if (!(v > 0)) v = CC_DEFAULT;
+    return Math.min(CC_MAX, Math.max(CC_MIN, v));
   }
 
   // ---- Exchange rate ---------------------------------------------
@@ -270,13 +498,80 @@
       btn.textContent = t.label;
       btn.dataset.type = t.id;
       btn.setAttribute("aria-pressed", String(t.id === state.type));
-      btn.addEventListener("click", () => { state.type = t.id; syncTypeButtons(); render(); });
+      btn.addEventListener("click", () => {
+        state.type = t.id;
+        if (state.priceIsDefault) {
+          state.copartPrice = defaultPrice(t.id);
+          priceInput.value = String(state.copartPrice);
+        }
+        syncTypeButtons();
+        updateControlVisibility();
+        render();
+      });
       segment.appendChild(btn);
     });
+  }
+  // Show the right controls for car (combustion/electric) vs motorcycle.
+  // For moto/ATV the CrashedToys checkbox comes first, then clean-title;
+  // for cars/jet ski the clean-title sits in its original top position.
+  function placeCleanTitle() {
+    if (state.type === "motorcycle") {
+      motoGroup.insertBefore(cleantitleField, motoGroup.children[1] || null);
+    } else if (state.type === "atv") {
+      atvGroup.insertBefore(cleantitleField, atvGroup.children[1] || null);
+    } else {
+      powertrainField.parentNode.insertBefore(cleantitleField, powertrainField);
+    }
+  }
+
+  function updateControlVisibility() {
+    placeCleanTitle();
+    const moto = state.type === "motorcycle";
+    const atv = state.type === "atv";
+    const jetski = state.type === "jetski";
+    const powersport = moto || atv;
+    const car = !powersport && !jetski;
+    const ev = car && state.fuel === "electric";
+    // Title matters for cars and jet skis; for powersports only when NOT CrashedToys.
+    const showClean = powersport ? !state.crashedToys : true;
+    if (cleantitleField) cleantitleField.style.display = showClean ? "block" : "none";
+    if (powertrainField) powertrainField.style.display = car ? "block" : "none";
+    if (combustionGroup) combustionGroup.style.display = (car && !ev) ? "block" : "none";
+    if (electricGroup) electricGroup.style.display = ev ? "block" : "none";
+    if (motoGroup) motoGroup.style.display = moto ? "block" : "none";
+    if (atvGroup) atvGroup.style.display = atv ? "block" : "none";
+    if (jetskiGroup) jetskiGroup.style.display = jetski ? "block" : "none";
+    // Keep both CrashedToys checkboxes in sync with state.
+    if (crashedCheck) crashedCheck.checked = state.crashedToys;
+    if (atvCrashed) atvCrashed.checked = state.crashedToys;
   }
   function syncTypeButtons() {
     segment.querySelectorAll("button").forEach((b) =>
       b.setAttribute("aria-pressed", String(b.dataset.type === state.type)));
+  }
+
+  // ---- Fuel-type segmented control -------------------------------
+  const FUEL_TYPES = [
+    { id: "petrol", label: "Бензин" },
+    { id: "diesel", label: "Дизель" },
+    { id: "electric", label: "Електро" },
+  ];
+  function buildFuelSegment() {
+    FUEL_TYPES.forEach((f) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = f.label;
+      btn.dataset.fuel = f.id;
+      btn.setAttribute("aria-pressed", String(f.id === state.fuel));
+      btn.addEventListener("click", () => {
+        state.fuel = f.id;
+        fuelSeg.querySelectorAll("button").forEach((b) =>
+          b.setAttribute("aria-pressed", String(b.dataset.fuel === state.fuel)));
+        updateControlVisibility();
+        render();
+      });
+      fuelSeg.appendChild(btn);
+    });
   }
 
   // ---- Searchable combobox ---------------------------------------
@@ -329,26 +624,150 @@
       return;
     }
 
-    const freight = FREIGHT[state.yard][state.type];
+    const isMoto = state.type === "motorcycle";
+    const isAtv = state.type === "atv";
+    const isJetski = state.type === "jetski";
+    const isPowersport = isMoto || isAtv;
+    const isCar = !isPowersport && !isJetski;
+    const freightKey = isMoto ? (state.bigMoto ? "moto_large" : "moto")
+      : isAtv ? "atv"
+      : isJetski ? (state.jetskiTrailer ? "jetski_trailer" : "jetski")
+      : state.type;
+    let freight = FREIGHT[state.yard][freightKey];
+    let freightApprox = false;
+    if (!freight) {
+      // No specific tariff for this yard: fall back to the car (regular) rate.
+      freight = FREIGHT[state.yard].regular;
+      freightApprox = true;
+    }
+
     const typeLabel = CARGO_TYPES.find((t) => t.id === state.type).label;
     const port = YARD_PORT[state.yard] || "";
-    const portLabel = port ? portName(port) : "Порт США";
+    const portLabel = port ? (PORT_DISPLAY[port] || portName(port)) : "Порт США";
+    const isCanada = port === "TORONTO";
     const t = timeline(port);
+
+    // Electric or hybrid (cars only) ship as dangerous goods (battery).
+    const isElectric = isCar && state.fuel === "electric";
+    const isDangerous = isCar && (isElectric || state.hybrid);
 
     const hasPrice = state.copartPrice > 0;
     const carUsd = hasPrice ? state.copartPrice : 0;
-    const commissionUsd = copartCommission(state.copartPrice, state.cleanTitle);
+    const commissionUsd = copartCommission(state.copartPrice, {
+      powersport: isPowersport, crashedToys: state.crashedToys, clean: state.cleanTitle,
+    });
 
-    const klaipedaEur = COSTS.klaipedaUnloadingEur;
+    const towingUsd = freight.towing;
+    const oceanUsd = freight.ocean + (isDangerous ? DANGEROUS_OCEAN_USD : 0);
+    const deliveryToKlaipeda = towingUsd + oceanUsd;
+
+    const klaipedaEur = COSTS.klaipedaUnloadingEur + (isDangerous ? DANGEROUS_KLAIPEDA_EUR : 0);
     const klaipedaUsd = klaipedaEur * state.eurUsd;
     const cherkasyUsd = COSTS.cherkasyByType[state.type];
     const brokerUsd   = COSTS.broker;
     const serviceUsd  = COSTS.service;
 
-    const grandTotal = carUsd + commissionUsd + freight.total +
-      klaipedaUsd + cherkasyUsd + brokerUsd + serviceUsd;
+    // Money-transfer commission and customs only apply once a price is set.
+    const transferUsd = hasPrice ? transferFee(carUsd, commissionUsd, deliveryToKlaipeda) : 0;
+    const cust = hasPrice
+      ? customs({
+          moto: isMoto, atv: isAtv, jetski: isJetski, electric: isElectric, fuel: state.fuel,
+          volL: isAtv ? state.atvCc : state.engineVol, ccL: state.motoCc,
+          year: isAtv ? state.atvYear : state.year,
+          batteryKwh: state.batteryKwh, car: carUsd, commission: commissionUsd,
+          eurUsd: state.eurUsd,
+        })
+      : null;
+    const customsUsd = cust ? cust.total : 0;
+
+    const grandTotal = carUsd + commissionUsd + transferUsd + deliveryToKlaipeda +
+      klaipedaUsd + cherkasyUsd + customsUsd + brokerUsd + serviceUsd;
+
+    const customsSub = cust
+      ? (isJetski
+          ? `Мито ${usd(cust.duty)} \u00B7 без акцизу \u00B7 ПДВ ${usd(cust.vat)}`
+          : `Мито ${usd(cust.duty)} \u00B7 Акциз ${eur(cust.exciseEur)} (&asymp;${usd(cust.exciseUsd)}) \u00B7 ПДВ ${usd(cust.vat)}`)
+      : "введіть ціну покупки";
+
+    const powertrain = isPowersport
+      ? (isMoto && state.bigMoto ? " · великий" : "") + (state.crashedToys ? " · CrashedToys" : "")
+      : isJetski ? (state.jetskiTrailer ? " · з причепом" : "")
+      : (isElectric ? " · електро" : (state.hybrid ? " · гібрид" : ""));
+    const priceLabel = (isMoto ? "Мотоцикл" : isAtv ? "Квадроцикл" : isJetski ? "Гідроцикл" : "Авто") + " (ціна на Copart)";
+    const commissionLabel = "Аукціонні збори" +
+      (isPowersport ? (state.crashedToys ? " CrashedToys" : " Copart")
+                    : " Copart" + (state.cleanTitle ? " · clean" : ""));
+    const oceanTag = "Морський фрахт до Клайпеди" + (isDangerous ? " (+$150 небезп.)" : "");
+    const klaipedaTag = "Розвантаження / експедитор (Клайпеда" + (isDangerous ? ", +€50)" : ")");
+
+    // Notes shown under the towing/ocean rows.
+    let freightNotes = "";
+    if (freightApprox) {
+      freightNotes += `<div class="b-note">Тариф приблизний: для цієї площадки немає мото-тарифу, узято легковий.</div>`;
+    }
+    if (isCanada) {
+      freightNotes += `<div class="b-note">Канада: тарифи на сушу й океан орієнтовні, можлива неточність. Можливі додаткові податки.</div>`;
+    }
+    if (isJetski && state.jetskiTrailer) {
+      freightNotes += `<div class="b-note">З причепом: можлива додаткова плата за розвантаження причепа в Клайпеді. Причеп розмитнюється окремо.</div>`;
+    }
 
     manifest.innerHTML = `
+      <div class="summary">
+        <div class="summary-main">
+          <span class="summary-label">Разом</span>
+          <span class="summary-total">${usd(grandTotal)}</span>
+        </div>
+        <div class="summary-sub">${escapeHtml(typeLabel)}${powertrain} \u00B7 ${t.months} у дорозі</div>
+      </div>
+
+      <div class="breakdown">
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>${priceLabel}</span>
+          <span class="amount">${usdOrDash(carUsd, hasPrice)}</span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>${commissionLabel}</span>
+          <span class="amount">${usdOrDash(commissionUsd, hasPrice)}</span>
+        </div>
+        <div class="b-row road">
+          <span class="tag"><span class="swatch"></span>Доставка до порту (${escapeHtml(portLabel)})</span>
+          <span class="amount">${usd(towingUsd)}</span>
+        </div>
+        <div class="b-row sea">
+          <span class="tag"><span class="swatch"></span>${oceanTag}</span>
+          <span class="amount">${usd(oceanUsd)}</span>
+        </div>
+        ${freightNotes}
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Комісія за переказ коштів</span>
+          <span class="amount">${usdOrDash(transferUsd, hasPrice)}</span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>${klaipedaTag}</span>
+          <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Логістика до Черкас</span>
+          <span class="amount">${usd(cherkasyUsd)}</span>
+        </div>
+        <div class="b-row col">
+          <div class="b-line">
+            <span class="tag"><span class="swatch"></span>Розмитнення (мито, акциз, ПДВ)</span>
+            <span class="amount">${usdOrDash(customsUsd, hasPrice)}</span>
+          </div>
+          <div class="sub">${customsSub}</div>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
+          <span class="amount">${usd(brokerUsd)}</span>
+        </div>
+        <div class="b-row">
+          <span class="tag"><span class="swatch"></span>Супровід та організація імпорту</span>
+          <span class="amount">${usd(serviceUsd)}</span>
+        </div>
+      </div>
+
       <div class="route">
         <div class="node origin">
           <span class="marker"></span>
@@ -358,7 +777,7 @@
         </div>
         <div class="node port">
           <span class="marker"></span>
-          <div class="place">${escapeHtml(portLabel)}<small>Порт відправлення</small></div>
+          <div class="place">${escapeHtml(portLabel)}<small>${isCanada ? "Порт відправлення · Канада" : "Порт відправлення"}</small></div>
           <div class="leg"><span class="mode">🚢</span> Морський фрахт <span class="dur">${weeksShort(t.ocean)}</span></div>
         </div>
         <div class="node sea">
@@ -371,51 +790,6 @@
           <span class="marker"></span>
           <div class="place">Черкаси, Україна<small>Призначення</small></div>
         </div>
-      </div>
-
-      <div class="term">
-        <span class="term-label">Орієнтовний термін у дорозі</span>
-        <span class="term-val">${t.months}</span>
-      </div>
-
-      <div class="breakdown">
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Авто (ціна на Copart)</span>
-          <span class="amount">${usdOrDash(carUsd, hasPrice)}</span>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Аукціонні збори Copart${state.cleanTitle ? " · clean" : ""}</span>
-          <span class="amount">${usdOrDash(commissionUsd, hasPrice)}</span>
-        </div>
-        <div class="b-row road">
-          <span class="tag"><span class="swatch"></span>Доставка до порту (${escapeHtml(portLabel)})</span>
-          <span class="amount">${usd(freight.towing)}</span>
-        </div>
-        <div class="b-row sea">
-          <span class="tag"><span class="swatch"></span>Морський фрахт до Клайпеди</span>
-          <span class="amount">${usd(freight.ocean)}</span>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Розвантаження / експедитор (Клайпеда)</span>
-          <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Логістика до Черкас</span>
-          <span class="amount">${usd(cherkasyUsd)}</span>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
-          <span class="amount">${usd(brokerUsd)}</span>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Супровід та організація імпорту</span>
-          <span class="amount">${usd(serviceUsd)}</span>
-        </div>
-      </div>
-
-      <div class="total-row">
-        <span class="tag">Разом<small>${escapeHtml(typeLabel)}</small></span>
-        <span class="amount">${usd(grandTotal)}</span>
       </div>
     `;
 
@@ -439,9 +813,20 @@
   }
 
   // ---- Event wiring ----------------------------------------------
+  // On focus, clear the field so the user can type fresh (as if nothing
+  // was selected); remember the current pick to restore on blur if needed.
+  let prevYard = null;
   input.addEventListener("focus", () => {
-    renderOptions(input.value === state.yard ? "" : input.value);
+    prevYard = state.yard;
+    input.value = "";
+    renderOptions("");
     openList();
+  });
+  input.addEventListener("blur", () => {
+    setTimeout(() => {
+      if (state.yard) { input.value = state.yard; }
+      else if (prevYard) { state.yard = prevYard; input.value = prevYard; render(); }
+    }, 180);
   });
   input.addEventListener("input", () => {
     state.yard = null;
@@ -469,12 +854,35 @@
   });
   document.addEventListener("click", (e) => { if (!e.target.closest(".combo")) closeList(); });
 
-  // Purchase price: digits only.
+  // Purchase price: digits only + stepper using Copart bid increments.
+  function setPrice(v) {
+    state.copartPrice = Math.max(0, Math.round(v));
+    state.priceIsDefault = false;
+    priceInput.value = state.copartPrice ? String(state.copartPrice) : "";
+    render();
+  }
   priceInput.addEventListener("input", () => {
     const digits = priceInput.value.replace(/\D+/g, "");
     if (priceInput.value !== digits) priceInput.value = digits;
     state.copartPrice = digits ? parseInt(digits, 10) : 0;
+    state.priceIsDefault = false;
     render();
+  });
+  pricePlus.addEventListener("click", () => setPrice(state.copartPrice + bidStep(state.copartPrice)));
+  priceMinus.addEventListener("click", () => setPrice(state.copartPrice - bidStep(Math.max(0, state.copartPrice - 1))));
+  // On focus clear the field; on blur restore the previous value if unchanged.
+  let prevPrice = null;
+  priceInput.addEventListener("focus", () => {
+    prevPrice = state.copartPrice;
+    priceInput.value = "";
+  });
+  priceInput.addEventListener("blur", () => {
+    const digits = priceInput.value.replace(/\D+/g, "");
+    if (!digits) {
+      state.copartPrice = prevPrice;
+      priceInput.value = prevPrice ? String(prevPrice) : "";
+      render();
+    }
   });
 
   // Clean-title checkbox.
@@ -483,9 +891,122 @@
     render();
   });
 
+  // Hybrid checkbox (petrol/diesel only).
+  hybridCheck.addEventListener("change", () => {
+    state.hybrid = hybridCheck.checked;
+    render();
+  });
+
+  // Engine volume: stepper buttons + manual entry (cc precision).
+  function setVol(v) {
+    state.engineVol = clampVol(v);
+    volInput.value = formatVol(state.engineVol);
+    render();
+  }
+  volMinus.addEventListener("click", () => setVol(Math.round((state.engineVol - VOL_STEP) * 10) / 10));
+  volPlus.addEventListener("click", () => setVol(Math.round((state.engineVol + VOL_STEP) * 10) / 10));
+  volInput.addEventListener("input", () => {
+    const v = parseFloat(volInput.value.replace(",", "."));
+    if (v > 0) { state.engineVol = v; render(); }   // clamp on blur, not mid-typing
+  });
+  volInput.addEventListener("blur", () => setVol(parseFloat(volInput.value.replace(",", "."))));
+
+  // Year of manufacture: stepper buttons (step 1) + manual entry.
+  function setYear(v) {
+    state.year = clampYear(v);
+    yearInput.value = String(state.year);
+    render();
+  }
+  yearMinus.addEventListener("click", () => setYear(state.year - 1));
+  yearPlus.addEventListener("click", () => setYear(state.year + 1));
+  yearInput.addEventListener("input", () => {
+    const digits = yearInput.value.replace(/\D+/g, "").slice(0, 4);
+    if (yearInput.value !== digits) yearInput.value = digits;
+    const y = parseInt(digits, 10);
+    if (y >= YEAR_MIN && y <= CURRENT_YEAR) { state.year = y; render(); }
+  });
+  yearInput.addEventListener("blur", () => setYear(parseInt(yearInput.value, 10)));
+
+  // Battery capacity: stepper buttons (step 1 kWh) + manual entry.
+  function setBatt(v) {
+    state.batteryKwh = clampBatt(v);
+    battInput.value = String(state.batteryKwh);
+    render();
+  }
+  battMinus.addEventListener("click", () => setBatt(state.batteryKwh - 1));
+  battPlus.addEventListener("click", () => setBatt(state.batteryKwh + 1));
+  battInput.addEventListener("input", () => {
+    const digits = battInput.value.replace(/\D+/g, "");
+    if (battInput.value !== digits) battInput.value = digits;
+    const v = parseInt(digits, 10);
+    if (v > 0) { state.batteryKwh = v; render(); }
+  });
+  battInput.addEventListener("blur", () => setBatt(parseInt(battInput.value, 10)));
+
+  // Motorcycle: CrashedToys + large-moto checkboxes.
+  crashedCheck.addEventListener("change", () => { state.crashedToys = crashedCheck.checked; updateControlVisibility(); render(); });
+  bigMotoCheck.addEventListener("change", () => { state.bigMoto = bigMotoCheck.checked; render(); });
+
+  // Motorcycle displacement: stepper + manual entry (cc precision).
+  function setCc(v) {
+    state.motoCc = clampCc(v);
+    ccInput.value = formatVol(state.motoCc);
+    render();
+  }
+  ccMinus.addEventListener("click", () => setCc(Math.round((state.motoCc - CC_STEP) * 10) / 10));
+  ccPlus.addEventListener("click", () => setCc(Math.round((state.motoCc + CC_STEP) * 10) / 10));
+  ccInput.addEventListener("input", () => {
+    const v = parseFloat(ccInput.value.replace(",", "."));
+    if (v > 0) { state.motoCc = v; render(); }
+  });
+  ccInput.addEventListener("blur", () => setCc(parseFloat(ccInput.value.replace(",", "."))));
+
+  // ATV: CrashedToys (shared flag), displacement, year of manufacture.
+  atvCrashed.addEventListener("change", () => { state.crashedToys = atvCrashed.checked; updateControlVisibility(); render(); });
+  function setAtvCc(v) {
+    if (!(v > 0)) v = ATV_CC_DEFAULT;
+    state.atvCc = Math.min(ATV_CC_MAX, Math.max(ATV_CC_MIN, v));
+    atvCcInput.value = formatVol(state.atvCc);
+    render();
+  }
+  atvCcMinus.addEventListener("click", () => setAtvCc(Math.round((state.atvCc - ATV_CC_STEP) * 10) / 10));
+  atvCcPlus.addEventListener("click", () => setAtvCc(Math.round((state.atvCc + ATV_CC_STEP) * 10) / 10));
+  atvCcInput.addEventListener("input", () => {
+    const v = parseFloat(atvCcInput.value.replace(",", "."));
+    if (v > 0) { state.atvCc = v; render(); }
+  });
+  atvCcInput.addEventListener("blur", () => setAtvCc(parseFloat(atvCcInput.value.replace(",", "."))));
+  function setAtvYear(v) {
+    state.atvYear = clampYear(v);
+    atvYearInput.value = String(state.atvYear);
+    render();
+  }
+  atvYearMinus.addEventListener("click", () => setAtvYear(state.atvYear - 1));
+  atvYearPlus.addEventListener("click", () => setAtvYear(state.atvYear + 1));
+  atvYearInput.addEventListener("input", () => {
+    const digits = atvYearInput.value.replace(/\D+/g, "").slice(0, 4);
+    if (atvYearInput.value !== digits) atvYearInput.value = digits;
+    const y = parseInt(digits, 10);
+    if (y >= YEAR_MIN && y <= CURRENT_YEAR) { state.atvYear = y; render(); }
+  });
+  atvYearInput.addEventListener("blur", () => setAtvYear(parseInt(atvYearInput.value, 10)));
+
+  // Jet ski: shipped with trailer (switches freight variant).
+  jetskiTrailer.addEventListener("change", () => { state.jetskiTrailer = jetskiTrailer.checked; render(); });
+
   // ---- Init ------------------------------------------------------
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   buildTypeSegment();
+  buildFuelSegment();
+  input.value = state.yard;
+  priceInput.value = String(state.copartPrice);
+  volInput.value = formatVol(state.engineVol);
+  yearInput.value = String(state.year);
+  battInput.value = String(state.batteryKwh);
+  ccInput.value = formatVol(state.motoCc);
+  atvCcInput.value = formatVol(state.atvCc);
+  atvYearInput.value = String(state.atvYear);
+  updateControlVisibility();
   render();
   loadExchangeRate();
 
