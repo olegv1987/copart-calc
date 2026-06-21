@@ -4,7 +4,7 @@
 // Bump CACHE_VERSION whenever any cached asset changes.
 // ============================================================
 
-const CACHE_VERSION = "freight-v16";
+const CACHE_VERSION = "freight-v19";
 const ASSETS = [
   "./",
   "./index.html",
@@ -13,6 +13,9 @@ const ASSETS = [
   "./app.js",
   "./manifest.json",
   "./icon.svg",
+  "./icon-180.png",
+  "./icon-192.png",
+  "./icon-512.png",
 ];
 
 // Pre-cache all assets on install.

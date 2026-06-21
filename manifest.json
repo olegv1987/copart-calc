@@ -1,7 +1,8 @@
 {
-  "name": "Copart → Klaipeda Freight Estimate",
-  "short_name": "Freight Est.",
-  "description": "Estimate vehicle delivery cost from Copart auction yards to the port of Klaipeda.",
+  "name": "Кошторис доставки — Copart → Черкаси",
+  "short_name": "Кошторис",
+  "description": "Повна вартість доставки та розмитнення техніки з аукціону Copart до Черкас.",
+  "lang": "uk",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,11 +10,9 @@
   "background_color": "#f4f6f4",
   "theme_color": "#16202b",
   "icons": [
-    {
-      "src": "icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
-      "purpose": "any maskable"
-    }
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
+    { "src": "icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }
   ]
 }

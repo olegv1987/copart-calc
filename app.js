@@ -72,8 +72,8 @@
     return 250;
   }
 
-  // Default auction yard prefilled on load.
-  const DEFAULT_YARD = "ATLANTA EAST - Georgia";
+  // localStorage key for persisting user settings.
+  const STORE_KEY = "copartCalc.v1";
 
   // Default purchase price by transport type: cars 5000, other tech 3000.
   const CAR_TYPES = ["regular"];
@@ -238,7 +238,7 @@
 
   // ---- App state -------------------------------------------------
   const state = {
-    yard: DEFAULT_YARD,
+    yard: null,
     type: CARGO_TYPES[0].id,
     carSize: "regular",                 // car body: regular | large | oversize
     copartPrice: 5000,                  // default car price
@@ -629,6 +629,7 @@
 
   // ---- Result rendering ------------------------------------------
   function render() {
+    saveState();
     if (!state.yard || !FREIGHT[state.yard]) {
       manifest.innerHTML = "";
       manifest.appendChild(emptyState);
@@ -1019,18 +1020,61 @@
   // Jet ski: shipped with trailer (switches freight variant).
   jetskiTrailer.addEventListener("change", () => { state.jetskiTrailer = jetskiTrailer.checked; render(); });
 
+  // ---- Persistence (localStorage) --------------------------------
+  function saveState() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        yard: state.yard, type: state.type, carSize: state.carSize,
+        copartPrice: state.copartPrice, priceIsDefault: state.priceIsDefault,
+        cleanTitle: state.cleanTitle, fuel: state.fuel, hybrid: state.hybrid,
+        engineVol: state.engineVol, batteryKwh: state.batteryKwh, year: state.year,
+        crashedToys: state.crashedToys, bigMoto: state.bigMoto, motoCc: state.motoCc,
+        atvCc: state.atvCc, atvYear: state.atvYear, jetskiTrailer: state.jetskiTrailer,
+      }));
+    } catch (e) { /* private mode / quota — ignore */ }
+  }
+  function loadState() {
+    let s;
+    try { s = JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) { return; }
+    if (!s || typeof s !== "object") return;
+    const bool = (v) => typeof v === "boolean";
+    const num = (v) => typeof v === "number" && isFinite(v);
+    if (typeof s.yard === "string" && FREIGHT[s.yard]) state.yard = s.yard;
+    if (CARGO_TYPES.some((t) => t.id === s.type)) state.type = s.type;
+    if (["regular", "large", "oversize"].includes(s.carSize)) state.carSize = s.carSize;
+    if (num(s.copartPrice) && s.copartPrice >= 0) state.copartPrice = Math.round(s.copartPrice);
+    if (bool(s.priceIsDefault)) state.priceIsDefault = s.priceIsDefault;
+    if (bool(s.cleanTitle)) state.cleanTitle = s.cleanTitle;
+    if (["petrol", "diesel", "electric"].includes(s.fuel)) state.fuel = s.fuel;
+    if (bool(s.hybrid)) state.hybrid = s.hybrid;
+    if (num(s.engineVol)) state.engineVol = clampVol(s.engineVol);
+    if (num(s.batteryKwh)) state.batteryKwh = clampBatt(s.batteryKwh);
+    if (num(s.year)) state.year = clampYear(s.year);
+    if (bool(s.crashedToys)) state.crashedToys = s.crashedToys;
+    if (bool(s.bigMoto)) state.bigMoto = s.bigMoto;
+    if (num(s.motoCc)) state.motoCc = clampCc(s.motoCc);
+    if (num(s.atvCc)) state.atvCc = Math.min(ATV_CC_MAX, Math.max(ATV_CC_MIN, s.atvCc));
+    if (num(s.atvYear)) state.atvYear = clampYear(s.atvYear);
+    if (bool(s.jetskiTrailer)) state.jetskiTrailer = s.jetskiTrailer;
+  }
+
   // ---- Init ------------------------------------------------------
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+  loadState();
   buildTypeSegment();
   buildFuelSegment();
-  input.value = state.yard;
-  priceInput.value = String(state.copartPrice);
+  input.value = state.yard || "";
+  priceInput.value = state.copartPrice ? String(state.copartPrice) : "";
   volInput.value = formatVol(state.engineVol);
   yearInput.value = String(state.year);
   battInput.value = String(state.batteryKwh);
   ccInput.value = formatVol(state.motoCc);
   atvCcInput.value = formatVol(state.atvCc);
   atvYearInput.value = String(state.atvYear);
+  cleanCheck.checked = state.cleanTitle;
+  hybridCheck.checked = state.hybrid;
+  bigMotoCheck.checked = state.bigMoto;
+  jetskiTrailer.checked = state.jetskiTrailer;
   updateControlVisibility();
   render();
   loadExchangeRate();
