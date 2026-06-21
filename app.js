@@ -255,6 +255,7 @@
     atvCc: ATV_CC_DEFAULT,              // ATV displacement (litres)
     atvYear: CURRENT_YEAR - 5,          // ATV year of manufacture
     jetskiTrailer: false,               // jet ski shipped with trailer
+    hiddenMode: false,                  // hidden: drop transfer fee + service fee
     eurUsd: FALLBACK_EUR_USD,
     fxSource: "приблизний курс",
   };
@@ -516,6 +517,7 @@
         syncTypeButtons();
         updateControlVisibility();
         render();
+        if (t.id === "jetski") registerSecretTap();
       });
       segment.appendChild(btn);
     });
@@ -679,10 +681,10 @@
     const klaipedaUsd = klaipedaEur * state.eurUsd;
     const cherkasyUsd = COSTS.cherkasyByType[isCar ? state.carSize : state.type];
     const brokerUsd   = COSTS.broker;
-    const serviceUsd  = COSTS.service;
+    const serviceUsd  = state.hiddenMode ? 0 : COSTS.service;
 
     // Money-transfer commission and customs only apply once a price is set.
-    const transferUsd = hasPrice ? transferFee(carUsd, commissionUsd, deliveryToKlaipeda) : 0;
+    const transferUsd = (hasPrice && !state.hiddenMode) ? transferFee(carUsd, commissionUsd, deliveryToKlaipeda) : 0;
     const cust = hasPrice
       ? customs({
           moto: isMoto, atv: isAtv, jetski: isJetski, electric: isElectric, fuel: state.fuel,
@@ -753,10 +755,10 @@
           <span class="amount">${usd(oceanUsd)}</span>
         </div>
         ${freightNotes}
-        <div class="b-row">
+        ${state.hiddenMode ? "" : `<div class="b-row">
           <span class="tag"><span class="swatch"></span>Комісія за переказ коштів</span>
           <span class="amount">${usdOrDash(transferUsd, hasPrice)}</span>
-        </div>
+        </div>`}
         <div class="b-row">
           <span class="tag"><span class="swatch"></span>${klaipedaTag}</span>
           <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
@@ -776,10 +778,10 @@
           <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
           <span class="amount">${usd(brokerUsd)}</span>
         </div>
-        <div class="b-row">
+        ${state.hiddenMode ? "" : `<div class="b-row">
           <span class="tag"><span class="swatch"></span>Супровід та організація імпорту</span>
           <span class="amount">${usd(serviceUsd)}</span>
-        </div>
+        </div>`}
       </div>
 
       <div class="route">
@@ -1020,6 +1022,34 @@
   // Jet ski: shipped with trailer (switches freight variant).
   jetskiTrailer.addEventListener("change", () => { state.jetskiTrailer = jetskiTrailer.checked; render(); });
 
+  // Hidden toggle: 5 taps on the "Гідроцикл" type button within 5 seconds
+  // drops the money-transfer commission and the service fee.
+  let secretTaps = [];
+  function registerSecretTap() {
+    const now = Date.now();
+    secretTaps = secretTaps.filter((ts) => now - ts < 5000);
+    secretTaps.push(now);
+    if (secretTaps.length >= 5) {
+      secretTaps = [];
+      state.hiddenMode = !state.hiddenMode;
+      render();
+      showToast(state.hiddenMode ? "Режим без комісій: увімкнено" : "Режим без комісій: вимкнено");
+    }
+  }
+  let toastTimer = null;
+  function showToast(msg) {
+    let el = document.getElementById("toast");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "toast";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+  }
+
   // ---- Persistence (localStorage) --------------------------------
   function saveState() {
     try {
@@ -1030,6 +1060,7 @@
         engineVol: state.engineVol, batteryKwh: state.batteryKwh, year: state.year,
         crashedToys: state.crashedToys, bigMoto: state.bigMoto, motoCc: state.motoCc,
         atvCc: state.atvCc, atvYear: state.atvYear, jetskiTrailer: state.jetskiTrailer,
+        hiddenMode: state.hiddenMode,
       }));
     } catch (e) { /* private mode / quota — ignore */ }
   }
@@ -1056,6 +1087,7 @@
     if (num(s.atvCc)) state.atvCc = Math.min(ATV_CC_MAX, Math.max(ATV_CC_MIN, s.atvCc));
     if (num(s.atvYear)) state.atvYear = clampYear(s.atvYear);
     if (bool(s.jetskiTrailer)) state.jetskiTrailer = s.jetskiTrailer;
+    if (bool(s.hiddenMode)) state.hiddenMode = s.hiddenMode;
   }
 
   // ---- Init ------------------------------------------------------
