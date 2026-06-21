@@ -6,10 +6,10 @@
 // Destination: Cherkasy via Klaipeda. Prices in USD. Hawaii yards last.
 // ============================================================
 
+// Transport types shown in the selector. Car body size (sedan / crossover /
+// pickup) is chosen via mutually-exclusive checkboxes, not separate types.
 const CARGO_TYPES = [
-  { id: "regular",    label: "Седан" },
-  { id: "large",      label: "Кросовер" },
-  { id: "oversize",   label: "Пікап" },
+  { id: "regular",    label: "Авто" },
   { id: "motorcycle", label: "Мотоцикл" },
   { id: "atv",        label: "Квадроцикл" },
   { id: "jetski",     label: "Гідроцикл" },

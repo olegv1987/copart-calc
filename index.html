@@ -13,7 +13,7 @@
     <!-- Header -->
     <p class="eyebrow">Copart <span class="arrow">→</span> Черкаси</p>
     <h1>Кошторис доставки</h1>
-    <p class="lede">Авто, мото, квадро та гідроцикли з Copart до Черкас — повна вартість доставки й розмитнення.</p>
+    <p class="lede">Техніка з Copart до Черкас — повна вартість доставки й розмитнення.</p>
 
     <!-- Yard selector: searchable combobox -->
     <div class="field">
@@ -38,7 +38,18 @@
     <!-- Cargo type: segmented control -->
     <div class="field">
       <label>Тип транспорту</label>
-      <div class="segment wrap" id="type-segment" role="group" aria-label="Тип транспорту"></div>
+      <div class="segment cols-4" id="type-segment" role="group" aria-label="Тип транспорту"></div>
+    </div>
+
+    <div id="carsize-group" class="carsize-row">
+      <label class="check">
+        <input id="size-large" type="checkbox" />
+        <span>Кросовер</span>
+      </label>
+      <label class="check">
+        <input id="size-oversize" type="checkbox" />
+        <span>Пікап / Вел. кросовер</span>
+      </label>
     </div>
 
     <!-- Copart purchase price + title type -->

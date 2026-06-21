@@ -76,8 +76,13 @@
   const DEFAULT_YARD = "ATLANTA EAST - Georgia";
 
   // Default purchase price by transport type: cars 5000, other tech 3000.
-  const CAR_TYPES = ["regular", "large", "oversize"];
+  const CAR_TYPES = ["regular"];
   function defaultPrice(type) { return CAR_TYPES.includes(type) ? 5000 : 3000; }
+
+  // Car body size -> freight/cherkasy key and display label.
+  function carSizeLabel(size) {
+    return size === "large" ? "Кросовер" : size === "oversize" ? "Пікап" : "Седан";
+  }
 
   // Battery-capacity input bounds (kWh) for electric cars.
   const BATT_MIN = 10, BATT_MAX = 250, BATT_DEFAULT = 82;
@@ -235,6 +240,7 @@
   const state = {
     yard: DEFAULT_YARD,
     type: CARGO_TYPES[0].id,
+    carSize: "regular",                 // car body: regular | large | oversize
     copartPrice: 5000,                  // default car price
     priceIsDefault: true,              // true until the user edits the price
     cleanTitle: false,
@@ -261,6 +267,9 @@
   const priceMinus = document.getElementById("price-minus");
   const pricePlus  = document.getElementById("price-plus");
   const cleanCheck = document.getElementById("clean-title");
+  const carsizeGroup = document.getElementById("carsize-group");
+  const sizeLarge    = document.getElementById("size-large");
+  const sizeOversize = document.getElementById("size-oversize");
   const fuelSeg    = document.getElementById("fuel-segment");
   const hybridCheck= document.getElementById("hybrid");
   const volInput   = document.getElementById("vol-input");
@@ -530,10 +539,11 @@
     const atv = state.type === "atv";
     const jetski = state.type === "jetski";
     const powersport = moto || atv;
-    const car = !powersport && !jetski;
+    const car = state.type === "regular";
     const ev = car && state.fuel === "electric";
     // Title matters for cars and jet skis; for powersports only when NOT CrashedToys.
     const showClean = powersport ? !state.crashedToys : true;
+    if (carsizeGroup) carsizeGroup.style.display = car ? "grid" : "none";
     if (cleantitleField) cleantitleField.style.display = showClean ? "block" : "none";
     if (powertrainField) powertrainField.style.display = car ? "block" : "none";
     if (combustionGroup) combustionGroup.style.display = (car && !ev) ? "block" : "none";
@@ -541,7 +551,9 @@
     if (motoGroup) motoGroup.style.display = moto ? "block" : "none";
     if (atvGroup) atvGroup.style.display = atv ? "block" : "none";
     if (jetskiGroup) jetskiGroup.style.display = jetski ? "block" : "none";
-    // Keep both CrashedToys checkboxes in sync with state.
+    // Sync the body-size and CrashedToys checkboxes with state.
+    if (sizeLarge) sizeLarge.checked = state.carSize === "large";
+    if (sizeOversize) sizeOversize.checked = state.carSize === "oversize";
     if (crashedCheck) crashedCheck.checked = state.crashedToys;
     if (atvCrashed) atvCrashed.checked = state.crashedToys;
   }
@@ -628,11 +640,11 @@
     const isAtv = state.type === "atv";
     const isJetski = state.type === "jetski";
     const isPowersport = isMoto || isAtv;
-    const isCar = !isPowersport && !isJetski;
+    const isCar = state.type === "regular";
     const freightKey = isMoto ? (state.bigMoto ? "moto_large" : "moto")
       : isAtv ? "atv"
       : isJetski ? (state.jetskiTrailer ? "jetski_trailer" : "jetski")
-      : state.type;
+      : state.carSize;
     let freight = FREIGHT[state.yard][freightKey];
     let freightApprox = false;
     if (!freight) {
@@ -641,7 +653,8 @@
       freightApprox = true;
     }
 
-    const typeLabel = CARGO_TYPES.find((t) => t.id === state.type).label;
+    const typeLabel = isCar ? carSizeLabel(state.carSize)
+      : CARGO_TYPES.find((t) => t.id === state.type).label;
     const port = YARD_PORT[state.yard] || "";
     const portLabel = port ? (PORT_DISPLAY[port] || portName(port)) : "Порт США";
     const isCanada = port === "TORONTO";
@@ -663,7 +676,7 @@
 
     const klaipedaEur = COSTS.klaipedaUnloadingEur + (isDangerous ? DANGEROUS_KLAIPEDA_EUR : 0);
     const klaipedaUsd = klaipedaEur * state.eurUsd;
-    const cherkasyUsd = COSTS.cherkasyByType[state.type];
+    const cherkasyUsd = COSTS.cherkasyByType[isCar ? state.carSize : state.type];
     const brokerUsd   = COSTS.broker;
     const serviceUsd  = COSTS.service;
 
@@ -888,6 +901,18 @@
   // Clean-title checkbox.
   cleanCheck.addEventListener("change", () => {
     state.cleanTitle = cleanCheck.checked;
+    render();
+  });
+
+  // Car body size: two mutually-exclusive checkboxes (off/off = sedan).
+  sizeLarge.addEventListener("change", () => {
+    state.carSize = sizeLarge.checked ? "large" : "regular";
+    updateControlVisibility();
+    render();
+  });
+  sizeOversize.addEventListener("change", () => {
+    state.carSize = sizeOversize.checked ? "oversize" : "regular";
+    updateControlVisibility();
     render();
   });
 

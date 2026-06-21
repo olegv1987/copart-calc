@@ -73,6 +73,14 @@ h1 {
   color: var(--ink-soft);
   font-size: 15px;
 }
+.lede-single {
+  margin: 4px 0 22px;
+  color: var(--ink);
+  font-weight: 650;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+  font-size: clamp(9px, 2.4vw, 14px);
+}
 
 /* ---------- Controls ---------- */
 .field { margin-bottom: 18px; }
@@ -479,9 +487,9 @@ h1 {
 }
 
 /* Engine-volume stepper */
-.stepper { display: flex; align-items: stretch; gap: 8px; }
+.stepper { display: flex; align-items: stretch; gap: 6px; }
 .stepper button {
-  flex: 0 0 46px;
+  flex: 0 0 40px;
   font-size: 20px;
   font-weight: 700;
   color: var(--ink);
@@ -493,7 +501,7 @@ h1 {
   transition: border-color .15s ease;
 }
 .stepper button:hover { border-color: #b9c2bb; }
-.stepper .text-input { text-align: center; }
+.stepper .text-input { text-align: center; min-width: 0; padding-left: 4px; padding-right: 4px; }
 
 /* 2-column segmented control (fuel) */
 .segment.cols-2 { grid-template-columns: repeat(2, 1fr); }
@@ -511,9 +519,14 @@ h1 {
 #moto-group { display: none; }
 
 /* 4-column compact type segment (single-line labels) */
-.segment.cols-4 { grid-template-columns: repeat(4, 1fr); }
-.segment.cols-4 button { padding: 11px 4px; font-size: 13px; }
+.segment.cols-4 { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.segment.cols-4 button { padding: 11px 2px; font-size: 12px; }
 .segment button { white-space: nowrap; }
+
+/* Car body-size checkboxes on a single row */
+.carsize-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: center; margin-bottom: 18px; }
+.carsize-row .check { gap: 8px; font-size: 14px; }
+.carsize-row .check span { white-space: nowrap; }
 
 /* Small hint text (examples) inside a checkbox label */
 .hint { display: block; font-size: 11px; font-weight: 500; color: var(--ink-soft); white-space: normal; }
@@ -538,3 +551,4 @@ h1 {
 
 /* Jet ski-only controls hidden until jet ski is chosen */
 #jetski-group { display: none; }
+
