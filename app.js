@@ -1091,6 +1091,10 @@
   }
 
   // ---- Init ------------------------------------------------------
+  // Block iOS pinch-zoom gestures (double-tap zoom handled by CSS
+  // touch-action: manipulation, which keeps fast taps working as clicks).
+  ["gesturestart", "gesturechange", "gestureend"].forEach((ev) =>
+    document.addEventListener(ev, (e) => e.preventDefault(), { passive: false }));
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   loadState();
   buildTypeSegment();

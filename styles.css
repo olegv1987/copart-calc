@@ -572,3 +572,9 @@ h1 {
   z-index: 50;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Disable double-tap-to-zoom (e.g. fast taps on stepper +/-) and text auto-zoom */
+html { -webkit-text-size-adjust: 100%; }
+html, body, button, input, label, a, .segment button, .stepper button {
+  touch-action: manipulation;
+}
