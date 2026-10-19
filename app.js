@@ -10,15 +10,14 @@
   // Extra costs added on top of freight-to-Klaipeda (towing + ocean).
   const COSTS = {
     klaipedaUnloadingEur: 260,          // unloading / forwarder in Klaipeda (EUR)
-    cherkasyByType: {                   // road logistics Klaipeda -> Cherkasy (USD)
-      regular: 1000,
-      large: 1000,
-      oversize: 1400,                   // pickup / oversize
-      motorcycle: 550,                  // motorcycle
-      atv: 550,                         // ATV (same as motorcycle by default)
-      jetski: 1000,                     // jet ski (like a car / sedan)
+    cherkasyByType: {                   // road logistics Klaipeda -> Cherkasy incl. customs broker (USD)
+      regular: 1050,
+      large: 1050,
+      oversize: 1500,                   // pickup / oversize
+      motorcycle: 650,                  // motorcycle
+      atv: 650,                         // ATV (same as motorcycle by default)
+      jetski: 1050,                     // jet ski (like a car / sedan)
     },
-    broker: 100,                        // customs broker fee (USD)
     service: 300,                       // owner's import-organization service (USD)
   };
 
@@ -680,7 +679,6 @@
     const klaipedaEur = COSTS.klaipedaUnloadingEur + (isDangerous ? DANGEROUS_KLAIPEDA_EUR : 0);
     const klaipedaUsd = klaipedaEur * state.eurUsd;
     const cherkasyUsd = COSTS.cherkasyByType[isCar ? state.carSize : state.type];
-    const brokerUsd   = COSTS.broker;
     const serviceUsd  = state.hiddenMode ? 0 : COSTS.service;
 
     // Money-transfer commission and customs only apply once a price is set.
@@ -697,7 +695,7 @@
     const customsUsd = cust ? cust.total : 0;
 
     const grandTotal = carUsd + commissionUsd + transferUsd + deliveryToKlaipeda +
-      klaipedaUsd + cherkasyUsd + customsUsd + brokerUsd + serviceUsd;
+      klaipedaUsd + cherkasyUsd + customsUsd + serviceUsd;
 
     const customsSub = cust
       ? (isJetski
@@ -764,7 +762,7 @@
           <span class="amount">${eur(klaipedaEur)}<span class="eur">&asymp; ${usd(klaipedaUsd)}</span></span>
         </div>
         <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Логістика до Черкас</span>
+          <span class="tag"><span class="swatch"></span>Логістика до Черкас (з брокером)</span>
           <span class="amount">${usd(cherkasyUsd)}</span>
         </div>
         <div class="b-row col">
@@ -773,10 +771,6 @@
             <span class="amount">${usdOrDash(customsUsd, hasPrice)}</span>
           </div>
           <div class="sub">${customsSub}</div>
-        </div>
-        <div class="b-row">
-          <span class="tag"><span class="swatch"></span>Брокерські послуги</span>
-          <span class="amount">${usd(brokerUsd)}</span>
         </div>
         ${state.hiddenMode ? "" : `<div class="b-row">
           <span class="tag"><span class="swatch"></span>Супровід та організація імпорту</span>
