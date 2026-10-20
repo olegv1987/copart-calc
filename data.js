@@ -1538,9 +1538,9 @@ const FREIGHT = {
       "total": 2400.0
     },
     "oversize": {
-      "towing": 1450.0,
+      "towing": 1550.0,
       "ocean": 1250.0,
-      "total": 2700.0
+      "total": 2800.0
     },
     "moto": {
       "towing": 1450.0,
@@ -2210,9 +2210,9 @@ const FREIGHT = {
       "total": 1250.0
     },
     "oversize": {
-      "towing": 300.0,
+      "towing": 400.0,
       "ocean": 1250.0,
-      "total": 1550.0
+      "total": 1650.0
     },
     "moto": {
       "towing": 300.0,
@@ -3050,9 +3050,9 @@ const FREIGHT = {
       "total": 2400.0
     },
     "oversize": {
-      "towing": 1450.0,
+      "towing": 1550.0,
       "ocean": 1250.0,
-      "total": 2700.0
+      "total": 2800.0
     },
     "moto": {
       "towing": 1250.0,
@@ -3848,9 +3848,9 @@ const FREIGHT = {
       "total": 2200.0
     },
     "oversize": {
-      "towing": 1250.0,
+      "towing": 1350.0,
       "ocean": 1250.0,
-      "total": 2500.0
+      "total": 2600.0
     },
     "moto": {
       "towing": 1250.0,
@@ -4621,14 +4621,14 @@ const FREIGHT = {
       "total": 3950.0
     },
     "large": {
-      "towing": 2750.0,
+      "towing": 2950.0,
       "ocean": 1450.0,
-      "total": 4200.0
+      "total": 4400.0
     },
     "oversize": {
-      "towing": 2750.0,
+      "towing": 3150.0,
       "ocean": 1700.0,
-      "total": 4450.0
+      "total": 4850.0
     },
     "atv": {
       "towing": 2750.0,
@@ -5036,9 +5036,9 @@ const FREIGHT = {
       "total": 1200.0
     },
     "oversize": {
-      "towing": 250.0,
+      "towing": 350.0,
       "ocean": 1250.0,
-      "total": 1500.0
+      "total": 1600.0
     },
     "moto": {
       "towing": 250.0,
@@ -6254,9 +6254,9 @@ const FREIGHT = {
       "total": 2225.0
     },
     "oversize": {
-      "towing": 1275.0,
+      "towing": 1375.0,
       "ocean": 1250.0,
-      "total": 2525.0
+      "total": 2625.0
     },
     "moto": {
       "towing": 1275.0,
@@ -6338,9 +6338,9 @@ const FREIGHT = {
       "total": 1450.0
     },
     "oversize": {
-      "towing": 500.0,
+      "towing": 600.0,
       "ocean": 1250.0,
-      "total": 1750.0
+      "total": 1850.0
     },
     "moto": {
       "towing": 500.0,
@@ -7000,9 +7000,9 @@ const FREIGHT = {
       "total": 1425.0
     },
     "oversize": {
-      "towing": 475.0,
+      "towing": 575.0,
       "ocean": 1250.0,
-      "total": 1725.0
+      "total": 1825.0
     },
     "moto": {
       "towing": 475.0,
@@ -8974,9 +8974,9 @@ const FREIGHT = {
       "total": 2800.0
     },
     "oversize": {
-      "towing": 1850.0,
+      "towing": 1950.0,
       "ocean": 1250.0,
-      "total": 3100.0
+      "total": 3200.0
     },
     "moto": {
       "towing": 1850.0,
@@ -9394,9 +9394,9 @@ const FREIGHT = {
       "total": 1175.0
     },
     "oversize": {
-      "towing": 225.0,
+      "towing": 325.0,
       "ocean": 1250.0,
-      "total": 1475.0
+      "total": 1575.0
     },
     "moto": {
       "towing": 225.0,
@@ -18831,14 +18831,14 @@ const IAAI_FREIGHT = {
       "total": 4450.0
     },
     "large": {
-      "towing": 2200.0,
+      "towing": 2300.0,
       "ocean": 2450.0,
-      "total": 4650.0
+      "total": 4750.0
     },
     "oversize": {
-      "towing": 2200.0,
+      "towing": 2500.0,
       "ocean": 3000.0,
-      "total": 5200.0
+      "total": 5500.0
     },
     "jetski": {
       "towing": 2200.0,

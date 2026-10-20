@@ -95,6 +95,21 @@
   // Electric excise: EUR per kWh of battery capacity.
   const EV_EXCISE_EUR_PER_KWH = 1;
 
+  // Canadian sales tax charged by Copart Canada on (lot price + auction fees).
+  // Refunded on export after 3–6 months, so it's shown as a note only.
+  // Ontario 13% confirmed by invoices; rates per CRA (on or after Apr 1, 2025).
+  const CANADA_SALES_TAX = [
+    { match: /- Ontario$/,        name: "HST",     rate: 0.13 },
+    { match: /- Quebec$/,         name: "GST+QST", rate: 0.14975 },
+    { match: /- Alberta$/,        name: "GST",     rate: 0.05 },
+    { match: /- Nova Scotia$/,    name: "HST",     rate: 0.14 },
+    { match: /- New Brunswick$/,  name: "HST",     rate: 0.15 },
+    { match: /- Newfoundland/,    name: "HST",     rate: 0.15 },
+  ];
+  function canadaTax(yard) {
+    return CANADA_SALES_TAX.find((t) => t.match.test(yard)) || null;
+  }
+
   // Display overrides for departure port names.
   const PORT_DISPLAY = { "NEWARK": "New York" };
 
@@ -292,14 +307,19 @@
     "CHICAGO":          [6, 6],
     "LOS ANGELES":      [7, 8],
     "SEATTLE":          [8, 10],
-    "TORONTO":          [8, 10],  // Canada
-    "PORT OF HONOLULU": [12, 12], // Hawaii, Honolulu
+    "TORONTO":          [4, 5],   // Canada
+    "PORT OF HONOLULU": [10, 10], // Hawaii, Honolulu
   };
   const DEFAULT_OCEAN_WEEKS = [8, 10];
 
   // Other fixed stages (weeks).
   const TO_PORT_WEEKS = { "TORONTO": 2 };   // auction purchase + road to US port
   const DEFAULT_TO_PORT_WEEKS = 1;
+  // Hawaii yards shipped via a mainland port: island -> California by sea first.
+  const HAWAII_TO_MAINLAND_WEEKS = 6;
+  // Remote Canadian provinces: long road haul to Toronto, weeks [min, max].
+  const CANADA_FAR_PROVINCES = /- (Alberta|Nova Scotia|New Brunswick|Newfoundland)/;
+  const CANADA_FAR_TO_PORT_WEEKS = [2, 4];
   const DISPATCH_WEEKS = 2;                  // loading into container + dispatch
   const UNLOADING_WEEKS = 1;                 // unloading at Klaipeda
   const LOGISTICS_WEEKS = 1;                 // road Klaipeda -> Cherkasy
@@ -581,18 +601,24 @@
   }
 
   // Build the timeline stages for a given departure port.
-  function timeline(port) {
+  function timeline(port, yard) {
     const ocean = OCEAN_WEEKS[port] || DEFAULT_OCEAN_WEEKS;
-    const toPort = TO_PORT_WEEKS[port] || DEFAULT_TO_PORT_WEEKS;
-    const totalMin = toPort + DISPATCH_WEEKS + ocean[0] + UNLOADING_WEEKS + LOGISTICS_WEEKS;
-    const totalMax = toPort + DISPATCH_WEEKS + ocean[1] + UNLOADING_WEEKS + LOGISTICS_WEEKS;
+    const viaMainland = /- Hawaii$/.test(yard) && port !== "PORT OF HONOLULU";
+    const farCanada = port === "TORONTO" && CANADA_FAR_PROVINCES.test(yard);
+    const w = viaMainland ? HAWAII_TO_MAINLAND_WEEKS
+      : (TO_PORT_WEEKS[port] || DEFAULT_TO_PORT_WEEKS);
+    const toPort = farCanada ? CANADA_FAR_TO_PORT_WEEKS : [w, w];
+    const rest = DISPATCH_WEEKS + UNLOADING_WEEKS + LOGISTICS_WEEKS;
+    const totalMin = toPort[0] + ocean[0] + rest;
+    const totalMax = toPort[1] + ocean[1] + rest;
     return {
-      toPort: [toPort, toPort],
+      toPort: toPort,
       dispatch: [DISPATCH_WEEKS, DISPATCH_WEEKS],
       ocean: ocean,
       unloading: [UNLOADING_WEEKS, UNLOADING_WEEKS],
       logistics: [LOGISTICS_WEEKS, LOGISTICS_WEEKS],
       months: monthsLabel(totalMin, totalMax),
+      viaMainland: viaMainland,
     };
   }
 
@@ -790,7 +816,7 @@
     const port = ad.port[state.yard] || "";
     const portLabel = port ? (PORT_DISPLAY[port] || portName(port)) : "Порт США";
     const isCanada = port === "TORONTO";
-    const t = timeline(port);
+    const t = timeline(port, state.yard);
 
     // Electric or hybrid (cars only) ship as dangerous goods (battery).
     const isElectric = isCar && state.fuel === "electric";
@@ -850,13 +876,19 @@
     const oceanTag = "Морський фрахт до Клайпеди" + (isDangerous ? " (+$150 небезп.)" : "");
     const klaipedaTag = "Розвантаження / експедитор (Клайпеда" + (isDangerous ? ", +€50)" : ")");
 
+    // Note shown under the auction-fees row (Canadian yards).
+    const caTax = isCanada ? canadaTax(state.yard) : null;
+    let commissionNote = "";
+    if (caTax) {
+      const pct = String(Math.round(caTax.rate * 100000) / 1000).replace(".", ",") + "%";
+      const amount = hasPrice ? ` (\u2248${usd((carUsd + commissionUsd) * caTax.rate)})` : "";
+      commissionNote = `<div class="b-note">Канада: не враховано податок ${caTax.name} ${pct}${amount} від ціни та зборів \u2014 сплачується при покупці й повертається через 3–6 місяців.</div>`;
+    }
+
     // Notes shown under the towing/ocean rows.
     let freightNotes = "";
     if (freightApprox) {
       freightNotes += `<div class="b-note">Тариф приблизний: для цієї площадки немає мото-тарифу, узято легковий.</div>`;
-    }
-    if (isCanada) {
-      freightNotes += `<div class="b-note">Канада: тарифи на сушу й океан орієнтовні, можлива неточність. Можливі додаткові податки.</div>`;
     }
     if (isJetski && state.jetskiTrailer) {
       freightNotes += `<div class="b-note">З причепом: можлива додаткова плата за розвантаження причепа в Клайпеді. Причеп розмитнюється окремо.</div>`;
@@ -880,6 +912,7 @@
           <span class="tag"><span class="swatch"></span>${commissionLabel}</span>
           <span class="amount">${usdOrDash(commissionUsd, hasPrice)}</span>
         </div>
+        ${commissionNote}
         <div class="b-row road">
           <span class="tag"><span class="swatch"></span>Доставка до порту (${escapeHtml(portLabel)})</span>
           <span class="amount">${usd(towingUsd)}</span>
@@ -918,7 +951,9 @@
         <div class="node origin">
           <span class="marker"></span>
           <div class="place">${escapeHtml(state.yard)}<small>Площадка ${ad.label}</small></div>
-          <div class="leg"><span class="mode">🚚</span> Доставка до порту <span class="dur">${weeksShort(t.toPort)}</span></div>
+          <div class="leg">${t.viaMainland
+            ? `<span class="mode">🚢</span> Доставка до Каліфорнії`
+            : `<span class="mode">🚚</span> Доставка до порту`} <span class="dur">${weeksShort(t.toPort)}</span></div>
           <div class="leg"><span class="mode">📦</span> Завантаження та відправлення <span class="dur">${weeksShort(t.dispatch)}</span></div>
         </div>
         <div class="node port">
