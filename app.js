@@ -1,6 +1,7 @@
 // ============================================================
 // app.js — UI logic for the Copart -> Cherkasy cost estimate
-// Depends on globals from data.js: YARDS, CARGO_TYPES, FREIGHT, YARD_PORT
+// Depends on globals from data.js: CARGO_TYPES, YARDS, FREIGHT, YARD_PORT,
+//   IAAI_YARDS, IAAI_FREIGHT, IAAI_YARD_PORT
 // ============================================================
 
 (function () {
@@ -209,6 +210,57 @@
     gateNonClean: 95,    // gate fee for salvage / non-clean vehicles
   };
 
+  // ============================================================
+  // IAAI FEES — licensed buyer, Standard Volume schedule (the higher one).
+  // Source: iaai.com/marketing/standard-iaa-licensed-buyer-fees
+  // (tables effective Nov 4, 2024; service/title fees effective Oct 1, 2026).
+  // One schedule regardless of title type.
+  // ============================================================
+  const IAAI_BUYER_FEE = [
+    { upTo: 49.99, fee: 25 },    { upTo: 99.99, fee: 45 },
+    { upTo: 199.99, fee: 80 },   { upTo: 299.99, fee: 130 },
+    { upTo: 349.99, fee: 137.5 },{ upTo: 399.99, fee: 145 },
+    { upTo: 449.99, fee: 175 },  { upTo: 499.99, fee: 185 },
+    { upTo: 549.99, fee: 205 },  { upTo: 599.99, fee: 210 },
+    { upTo: 699.99, fee: 240 },  { upTo: 799.99, fee: 270 },
+    { upTo: 899.99, fee: 295 },  { upTo: 999.99, fee: 320 },
+    { upTo: 1199.99, fee: 375 }, { upTo: 1299.99, fee: 395 },
+    { upTo: 1399.99, fee: 410 }, { upTo: 1499.99, fee: 430 },
+    { upTo: 1599.99, fee: 445 }, { upTo: 1699.99, fee: 465 },
+    { upTo: 1799.99, fee: 485 }, { upTo: 1999.99, fee: 510 },
+    { upTo: 2399.99, fee: 535 }, { upTo: 2499.99, fee: 570 },
+    { upTo: 2999.99, fee: 610 }, { upTo: 3499.99, fee: 655 },
+    { upTo: 3999.99, fee: 705 }, { upTo: 4499.99, fee: 725 },
+    { upTo: 4999.99, fee: 750 }, { upTo: 5499.99, fee: 775 },
+    { upTo: 5999.99, fee: 800 }, { upTo: 6499.99, fee: 825 },
+    { upTo: 6999.99, fee: 845 }, { upTo: 7499.99, fee: 880 },
+    { upTo: 7999.99, fee: 900 }, { upTo: 8499.99, fee: 925 },
+    { upTo: 9999.99, fee: 945 }, { upTo: 14999.99, fee: 1000 },
+    { upTo: Infinity, pct: 0.075 },
+  ];
+
+  // Live Online Bid Fee (higher than the Proxy Bid Fee).
+  const IAAI_LIVE_BID_FEE = [
+    { upTo: 99.99, fee: 0 },     { upTo: 499.99, fee: 50 },
+    { upTo: 999.99, fee: 65 },   { upTo: 1499.99, fee: 85 },
+    { upTo: 1999.99, fee: 95 },  { upTo: 3999.99, fee: 110 },
+    { upTo: 5999.99, fee: 125 }, { upTo: 7999.99, fee: 145 },
+    { upTo: Infinity, fee: 160 },
+  ];
+
+  // Fixed per-purchase IAAI fees (USD).
+  const IAAI_FIXED = {
+    service: 105,        // vehicle handling: imaging, pull-out, loading
+    titleFee: 20,        // title handling
+    ehs: 15,             // EH&S and Fuel Surcharge — amount not published, estimate
+  };
+
+  // Auction data sets: yard list, yard -> departure port, freight rates.
+  const AUCTIONS = {
+    copart: { label: "Copart", yards: YARDS, port: YARD_PORT, freight: FREIGHT },
+    iaai:   { label: "IAAI", yards: IAAI_YARDS, port: IAAI_YARD_PORT, freight: IAAI_FREIGHT },
+  };
+
   // ---- Timing configuration --------------------------------------
   // Ocean transit per departure port, in weeks [min, max].
   const OCEAN_WEEKS = {
@@ -237,7 +289,9 @@
 
   // ---- App state -------------------------------------------------
   const state = {
+    auction: "copart",                  // "copart" | "iaai"
     yard: null,
+    yardByAuction: { copart: null, iaai: null }, // last yard per auction
     type: CARGO_TYPES[0].id,
     carSize: "regular",                 // car body: regular | large | oversize
     copartPrice: 5000,                  // default car price
@@ -261,6 +315,9 @@
 
   // ---- DOM references --------------------------------------------
   const input      = document.getElementById("yard-input");
+  const auctionRadios = document.querySelectorAll('input[name="auction"]');
+  const crashedField    = document.getElementById("crashedtoys-field");
+  const atvCrashedField = document.getElementById("atv-crashedtoys-field");
   const list       = document.getElementById("yard-list");
   const segment    = document.getElementById("type-segment");
   const priceInput = document.getElementById("price-input");
@@ -352,6 +409,17 @@
     }
     return buyer + virtual + gate + COPART_FIXED.environmental + COPART_FIXED.titleFee;
   }
+
+  // Total IAAI commission (all fees combined), for price > 0.
+  function iaaiCommission(price) {
+    if (!(price > 0)) return 0;
+    return tierFee(IAAI_BUYER_FEE, price) + tierFee(IAAI_LIVE_BID_FEE, price) +
+      IAAI_FIXED.service + IAAI_FIXED.titleFee + IAAI_FIXED.ehs;
+  }
+
+  function auctionData() { return AUCTIONS[state.auction]; }
+  // CrashedToys and clean/non-clean title only exist on Copart.
+  function isCopart() { return state.auction === "copart"; }
 
   // ---- Money transfer & customs ----------------------------------
   // Commission for wiring money for (car + Copart fees + delivery to Klaipeda).
@@ -543,7 +611,7 @@
     const car = state.type === "regular";
     const ev = car && state.fuel === "electric";
     // Title matters for cars and jet skis; for powersports only when NOT CrashedToys.
-    const showClean = powersport ? !state.crashedToys : true;
+    const showClean = isCopart() && (powersport ? !state.crashedToys : true);
     if (carsizeGroup) carsizeGroup.style.display = car ? "grid" : "none";
     if (cleantitleField) cleantitleField.style.display = showClean ? "block" : "none";
     if (powertrainField) powertrainField.style.display = car ? "block" : "none";
@@ -552,6 +620,8 @@
     if (motoGroup) motoGroup.style.display = moto ? "block" : "none";
     if (atvGroup) atvGroup.style.display = atv ? "block" : "none";
     if (jetskiGroup) jetskiGroup.style.display = jetski ? "block" : "none";
+    if (crashedField) crashedField.style.display = isCopart() ? "block" : "none";
+    if (atvCrashedField) atvCrashedField.style.display = isCopart() ? "block" : "none";
     // Sync the body-size and CrashedToys checkboxes with state.
     if (sizeLarge) sizeLarge.checked = state.carSize === "large";
     if (sizeOversize) sizeOversize.checked = state.carSize === "oversize";
@@ -596,7 +666,8 @@
 
   function filterYards(query) {
     const q = query.trim().toLowerCase();
-    return q ? YARDS.filter((y) => y.toLowerCase().includes(q)) : YARDS.slice();
+    const yards = auctionData().yards;
+    return q ? yards.filter((y) => y.toLowerCase().includes(q)) : yards.slice();
   }
 
   function renderOptions(query) {
@@ -622,6 +693,22 @@
 
   function selectYard(yard) { state.yard = yard; input.value = yard; closeList(); render(); }
 
+  // ---- Auction toggle (Copart / IAAI) ----------------------------
+  // Each auction keeps its own last-picked yard.
+  function setAuction(auction) {
+    if (!AUCTIONS[auction] || auction === state.auction) return;
+    state.auction = auction;
+    state.yard = state.yardByAuction[auction] || null;
+    prevYard = null;   // don't restore the other auction's yard on blur
+    input.value = state.yard || "";
+    closeList();
+    updateControlVisibility();
+    render();
+  }
+  function syncAuctionRadios() {
+    auctionRadios.forEach((r) => { r.checked = r.value === state.auction; });
+  }
+
   function highlightActive() {
     const options = list.querySelectorAll(".combo-option");
     options.forEach((o, i) => o.classList.toggle("active", i === activeIndex));
@@ -630,8 +717,11 @@
 
   // ---- Result rendering ------------------------------------------
   function render() {
+    const ad = auctionData();
+    if (state.yard && !ad.freight[state.yard]) state.yard = null;
+    state.yardByAuction[state.auction] = state.yard;
     saveState();
-    if (!state.yard || !FREIGHT[state.yard]) {
+    if (!state.yard) {
       manifest.innerHTML = "";
       manifest.appendChild(emptyState);
       removeFxNote();
@@ -647,17 +737,17 @@
       : isAtv ? "atv"
       : isJetski ? (state.jetskiTrailer ? "jetski_trailer" : "jetski")
       : state.carSize;
-    let freight = FREIGHT[state.yard][freightKey];
+    let freight = ad.freight[state.yard][freightKey];
     let freightApprox = false;
     if (!freight) {
       // No specific tariff for this yard: fall back to the car (regular) rate.
-      freight = FREIGHT[state.yard].regular;
+      freight = ad.freight[state.yard].regular;
       freightApprox = true;
     }
 
     const typeLabel = isCar ? carSizeLabel(state.carSize)
       : CARGO_TYPES.find((t) => t.id === state.type).label;
-    const port = YARD_PORT[state.yard] || "";
+    const port = ad.port[state.yard] || "";
     const portLabel = port ? (PORT_DISPLAY[port] || portName(port)) : "Порт США";
     const isCanada = port === "TORONTO";
     const t = timeline(port);
@@ -668,9 +758,12 @@
 
     const hasPrice = state.copartPrice > 0;
     const carUsd = hasPrice ? state.copartPrice : 0;
-    const commissionUsd = copartCommission(state.copartPrice, {
-      powersport: isPowersport, crashedToys: state.crashedToys, clean: state.cleanTitle,
-    });
+    const crashedToys = isCopart() && state.crashedToys;
+    const commissionUsd = isCopart()
+      ? copartCommission(state.copartPrice, {
+          powersport: isPowersport, crashedToys: crashedToys, clean: state.cleanTitle,
+        })
+      : iaaiCommission(state.copartPrice);
 
     const towingUsd = freight.towing;
     const oceanUsd = freight.ocean + (isDangerous ? DANGEROUS_OCEAN_USD : 0);
@@ -704,13 +797,15 @@
       : "введіть ціну покупки";
 
     const powertrain = isPowersport
-      ? (isMoto && state.bigMoto ? " · великий" : "") + (state.crashedToys ? " · CrashedToys" : "")
+      ? (isMoto && state.bigMoto ? " · великий" : "") + (crashedToys ? " · CrashedToys" : "")
       : isJetski ? (state.jetskiTrailer ? " · з причепом" : "")
       : (isElectric ? " · електро" : (state.hybrid ? " · гібрид" : ""));
-    const priceLabel = (isMoto ? "Мотоцикл" : isAtv ? "Квадроцикл" : isJetski ? "Гідроцикл" : "Авто") + " (ціна на Copart)";
+    const priceLabel = (isMoto ? "Мотоцикл" : isAtv ? "Квадроцикл" : isJetski ? "Гідроцикл" : "Авто") +
+      " (ціна на " + ad.label + ")";
     const commissionLabel = "Аукціонні збори" +
-      (isPowersport ? (state.crashedToys ? " CrashedToys" : " Copart")
-                    : " Copart" + (state.cleanTitle ? " · clean" : ""));
+      (!isCopart() ? " IAAI"
+        : isPowersport ? (crashedToys ? " CrashedToys" : " Copart")
+        : " Copart" + (state.cleanTitle ? " · clean" : ""));
     const oceanTag = "Морський фрахт до Клайпеди" + (isDangerous ? " (+$150 небезп.)" : "");
     const klaipedaTag = "Розвантаження / експедитор (Клайпеда" + (isDangerous ? ", +€50)" : ")");
 
@@ -781,7 +876,7 @@
       <div class="route">
         <div class="node origin">
           <span class="marker"></span>
-          <div class="place">${escapeHtml(state.yard)}<small>Площадка Copart</small></div>
+          <div class="place">${escapeHtml(state.yard)}<small>Площадка ${ad.label}</small></div>
           <div class="leg"><span class="mode">🚚</span> Доставка до порту <span class="dur">${weeksShort(t.toPort)}</span></div>
           <div class="leg"><span class="mode">📦</span> Завантаження та відправлення <span class="dur">${weeksShort(t.dispatch)}</span></div>
         </div>
@@ -1048,6 +1143,7 @@
   function saveState() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
+        auction: state.auction, yardByAuction: state.yardByAuction,
         yard: state.yard, type: state.type, carSize: state.carSize,
         copartPrice: state.copartPrice, priceIsDefault: state.priceIsDefault,
         cleanTitle: state.cleanTitle, fuel: state.fuel, hybrid: state.hybrid,
@@ -1064,7 +1160,14 @@
     if (!s || typeof s !== "object") return;
     const bool = (v) => typeof v === "boolean";
     const num = (v) => typeof v === "number" && isFinite(v);
-    if (typeof s.yard === "string" && FREIGHT[s.yard]) state.yard = s.yard;
+    if (AUCTIONS[s.auction]) state.auction = s.auction;
+    const yba = s.yardByAuction && typeof s.yardByAuction === "object" ? s.yardByAuction : {};
+    Object.keys(AUCTIONS).forEach((a) => {
+      if (typeof yba[a] === "string" && AUCTIONS[a].freight[yba[a]]) state.yardByAuction[a] = yba[a];
+    });
+    // Older saves only had a Copart yard.
+    if (!yba.copart && typeof s.yard === "string" && FREIGHT[s.yard]) state.yardByAuction.copart = s.yard;
+    state.yard = state.yardByAuction[state.auction];
     if (CARGO_TYPES.some((t) => t.id === s.type)) state.type = s.type;
     if (["regular", "large", "oversize"].includes(s.carSize)) state.carSize = s.carSize;
     if (num(s.copartPrice) && s.copartPrice >= 0) state.copartPrice = Math.round(s.copartPrice);
@@ -1093,6 +1196,8 @@
   loadState();
   buildTypeSegment();
   buildFuelSegment();
+  syncAuctionRadios();
+  auctionRadios.forEach((r) => r.addEventListener("change", () => { if (r.checked) setAuction(r.value); }));
   input.value = state.yard || "";
   priceInput.value = state.copartPrice ? String(state.copartPrice) : "";
   volInput.value = formatVol(state.engineVol);

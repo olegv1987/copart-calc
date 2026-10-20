@@ -4,7 +4,7 @@
 // Bump CACHE_VERSION whenever any cached asset changes.
 // ============================================================
 
-const CACHE_VERSION = "freight-v23";
+const CACHE_VERSION = "freight-v24";
 const ASSETS = [
   "./",
   "./index.html",

@@ -10129,3 +10129,8726 @@ const FREIGHT = {
     }
   }
 };
+
+// IAAI yards: from TruckingAndOceanFreightQuotes.xlsx (IAAI rows, Oct 2026).
+// ATV / jet ski: ocean = same per-port consolidated rates as Copart;
+//   towing = Large Motorcycle (ATV) or Sedan (jet ski) per yard.
+// Yards without motorcycle rates fall back to the car rate in app.js.
+const IAAI_YARDS = [
+  "ABILENE - Texas",
+  "ACE - Carson - California",
+  "ACE - PERRIS 2 - California",
+  "ACE - Perris - California",
+  "AKRON-CANTON - Ohio",
+  "ALBANY - New York",
+  "ALBUQUERQUE - New Mexico",
+  "ALTOONA - Pennsylvania",
+  "AMARILLO - Texas",
+  "ANAHEIM - California",
+  "APPLETON - Wisconsin",
+  "ASHEVILLE - North Carolina",
+  "ATLANTA - Georgia",
+  "ATLANTA EAST - Georgia",
+  "ATLANTA NORTH - Georgia",
+  "ATLANTA SOUTH - Georgia",
+  "AUSTIN - Texas",
+  "AUSTIN NORTH - Texas",
+  "AVENEL NEW JERSEY - New Jersey",
+  "Atlanta West - Georgia",
+  "BALTIMORE - Maryland",
+  "BATON ROUGE - Louisiana",
+  "BILLINGS - Montana",
+  "BIRMINGHAM - Alabama",
+  "BOISE - Idaho",
+  "BOSTON - SHIRLEY - Massachusetts",
+  "BOWLING GREEN - Kentucky",
+  "BRIDGEPORT - Pennsylvania",
+  "BUCKHANNON - West Virginia",
+  "BUFFALO - New York",
+  "BURLINGTON - Vermont",
+  "CENTRAL NEW JERSEY - New Jersey",
+  "CHARLESTON - South Carolina",
+  "CHARLOTTE - North Carolina",
+  "CHATTANOOGA - Tennessee",
+  "CHICAGO-NORTH - Illinois",
+  "CHICAGO-SOUTH - Illinois",
+  "CHICAGO-WEST - Illinois",
+  "CINCINNATI - Ohio",
+  "CINCINNATI SOUTH - Ohio",
+  "CLEARWATER - Florida",
+  "CLEVELAND - Ohio",
+  "COLTON - California",
+  "COLUMBIA - South Carolina",
+  "COLUMBUS - Ohio",
+  "CONCORD - North Carolina",
+  "CORPUS CHRISTI - Texas",
+  "CULPEPER - Virginia",
+  "Colorado Springs - Colorado",
+  "DALLAS - Texas",
+  "DAVENPORT - Iowa",
+  "DAYTON - Ohio",
+  "DENVER - Colorado",
+  "DENVER EAST - Colorado",
+  "DES MOINES - Iowa",
+  "DETROIT - Michigan",
+  "DOTHAN - Alabama",
+  "DUNDALK - Maryland",
+  "Dallas/Ft Worth - Texas",
+  "EAST BAY - California",
+  "EL PASO - Texas",
+  "ERIE - Pennsylvania",
+  "EUGENE - Oregon",
+  "Elkton - Maryland",
+  "Englishtown - New Jersey",
+  "FARGO - North Dakota",
+  "FAYETTEVILLE - Arkansas",
+  "FLINT - Michigan",
+  "FONTANA - California",
+  "FORT MYERS - Florida",
+  "FORT PIERCE - Florida",
+  "FREMONT - California",
+  "FRESNO - California",
+  "Fort Wayne - Indiana",
+  "Fort Worth North - Texas",
+  "Fredericksburg-South - Virginia",
+  "GRAND RAPIDS - Michigan",
+  "GREENSBORO - North Carolina",
+  "GREENVILLE - South Carolina",
+  "GRENADA - Mississippi",
+  "GULF COAST - Mississippi",
+  "HARTFORD - Connecticut",
+  "HARTFORD-SOUTH - Connecticut",
+  "HIGH DESERT - California",
+  "HIGH POINT - North Carolina",
+  "HOUSTON - Texas",
+  "HOUSTON SOUTH - Texas",
+  "HOUSTON-NORTH - Texas",
+  "HUNTSVILLE - Alabama",
+  "INDIANAPOLIS - Indiana",
+  "Indianapolis South - Indiana",
+  "JACKSON - Mississippi",
+  "JACKSONVILLE - Florida",
+  "KANSAS CITY - Kansas",
+  "KNOXVILLE - Tennessee",
+  "Kansas City East - Missouri",
+  "LAFAYETTE - Louisiana",
+  "LAKE CITY - Georgia",
+  "LAS VEGAS - (OLD) - Nevada",
+  "LAS VEGAS - Nevada",
+  "LAUREL - Maryland",
+  "LINCOLN - Illinois",
+  "LITTLE ROCK - Arkansas",
+  "LONG ISLAND - New York",
+  "LONGVIEW - Texas",
+  "LOS ANGELES - California",
+  "LOUISVILLE - Kentucky",
+  "LOUISVILLE NORTH - Kentucky",
+  "LUBBOCK - Texas",
+  "Lexington - South Carolina",
+  "Los Angeles South - California",
+  "MACON - Georgia",
+  "MANCHESTER - New Hampshire",
+  "MCALLEN - Texas",
+  "MEMPHIS - Tennessee",
+  "METRO DC - Maryland",
+  "MIAMI - Florida",
+  "MIAMI-NORTH - Florida",
+  "MILWAUKEE - Wisconsin",
+  "MINNEAPOLIS/ST. PAUL - Minnesota",
+  "MISSOULA - Montana",
+  "MOBILE - Alabama",
+  "Minneapolis South - Minnesota",
+  "Monticello - New York",
+  "NASHVILLE - Tennessee",
+  "NEW CASTLE - Delaware",
+  "NEW ORLEANS - Louisiana",
+  "NEW ORLEANS EAST - Louisiana",
+  "NEWBURGH - New York",
+  "NORTH HOLLYWOOD - California",
+  "NORTHERN NEW JERSEY - New Jersey",
+  "NORTHERN VIRGINIA - Virginia",
+  "New Orleans and Louisiana Flood - Louisiana",
+  "OKLAHOMA CITY - Oklahoma",
+  "OMAHA - Nebraska",
+  "ORLANDO - Florida",
+  "ORLANDO-NORTH - Florida",
+  "Omaha South - Nebraska",
+  "PENSACOLA - Florida",
+  "PERMIAN BASIN - Texas",
+  "PHILADELPHIA - Pennsylvania",
+  "PHOENIX - Arizona",
+  "PITTSBURGH - Pennsylvania",
+  "PITTSBURGH-NORTH - Pennsylvania",
+  "PORT MURRAY - New Jersey",
+  "PORTAGE - Wisconsin",
+  "PORTLAND - GORHAM - Maine",
+  "PORTLAND - Oregon",
+  "PORTLAND SOUTH - Oregon",
+  "PROVIDENCE - Rhode Island",
+  "PULASKI - Virginia",
+  "Portland West - Oregon",
+  "Provo - Utah",
+  "RALEIGH - North Carolina",
+  "RENO - Nevada",
+  "RICHMOND - Virginia",
+  "ROANOKE - Virginia",
+  "ROCHESTER - New York",
+  "ROSEDALE - Maryland",
+  "SACRAMENTO - California",
+  "SACRAMENTO WEST - California",
+  "SALT LAKE CITY - Utah",
+  "SAN ANTONIO - Texas",
+  "SAN ANTONIO-SOUTH - Texas",
+  "SAN BERNARDINO - California",
+  "SAN DIEGO - California",
+  "SANTA CLARITA - California",
+  "SAVANNAH - Georgia",
+  "SCRANTON - Pennsylvania",
+  "SEATTLE - Washington",
+  "SHADY SPRING - West Virginia",
+  "SHREVEPORT - Louisiana",
+  "SIOUX FALLS - South Dakota",
+  "SOUTH BEND - Indiana",
+  "SOUTHERN NEW JERSEY - New Jersey",
+  "SPOKANE - Washington",
+  "SPRINGFIELD - Missouri",
+  "ST. CLOUD - Minnesota",
+  "ST. LOUIS - Illinois",
+  "STOCKTON - California",
+  "SYRACUSE - New York",
+  "Sayreville - New Jersey",
+  "Suffolk - Virginia",
+  "TAMPA - Florida",
+  "TAUNTON - Massachusetts",
+  "TIDEWATER - Virginia",
+  "TIFTON - Georgia",
+  "TUCSON - Arizona",
+  "TULSA - Oklahoma",
+  "Tampa North - Florida",
+  "Templeton - Massachusetts",
+  "WEST PALM BEACH - Florida",
+  "WICHITA - Kansas",
+  "WILMINGTON - North Carolina",
+  "YORK SPRINGS - Pennsylvania",
+  "BZ Trucking - Hawaii",
+  "D&D TOWING INC MAUI - Hawaii",
+  "DC TOWING HILO - Hawaii",
+  "HONOLULU - Hawaii",
+  "KINDA QUICK TOWING - Hawaii"
+];
+
+const IAAI_YARD_PORT = {
+  "ABILENE - Texas": "HOUSTON",
+  "ACE - Carson - California": "LOS ANGELES",
+  "ACE - PERRIS 2 - California": "LOS ANGELES",
+  "ACE - Perris - California": "LOS ANGELES",
+  "AKRON-CANTON - Ohio": "NORFOLK",
+  "ALBANY - New York": "NEWARK",
+  "ALBUQUERQUE - New Mexico": "HOUSTON",
+  "ALTOONA - Pennsylvania": "NEWARK",
+  "AMARILLO - Texas": "HOUSTON",
+  "ANAHEIM - California": "LOS ANGELES",
+  "APPLETON - Wisconsin": "CHICAGO",
+  "ASHEVILLE - North Carolina": "SAVANNAH",
+  "ATLANTA - Georgia": "SAVANNAH",
+  "ATLANTA EAST - Georgia": "SAVANNAH",
+  "ATLANTA NORTH - Georgia": "SAVANNAH",
+  "ATLANTA SOUTH - Georgia": "SAVANNAH",
+  "AUSTIN - Texas": "HOUSTON",
+  "AUSTIN NORTH - Texas": "HOUSTON",
+  "AVENEL NEW JERSEY - New Jersey": "NEWARK",
+  "Atlanta West - Georgia": "SAVANNAH",
+  "BALTIMORE - Maryland": "NORFOLK",
+  "BATON ROUGE - Louisiana": "HOUSTON",
+  "BILLINGS - Montana": "SEATTLE",
+  "BIRMINGHAM - Alabama": "SAVANNAH",
+  "BOISE - Idaho": "SEATTLE",
+  "BOSTON - SHIRLEY - Massachusetts": "NEWARK",
+  "BOWLING GREEN - Kentucky": "CHICAGO",
+  "BRIDGEPORT - Pennsylvania": "NEWARK",
+  "BUCKHANNON - West Virginia": "NORFOLK",
+  "BUFFALO - New York": "NEWARK",
+  "BURLINGTON - Vermont": "NEWARK",
+  "CENTRAL NEW JERSEY - New Jersey": "NEWARK",
+  "CHARLESTON - South Carolina": "SAVANNAH",
+  "CHARLOTTE - North Carolina": "NORFOLK",
+  "CHATTANOOGA - Tennessee": "SAVANNAH",
+  "CHICAGO-NORTH - Illinois": "CHICAGO",
+  "CHICAGO-SOUTH - Illinois": "CHICAGO",
+  "CHICAGO-WEST - Illinois": "CHICAGO",
+  "CINCINNATI - Ohio": "NORFOLK",
+  "CINCINNATI SOUTH - Ohio": "NORFOLK",
+  "CLEARWATER - Florida": "MIAMI",
+  "CLEVELAND - Ohio": "NORFOLK",
+  "COLTON - California": "LOS ANGELES",
+  "COLUMBIA - South Carolina": "SAVANNAH",
+  "COLUMBUS - Ohio": "NORFOLK",
+  "CONCORD - North Carolina": "NORFOLK",
+  "CORPUS CHRISTI - Texas": "HOUSTON",
+  "CULPEPER - Virginia": "NORFOLK",
+  "Colorado Springs - Colorado": "CHICAGO",
+  "DALLAS - Texas": "HOUSTON",
+  "DAVENPORT - Iowa": "CHICAGO",
+  "DAYTON - Ohio": "NORFOLK",
+  "DENVER - Colorado": "CHICAGO",
+  "DENVER EAST - Colorado": "CHICAGO",
+  "DES MOINES - Iowa": "CHICAGO",
+  "DETROIT - Michigan": "CHICAGO",
+  "DOTHAN - Alabama": "SAVANNAH",
+  "DUNDALK - Maryland": "NORFOLK",
+  "Dallas/Ft Worth - Texas": "HOUSTON",
+  "EAST BAY - California": "LOS ANGELES",
+  "EL PASO - Texas": "HOUSTON",
+  "ERIE - Pennsylvania": "NEWARK",
+  "EUGENE - Oregon": "SEATTLE",
+  "Elkton - Maryland": "NORFOLK",
+  "Englishtown - New Jersey": "NEWARK",
+  "FARGO - North Dakota": "CHICAGO",
+  "FAYETTEVILLE - Arkansas": "HOUSTON",
+  "FLINT - Michigan": "CHICAGO",
+  "FONTANA - California": "LOS ANGELES",
+  "FORT MYERS - Florida": "MIAMI",
+  "FORT PIERCE - Florida": "MIAMI",
+  "FREMONT - California": "LOS ANGELES",
+  "FRESNO - California": "LOS ANGELES",
+  "Fort Wayne - Indiana": "CHICAGO",
+  "Fort Worth North - Texas": "HOUSTON",
+  "Fredericksburg-South - Virginia": "NORFOLK",
+  "GRAND RAPIDS - Michigan": "CHICAGO",
+  "GREENSBORO - North Carolina": "NORFOLK",
+  "GREENVILLE - South Carolina": "SAVANNAH",
+  "GRENADA - Mississippi": "HOUSTON",
+  "GULF COAST - Mississippi": "HOUSTON",
+  "HARTFORD - Connecticut": "NEWARK",
+  "HARTFORD-SOUTH - Connecticut": "NEWARK",
+  "HIGH DESERT - California": "LOS ANGELES",
+  "HIGH POINT - North Carolina": "NORFOLK",
+  "HOUSTON - Texas": "HOUSTON",
+  "HOUSTON SOUTH - Texas": "HOUSTON",
+  "HOUSTON-NORTH - Texas": "HOUSTON",
+  "HUNTSVILLE - Alabama": "SAVANNAH",
+  "INDIANAPOLIS - Indiana": "CHICAGO",
+  "Indianapolis South - Indiana": "SAVANNAH",
+  "JACKSON - Mississippi": "HOUSTON",
+  "JACKSONVILLE - Florida": "SAVANNAH",
+  "KANSAS CITY - Kansas": "SAVANNAH",
+  "KNOXVILLE - Tennessee": "SAVANNAH",
+  "Kansas City East - Missouri": "SAVANNAH",
+  "LAFAYETTE - Louisiana": "HOUSTON",
+  "LAKE CITY - Georgia": "SAVANNAH",
+  "LAS VEGAS - (OLD) - Nevada": "LOS ANGELES",
+  "LAS VEGAS - Nevada": "LOS ANGELES",
+  "LAUREL - Maryland": "NORFOLK",
+  "LINCOLN - Illinois": "CHICAGO",
+  "LITTLE ROCK - Arkansas": "HOUSTON",
+  "LONG ISLAND - New York": "NEWARK",
+  "LONGVIEW - Texas": "HOUSTON",
+  "LOS ANGELES - California": "LOS ANGELES",
+  "LOUISVILLE - Kentucky": "SAVANNAH",
+  "LOUISVILLE NORTH - Kentucky": "SAVANNAH",
+  "LUBBOCK - Texas": "HOUSTON",
+  "Lexington - South Carolina": "SAVANNAH",
+  "Los Angeles South - California": "LOS ANGELES",
+  "MACON - Georgia": "SAVANNAH",
+  "MANCHESTER - New Hampshire": "NEWARK",
+  "MCALLEN - Texas": "HOUSTON",
+  "MEMPHIS - Tennessee": "SAVANNAH",
+  "METRO DC - Maryland": "NORFOLK",
+  "MIAMI - Florida": "MIAMI",
+  "MIAMI-NORTH - Florida": "MIAMI",
+  "MILWAUKEE - Wisconsin": "CHICAGO",
+  "MINNEAPOLIS/ST. PAUL - Minnesota": "CHICAGO",
+  "MISSOULA - Montana": "SEATTLE",
+  "MOBILE - Alabama": "SAVANNAH",
+  "Minneapolis South - Minnesota": "CHICAGO",
+  "Monticello - New York": "NEWARK",
+  "NASHVILLE - Tennessee": "SAVANNAH",
+  "NEW CASTLE - Delaware": "NEWARK",
+  "NEW ORLEANS - Louisiana": "HOUSTON",
+  "NEW ORLEANS EAST - Louisiana": "HOUSTON",
+  "NEWBURGH - New York": "NEWARK",
+  "NORTH HOLLYWOOD - California": "LOS ANGELES",
+  "NORTHERN NEW JERSEY - New Jersey": "NEWARK",
+  "NORTHERN VIRGINIA - Virginia": "NORFOLK",
+  "New Orleans and Louisiana Flood - Louisiana": "SAVANNAH",
+  "OKLAHOMA CITY - Oklahoma": "HOUSTON",
+  "OMAHA - Nebraska": "CHICAGO",
+  "ORLANDO - Florida": "MIAMI",
+  "ORLANDO-NORTH - Florida": "MIAMI",
+  "Omaha South - Nebraska": "CHICAGO",
+  "PENSACOLA - Florida": "MIAMI",
+  "PERMIAN BASIN - Texas": "HOUSTON",
+  "PHILADELPHIA - Pennsylvania": "NEWARK",
+  "PHOENIX - Arizona": "LOS ANGELES",
+  "PITTSBURGH - Pennsylvania": "NEWARK",
+  "PITTSBURGH-NORTH - Pennsylvania": "NEWARK",
+  "PORT MURRAY - New Jersey": "NEWARK",
+  "PORTAGE - Wisconsin": "CHICAGO",
+  "PORTLAND - GORHAM - Maine": "NEWARK",
+  "PORTLAND - Oregon": "SEATTLE",
+  "PORTLAND SOUTH - Oregon": "SEATTLE",
+  "PROVIDENCE - Rhode Island": "NEWARK",
+  "PULASKI - Virginia": "NORFOLK",
+  "Portland West - Oregon": "SEATTLE",
+  "Provo - Utah": "LOS ANGELES",
+  "RALEIGH - North Carolina": "NORFOLK",
+  "RENO - Nevada": "LOS ANGELES",
+  "RICHMOND - Virginia": "NORFOLK",
+  "ROANOKE - Virginia": "NORFOLK",
+  "ROCHESTER - New York": "NEWARK",
+  "ROSEDALE - Maryland": "NORFOLK",
+  "SACRAMENTO - California": "LOS ANGELES",
+  "SACRAMENTO WEST - California": "LOS ANGELES",
+  "SALT LAKE CITY - Utah": "LOS ANGELES",
+  "SAN ANTONIO - Texas": "HOUSTON",
+  "SAN ANTONIO-SOUTH - Texas": "HOUSTON",
+  "SAN BERNARDINO - California": "LOS ANGELES",
+  "SAN DIEGO - California": "LOS ANGELES",
+  "SANTA CLARITA - California": "LOS ANGELES",
+  "SAVANNAH - Georgia": "SAVANNAH",
+  "SCRANTON - Pennsylvania": "NEWARK",
+  "SEATTLE - Washington": "SEATTLE",
+  "SHADY SPRING - West Virginia": "NORFOLK",
+  "SHREVEPORT - Louisiana": "HOUSTON",
+  "SIOUX FALLS - South Dakota": "CHICAGO",
+  "SOUTH BEND - Indiana": "CHICAGO",
+  "SOUTHERN NEW JERSEY - New Jersey": "NEWARK",
+  "SPOKANE - Washington": "SEATTLE",
+  "SPRINGFIELD - Missouri": "SAVANNAH",
+  "ST. CLOUD - Minnesota": "CHICAGO",
+  "ST. LOUIS - Illinois": "SAVANNAH",
+  "STOCKTON - California": "LOS ANGELES",
+  "SYRACUSE - New York": "NEWARK",
+  "Sayreville - New Jersey": "NEWARK",
+  "Suffolk - Virginia": "NORFOLK",
+  "TAMPA - Florida": "MIAMI",
+  "TAUNTON - Massachusetts": "NEWARK",
+  "TIDEWATER - Virginia": "NORFOLK",
+  "TIFTON - Georgia": "SAVANNAH",
+  "TUCSON - Arizona": "LOS ANGELES",
+  "TULSA - Oklahoma": "HOUSTON",
+  "Tampa North - Florida": "MIAMI",
+  "Templeton - Massachusetts": "NEWARK",
+  "WEST PALM BEACH - Florida": "MIAMI",
+  "WICHITA - Kansas": "HOUSTON",
+  "WILMINGTON - North Carolina": "NORFOLK",
+  "YORK SPRINGS - Pennsylvania": "NEWARK",
+  "BZ Trucking - Hawaii": "LOS ANGELES",
+  "D&D TOWING INC MAUI - Hawaii": "LOS ANGELES",
+  "DC TOWING HILO - Hawaii": "LOS ANGELES",
+  "HONOLULU - Hawaii": "PORT OF HONOLULU",
+  "KINDA QUICK TOWING - Hawaii": "PORT OF HONOLULU"
+};
+
+const IAAI_FREIGHT = {
+  "ABILENE - Texas": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 750.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 850.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1100.0,
+      "total": 1450.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 325.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 400.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 400.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    }
+  },
+  "ACE - Carson - California": {
+    "regular": {
+      "towing": 160.0,
+      "ocean": 1200.0,
+      "total": 1360.0
+    },
+    "large": {
+      "towing": 160.0,
+      "ocean": 1450.0,
+      "total": 1610.0
+    },
+    "oversize": {
+      "towing": 160.0,
+      "ocean": 1700.0,
+      "total": 1860.0
+    },
+    "moto": {
+      "towing": 160.0,
+      "ocean": 500.0,
+      "total": 660.0
+    },
+    "moto_large": {
+      "towing": 160.0,
+      "ocean": 600.0,
+      "total": 760.0
+    },
+    "atv": {
+      "towing": 160.0,
+      "ocean": 600.0,
+      "total": 760.0
+    },
+    "jetski": {
+      "towing": 160.0,
+      "ocean": 1075.0,
+      "total": 1235.0
+    },
+    "jetski_trailer": {
+      "towing": 160.0,
+      "ocean": 1150.0,
+      "total": 1310.0
+    }
+  },
+  "ACE - PERRIS 2 - California": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 1200.0,
+      "total": 1475.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 1450.0,
+      "total": 1725.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1700.0,
+      "total": 1975.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 500.0,
+      "total": 775.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 600.0,
+      "total": 875.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 600.0,
+      "total": 875.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 1075.0,
+      "total": 1350.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 1150.0,
+      "total": 1425.0
+    }
+  },
+  "ACE - Perris - California": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 1200.0,
+      "total": 1450.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 1450.0,
+      "total": 1700.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1700.0,
+      "total": 1950.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 500.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 1075.0,
+      "total": 1325.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 1150.0,
+      "total": 1400.0
+    }
+  },
+  "AKRON-CANTON - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "ALBANY - New York": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 800.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1050.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 575.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 650.0,
+      "total": 925.0
+    }
+  },
+  "ALBUQUERQUE - New Mexico": {
+    "regular": {
+      "towing": 600.0,
+      "ocean": 750.0,
+      "total": 1350.0
+    },
+    "large": {
+      "towing": 600.0,
+      "ocean": 850.0,
+      "total": 1450.0
+    },
+    "oversize": {
+      "towing": 600.0,
+      "ocean": 1100.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 325.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 400.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 400.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 600.0,
+      "ocean": 625.0,
+      "total": 1225.0
+    },
+    "jetski_trailer": {
+      "towing": 600.0,
+      "ocean": 700.0,
+      "total": 1300.0
+    }
+  },
+  "ALTOONA - Pennsylvania": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1050.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 575.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 650.0,
+      "total": 1100.0
+    }
+  },
+  "AMARILLO - Texas": {
+    "regular": {
+      "towing": 525.0,
+      "ocean": 750.0,
+      "total": 1275.0
+    },
+    "large": {
+      "towing": 525.0,
+      "ocean": 850.0,
+      "total": 1375.0
+    },
+    "oversize": {
+      "towing": 525.0,
+      "ocean": 1100.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 325.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 525.0,
+      "ocean": 625.0,
+      "total": 1150.0
+    },
+    "jetski_trailer": {
+      "towing": 525.0,
+      "ocean": 700.0,
+      "total": 1225.0
+    }
+  },
+  "ANAHEIM - California": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 1200.0,
+      "total": 1400.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 1450.0,
+      "total": 1650.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1700.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 500.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 1075.0,
+      "total": 1275.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 1150.0,
+      "total": 1350.0
+    }
+  },
+  "APPLETON - Wisconsin": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 850.0,
+      "total": 1175.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 950.0,
+      "total": 1275.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1250.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 350.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 450.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 450.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 725.0,
+      "total": 1050.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 800.0,
+      "total": 1125.0
+    }
+  },
+  "ASHEVILLE - North Carolina": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 675.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 775.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1000.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 550.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    }
+  },
+  "ATLANTA - Georgia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "ATLANTA EAST - Georgia": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 675.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 775.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1000.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 300.0,
+      "total": 575.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 375.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 375.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 550.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 625.0,
+      "total": 950.0
+    }
+  },
+  "ATLANTA NORTH - Georgia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "ATLANTA SOUTH - Georgia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "AUSTIN - Texas": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 325.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 400.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 400.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "AUSTIN NORTH - Texas": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 185.0,
+      "ocean": 325.0,
+      "total": 510.0
+    },
+    "moto_large": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "atv": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "AVENEL NEW JERSEY - New Jersey": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 700.0,
+      "total": 850.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 800.0,
+      "total": 950.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1050.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 575.0,
+      "total": 725.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 650.0,
+      "total": 800.0
+    }
+  },
+  "Atlanta West - Georgia": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 675.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 775.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1000.0,
+      "total": 1325.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 550.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 625.0,
+      "total": 950.0
+    }
+  },
+  "BALTIMORE - Maryland": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 675.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 775.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1000.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 550.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    }
+  },
+  "BATON ROUGE - Louisiana": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 750.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 850.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1100.0,
+      "total": 1450.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 325.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 400.0,
+      "total": 675.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 400.0,
+      "total": 675.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    }
+  },
+  "BILLINGS - Montana": {
+    "regular": {
+      "towing": 850.0,
+      "ocean": 1625.0,
+      "total": 2475.0
+    },
+    "large": {
+      "towing": 850.0,
+      "ocean": 1800.0,
+      "total": 2650.0
+    },
+    "oversize": {
+      "towing": 850.0,
+      "ocean": 2200.0,
+      "total": 3050.0
+    },
+    "moto": {
+      "towing": 775.0,
+      "ocean": 725.0,
+      "total": 1500.0
+    },
+    "moto_large": {
+      "towing": 775.0,
+      "ocean": 825.0,
+      "total": 1600.0
+    },
+    "atv": {
+      "towing": 775.0,
+      "ocean": 825.0,
+      "total": 1600.0
+    },
+    "jetski": {
+      "towing": 850.0,
+      "ocean": 1500.0,
+      "total": 2350.0
+    },
+    "jetski_trailer": {
+      "towing": 850.0,
+      "ocean": 1575.0,
+      "total": 2425.0
+    }
+  },
+  "BIRMINGHAM - Alabama": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 675.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 775.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1000.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 550.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 625.0,
+      "total": 1000.0
+    }
+  },
+  "BOISE - Idaho": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 1625.0,
+      "total": 2075.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 1800.0,
+      "total": 2250.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 2200.0,
+      "total": 2650.0
+    },
+    "moto": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "moto_large": {
+      "towing": 450.0,
+      "ocean": 825.0,
+      "total": 1275.0
+    },
+    "atv": {
+      "towing": 450.0,
+      "ocean": 825.0,
+      "total": 1275.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 1500.0,
+      "total": 1950.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 1575.0,
+      "total": 2025.0
+    }
+  },
+  "BOSTON - SHIRLEY - Massachusetts": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 700.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 800.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1050.0,
+      "total": 1425.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 575.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 650.0,
+      "total": 1025.0
+    }
+  },
+  "BOWLING GREEN - Kentucky": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 850.0,
+      "total": 1350.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 950.0,
+      "total": 1450.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1250.0,
+      "total": 1750.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 350.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 450.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 450.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 725.0,
+      "total": 1225.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    }
+  },
+  "BRIDGEPORT - Pennsylvania": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 700.0,
+      "total": 925.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 800.0,
+      "total": 1025.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1050.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 300.0,
+      "total": 475.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 575.0,
+      "total": 800.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 650.0,
+      "total": 875.0
+    }
+  },
+  "BUCKHANNON - West Virginia": {
+    "regular": {
+      "towing": 625.0,
+      "ocean": 675.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 625.0,
+      "ocean": 775.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 625.0,
+      "ocean": 1000.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 300.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "jetski": {
+      "towing": 625.0,
+      "ocean": 550.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 625.0,
+      "ocean": 625.0,
+      "total": 1250.0
+    }
+  },
+  "BUFFALO - New York": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 700.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1050.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 575.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 650.0,
+      "total": 1150.0
+    }
+  },
+  "BURLINGTON - Vermont": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 700.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1050.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 575.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 650.0,
+      "total": 1150.0
+    }
+  },
+  "CENTRAL NEW JERSEY - New Jersey": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 700.0,
+      "total": 850.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 800.0,
+      "total": 950.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1050.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 575.0,
+      "total": 725.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 650.0,
+      "total": 800.0
+    }
+  },
+  "CHARLESTON - South Carolina": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 675.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 775.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1000.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 550.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    }
+  },
+  "CHARLOTTE - North Carolina": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 675.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 775.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1000.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 550.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 625.0,
+      "total": 950.0
+    }
+  },
+  "CHATTANOOGA - Tennessee": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 675.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 775.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1000.0,
+      "total": 1475.0
+    },
+    "moto": {
+      "towing": 425.0,
+      "ocean": 300.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 550.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 625.0,
+      "total": 1100.0
+    }
+  },
+  "CHICAGO-NORTH - Illinois": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 950.0,
+      "total": 1130.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1250.0,
+      "total": 1430.0
+    },
+    "moto": {
+      "towing": 180.0,
+      "ocean": 350.0,
+      "total": 530.0
+    },
+    "moto_large": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "atv": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 725.0,
+      "total": 905.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 800.0,
+      "total": 980.0
+    }
+  },
+  "CHICAGO-SOUTH - Illinois": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 950.0,
+      "total": 1130.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1250.0,
+      "total": 1430.0
+    },
+    "moto": {
+      "towing": 180.0,
+      "ocean": 350.0,
+      "total": 530.0
+    },
+    "moto_large": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "atv": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 725.0,
+      "total": 905.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 800.0,
+      "total": 980.0
+    }
+  },
+  "CHICAGO-WEST - Illinois": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 950.0,
+      "total": 1130.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1250.0,
+      "total": 1430.0
+    },
+    "moto": {
+      "towing": 180.0,
+      "ocean": 350.0,
+      "total": 530.0
+    },
+    "moto_large": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "atv": {
+      "towing": 180.0,
+      "ocean": 450.0,
+      "total": 630.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 725.0,
+      "total": 905.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 800.0,
+      "total": 980.0
+    }
+  },
+  "CINCINNATI - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "CINCINNATI SOUTH - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "CLEARWATER - Florida": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "CLEVELAND - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "COLTON - California": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 1200.0,
+      "total": 1400.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 1450.0,
+      "total": 1650.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1700.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 500.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 1075.0,
+      "total": 1275.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 1150.0,
+      "total": 1350.0
+    }
+  },
+  "COLUMBIA - South Carolina": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 675.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 775.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1000.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 550.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    }
+  },
+  "COLUMBUS - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "CONCORD - North Carolina": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "CORPUS CHRISTI - Texas": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 750.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 850.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1100.0,
+      "total": 1450.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 325.0,
+      "total": 575.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    }
+  },
+  "CULPEPER - Virginia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "Colorado Springs - Colorado": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 850.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 950.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1250.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 350.0,
+      "total": 850.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 725.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 800.0,
+      "total": 1450.0
+    }
+  },
+  "DALLAS - Texas": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 185.0,
+      "ocean": 325.0,
+      "total": 510.0
+    },
+    "moto_large": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "atv": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "DAVENPORT - Iowa": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 850.0,
+      "total": 1175.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 950.0,
+      "total": 1275.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1250.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 350.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 450.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 450.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 725.0,
+      "total": 1050.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 800.0,
+      "total": 1125.0
+    }
+  },
+  "DAYTON - Ohio": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "DENVER - Colorado": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 850.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 950.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1250.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 350.0,
+      "total": 850.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 725.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 800.0,
+      "total": 1450.0
+    }
+  },
+  "DENVER EAST - Colorado": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 850.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 950.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1250.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 350.0,
+      "total": 850.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 450.0,
+      "total": 950.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 725.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 800.0,
+      "total": 1450.0
+    }
+  },
+  "DES MOINES - Iowa": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 950.0,
+      "total": 1350.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1250.0,
+      "total": 1650.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 350.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 450.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 450.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 725.0,
+      "total": 1125.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 800.0,
+      "total": 1200.0
+    }
+  },
+  "DETROIT - Michigan": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 350.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "DOTHAN - Alabama": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 675.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 775.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1000.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 550.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 625.0,
+      "total": 1000.0
+    }
+  },
+  "DUNDALK - Maryland": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "Dallas/Ft Worth - Texas": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 185.0,
+      "ocean": 325.0,
+      "total": 510.0
+    },
+    "moto_large": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "atv": {
+      "towing": 185.0,
+      "ocean": 400.0,
+      "total": 585.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "EAST BAY - California": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 1200.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 1450.0,
+      "total": 1750.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1700.0,
+      "total": 2000.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 500.0,
+      "total": 900.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 600.0,
+      "total": 1000.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 600.0,
+      "total": 1000.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 1075.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 1150.0,
+      "total": 1450.0
+    }
+  },
+  "EL PASO - Texas": {
+    "regular": {
+      "towing": 425.0,
+      "ocean": 750.0,
+      "total": 1175.0
+    },
+    "large": {
+      "towing": 425.0,
+      "ocean": 850.0,
+      "total": 1275.0
+    },
+    "oversize": {
+      "towing": 425.0,
+      "ocean": 1100.0,
+      "total": 1525.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 325.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 425.0,
+      "ocean": 625.0,
+      "total": 1050.0
+    },
+    "jetski_trailer": {
+      "towing": 425.0,
+      "ocean": 700.0,
+      "total": 1125.0
+    }
+  },
+  "ERIE - Pennsylvania": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 700.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1050.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 575.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 650.0,
+      "total": 1150.0
+    }
+  },
+  "EUGENE - Oregon": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 1625.0,
+      "total": 2000.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 1800.0,
+      "total": 2175.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 2200.0,
+      "total": 2575.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 825.0,
+      "total": 1125.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 825.0,
+      "total": 1125.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 1500.0,
+      "total": 1875.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 1575.0,
+      "total": 1950.0
+    }
+  },
+  "Elkton - Maryland": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 675.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 775.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1000.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 300.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 550.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    }
+  },
+  "Englishtown - New Jersey": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 700.0,
+      "total": 850.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 800.0,
+      "total": 950.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1050.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 575.0,
+      "total": 725.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 650.0,
+      "total": 800.0
+    }
+  },
+  "FARGO - North Dakota": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 850.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 950.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1250.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 550.0,
+      "ocean": 350.0,
+      "total": 900.0
+    },
+    "moto_large": {
+      "towing": 550.0,
+      "ocean": 450.0,
+      "total": 1000.0
+    },
+    "atv": {
+      "towing": 550.0,
+      "ocean": 450.0,
+      "total": 1000.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 725.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 800.0,
+      "total": 1450.0
+    }
+  },
+  "FAYETTEVILLE - Arkansas": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 750.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 850.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1100.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 325.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 625.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 700.0,
+      "total": 1175.0
+    }
+  },
+  "FLINT - Michigan": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 350.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 450.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 450.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "FONTANA - California": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 1200.0,
+      "total": 1400.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 1450.0,
+      "total": 1650.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1700.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 500.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 1075.0,
+      "total": 1275.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 1150.0,
+      "total": 1350.0
+    }
+  },
+  "FORT MYERS - Florida": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "FORT PIERCE - Florida": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 750.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 850.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1100.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 180.0,
+      "ocean": 300.0,
+      "total": 480.0
+    },
+    "moto_large": {
+      "towing": 180.0,
+      "ocean": 400.0,
+      "total": 580.0
+    },
+    "atv": {
+      "towing": 180.0,
+      "ocean": 400.0,
+      "total": 580.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 625.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 700.0,
+      "total": 900.0
+    }
+  },
+  "FREMONT - California": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 1200.0,
+      "total": 1600.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 1450.0,
+      "total": 1850.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1700.0,
+      "total": 2100.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 1075.0,
+      "total": 1475.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 1150.0,
+      "total": 1550.0
+    }
+  },
+  "FRESNO - California": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 1200.0,
+      "total": 1575.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 1450.0,
+      "total": 1825.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1700.0,
+      "total": 2075.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 1075.0,
+      "total": 1450.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 1150.0,
+      "total": 1525.0
+    }
+  },
+  "Fort Wayne - Indiana": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 950.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1250.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 350.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 800.0,
+      "total": 1100.0
+    }
+  },
+  "Fort Worth North - Texas": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 325.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "Fredericksburg-South - Virginia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "GRAND RAPIDS - Michigan": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 950.0,
+      "total": 1350.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1250.0,
+      "total": 1650.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 350.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 450.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 450.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 725.0,
+      "total": 1125.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 800.0,
+      "total": 1200.0
+    }
+  },
+  "GREENSBORO - North Carolina": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "GREENVILLE - South Carolina": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 675.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 775.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1000.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 300.0,
+      "total": 575.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 375.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 375.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 550.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 625.0,
+      "total": 950.0
+    }
+  },
+  "GRENADA - Mississippi": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 750.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 850.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1100.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 325.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 625.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 700.0,
+      "total": 1175.0
+    }
+  },
+  "GULF COAST - Mississippi": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 750.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 850.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1100.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 325.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 625.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 700.0,
+      "total": 1175.0
+    }
+  },
+  "HARTFORD - Connecticut": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 800.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1050.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 575.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 650.0,
+      "total": 900.0
+    }
+  },
+  "HARTFORD-SOUTH - Connecticut": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 700.0,
+      "total": 925.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 800.0,
+      "total": 1025.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1050.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 300.0,
+      "total": 475.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 575.0,
+      "total": 800.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 650.0,
+      "total": 875.0
+    }
+  },
+  "HIGH DESERT - California": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 1200.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 1450.0,
+      "total": 1750.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1700.0,
+      "total": 2000.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 500.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 1075.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 1150.0,
+      "total": 1450.0
+    }
+  },
+  "HIGH POINT - North Carolina": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "HOUSTON - Texas": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 750.0,
+      "total": 930.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1100.0,
+      "total": 1280.0
+    },
+    "moto": {
+      "towing": 100.0,
+      "ocean": 325.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 625.0,
+      "total": 805.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 700.0,
+      "total": 880.0
+    }
+  },
+  "HOUSTON SOUTH - Texas": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 750.0,
+      "total": 930.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1100.0,
+      "total": 1280.0
+    },
+    "moto": {
+      "towing": 100.0,
+      "ocean": 325.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 625.0,
+      "total": 805.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 700.0,
+      "total": 880.0
+    }
+  },
+  "HOUSTON-NORTH - Texas": {
+    "regular": {
+      "towing": 165.0,
+      "ocean": 750.0,
+      "total": 915.0
+    },
+    "large": {
+      "towing": 165.0,
+      "ocean": 850.0,
+      "total": 1015.0
+    },
+    "oversize": {
+      "towing": 165.0,
+      "ocean": 1100.0,
+      "total": 1265.0
+    },
+    "moto": {
+      "towing": 100.0,
+      "ocean": 325.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 100.0,
+      "ocean": 400.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 165.0,
+      "ocean": 625.0,
+      "total": 790.0
+    },
+    "jetski_trailer": {
+      "towing": 165.0,
+      "ocean": 700.0,
+      "total": 865.0
+    }
+  },
+  "HUNTSVILLE - Alabama": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 675.0,
+      "total": 1125.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 775.0,
+      "total": 1225.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1000.0,
+      "total": 1450.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 550.0,
+      "total": 1000.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 625.0,
+      "total": 1075.0
+    }
+  },
+  "INDIANAPOLIS - Indiana": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 950.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1250.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 350.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 800.0,
+      "total": 1100.0
+    }
+  },
+  "Indianapolis South - Indiana": {
+    "regular": {
+      "towing": 600.0,
+      "ocean": 675.0,
+      "total": 1275.0
+    },
+    "large": {
+      "towing": 600.0,
+      "ocean": 775.0,
+      "total": 1375.0
+    },
+    "oversize": {
+      "towing": 600.0,
+      "ocean": 1000.0,
+      "total": 1600.0
+    },
+    "moto": {
+      "towing": 525.0,
+      "ocean": 300.0,
+      "total": 825.0
+    },
+    "moto_large": {
+      "towing": 525.0,
+      "ocean": 375.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 525.0,
+      "ocean": 375.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 600.0,
+      "ocean": 550.0,
+      "total": 1150.0
+    },
+    "jetski_trailer": {
+      "towing": 600.0,
+      "ocean": 625.0,
+      "total": 1225.0
+    }
+  },
+  "JACKSON - Mississippi": {
+    "regular": {
+      "towing": 425.0,
+      "ocean": 750.0,
+      "total": 1175.0
+    },
+    "large": {
+      "towing": 425.0,
+      "ocean": 850.0,
+      "total": 1275.0
+    },
+    "oversize": {
+      "towing": 425.0,
+      "ocean": 1100.0,
+      "total": 1525.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 325.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 425.0,
+      "ocean": 625.0,
+      "total": 1050.0
+    },
+    "jetski_trailer": {
+      "towing": 425.0,
+      "ocean": 700.0,
+      "total": 1125.0
+    }
+  },
+  "JACKSONVILLE - Florida": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 675.0,
+      "total": 900.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 775.0,
+      "total": 1000.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1000.0,
+      "total": 1225.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 300.0,
+      "total": 475.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 550.0,
+      "total": 775.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 625.0,
+      "total": 850.0
+    }
+  },
+  "KANSAS CITY - Kansas": {
+    "regular": {
+      "towing": 625.0,
+      "ocean": 675.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 625.0,
+      "ocean": 775.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 625.0,
+      "ocean": 1000.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 425.0,
+      "ocean": 300.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 625.0,
+      "ocean": 550.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 625.0,
+      "ocean": 625.0,
+      "total": 1250.0
+    }
+  },
+  "KNOXVILLE - Tennessee": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 675.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 775.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1000.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 550.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    }
+  },
+  "Kansas City East - Missouri": {
+    "regular": {
+      "towing": 625.0,
+      "ocean": 675.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 625.0,
+      "ocean": 775.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 625.0,
+      "ocean": 1000.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 425.0,
+      "ocean": 300.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 625.0,
+      "ocean": 550.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 625.0,
+      "ocean": 625.0,
+      "total": 1250.0
+    }
+  },
+  "LAFAYETTE - Louisiana": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 750.0,
+      "total": 1125.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 850.0,
+      "total": 1225.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1100.0,
+      "total": 1475.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 325.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 625.0,
+      "total": 1000.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 700.0,
+      "total": 1075.0
+    }
+  },
+  "LAKE CITY - Georgia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "LAS VEGAS - (OLD) - Nevada": {
+    "regular": {
+      "towing": 325.0,
+      "ocean": 1200.0,
+      "total": 1525.0
+    },
+    "large": {
+      "towing": 325.0,
+      "ocean": 1450.0,
+      "total": 1775.0
+    },
+    "oversize": {
+      "towing": 325.0,
+      "ocean": 1700.0,
+      "total": 2025.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 500.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 325.0,
+      "ocean": 1075.0,
+      "total": 1400.0
+    },
+    "jetski_trailer": {
+      "towing": 325.0,
+      "ocean": 1150.0,
+      "total": 1475.0
+    }
+  },
+  "LAS VEGAS - Nevada": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 1200.0,
+      "total": 1575.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 1450.0,
+      "total": 1825.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1700.0,
+      "total": 2075.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 1075.0,
+      "total": 1450.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 1150.0,
+      "total": 1525.0
+    }
+  },
+  "LAUREL - Maryland": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "LINCOLN - Illinois": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 950.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1250.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 350.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 800.0,
+      "total": 1100.0
+    }
+  },
+  "LITTLE ROCK - Arkansas": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 750.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1100.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 325.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 625.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    }
+  },
+  "LONG ISLAND - New York": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 800.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1050.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 190.0,
+      "ocean": 300.0,
+      "total": 490.0
+    },
+    "moto_large": {
+      "towing": 190.0,
+      "ocean": 375.0,
+      "total": 565.0
+    },
+    "atv": {
+      "towing": 190.0,
+      "ocean": 375.0,
+      "total": 565.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 575.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 650.0,
+      "total": 900.0
+    }
+  },
+  "LONGVIEW - Texas": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 325.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "LOS ANGELES - California": {
+    "regular": {
+      "towing": 160.0,
+      "ocean": 1200.0,
+      "total": 1360.0
+    },
+    "large": {
+      "towing": 160.0,
+      "ocean": 1450.0,
+      "total": 1610.0
+    },
+    "oversize": {
+      "towing": 160.0,
+      "ocean": 1700.0,
+      "total": 1860.0
+    },
+    "moto": {
+      "towing": 160.0,
+      "ocean": 500.0,
+      "total": 660.0
+    },
+    "moto_large": {
+      "towing": 160.0,
+      "ocean": 600.0,
+      "total": 760.0
+    },
+    "atv": {
+      "towing": 160.0,
+      "ocean": 600.0,
+      "total": 760.0
+    },
+    "jetski": {
+      "towing": 160.0,
+      "ocean": 1075.0,
+      "total": 1235.0
+    },
+    "jetski_trailer": {
+      "towing": 160.0,
+      "ocean": 1150.0,
+      "total": 1310.0
+    }
+  },
+  "LOUISVILLE - Kentucky": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 300.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "LOUISVILLE NORTH - Kentucky": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 675.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 775.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1000.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 300.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 550.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    }
+  },
+  "LUBBOCK - Texas": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 750.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1100.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 325.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 625.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    }
+  },
+  "Lexington - South Carolina": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "Los Angeles South - California": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 1200.0,
+      "total": 1350.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 1450.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1700.0,
+      "total": 1850.0
+    },
+    "moto": {
+      "towing": 150.0,
+      "ocean": 500.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 150.0,
+      "ocean": 600.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 150.0,
+      "ocean": 600.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 1075.0,
+      "total": 1225.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 1150.0,
+      "total": 1300.0
+    }
+  },
+  "MACON - Georgia": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 675.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 775.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1000.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 550.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    }
+  },
+  "MANCHESTER - New Hampshire": {
+    "regular": {
+      "towing": 425.0,
+      "ocean": 700.0,
+      "total": 1125.0
+    },
+    "large": {
+      "towing": 425.0,
+      "ocean": 800.0,
+      "total": 1225.0
+    },
+    "oversize": {
+      "towing": 425.0,
+      "ocean": 1050.0,
+      "total": 1475.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 425.0,
+      "ocean": 575.0,
+      "total": 1000.0
+    },
+    "jetski_trailer": {
+      "towing": 425.0,
+      "ocean": 650.0,
+      "total": 1075.0
+    }
+  },
+  "MCALLEN - Texas": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 750.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 850.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1100.0,
+      "total": 1450.0
+    },
+    "moto": {
+      "towing": 285.0,
+      "ocean": 325.0,
+      "total": 610.0
+    },
+    "moto_large": {
+      "towing": 285.0,
+      "ocean": 400.0,
+      "total": 685.0
+    },
+    "atv": {
+      "towing": 285.0,
+      "ocean": 400.0,
+      "total": 685.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    }
+  },
+  "MEMPHIS - Tennessee": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 675.0,
+      "total": 1175.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 775.0,
+      "total": 1275.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1000.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 450.0,
+      "ocean": 300.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 450.0,
+      "ocean": 375.0,
+      "total": 825.0
+    },
+    "atv": {
+      "towing": 450.0,
+      "ocean": 375.0,
+      "total": 825.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 550.0,
+      "total": 1050.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 625.0,
+      "total": 1125.0
+    }
+  },
+  "METRO DC - Maryland": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "MIAMI - Florida": {
+    "regular": {
+      "towing": 125.0,
+      "ocean": 750.0,
+      "total": 875.0
+    },
+    "large": {
+      "towing": 125.0,
+      "ocean": 850.0,
+      "total": 975.0
+    },
+    "oversize": {
+      "towing": 125.0,
+      "ocean": 1100.0,
+      "total": 1225.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 400.0,
+      "total": 525.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 400.0,
+      "total": 525.0
+    },
+    "jetski": {
+      "towing": 125.0,
+      "ocean": 625.0,
+      "total": 750.0
+    },
+    "jetski_trailer": {
+      "towing": 125.0,
+      "ocean": 700.0,
+      "total": 825.0
+    }
+  },
+  "MIAMI-NORTH - Florida": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 750.0,
+      "total": 900.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 850.0,
+      "total": 1000.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1100.0,
+      "total": 1250.0
+    },
+    "moto": {
+      "towing": 150.0,
+      "ocean": 300.0,
+      "total": 450.0
+    },
+    "moto_large": {
+      "towing": 150.0,
+      "ocean": 400.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 150.0,
+      "ocean": 400.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 625.0,
+      "total": 775.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 700.0,
+      "total": 850.0
+    }
+  },
+  "MILWAUKEE - Wisconsin": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 850.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 950.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1250.0,
+      "total": 1475.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 350.0,
+      "total": 575.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 450.0,
+      "total": 675.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 450.0,
+      "total": 675.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 725.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 800.0,
+      "total": 1025.0
+    }
+  },
+  "MINNEAPOLIS/ST. PAUL - Minnesota": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 350.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "MISSOULA - Montana": {
+    "regular": {
+      "towing": 600.0,
+      "ocean": 1625.0,
+      "total": 2225.0
+    },
+    "large": {
+      "towing": 600.0,
+      "ocean": 1800.0,
+      "total": 2400.0
+    },
+    "oversize": {
+      "towing": 600.0,
+      "ocean": 2200.0,
+      "total": 2800.0
+    },
+    "moto": {
+      "towing": 600.0,
+      "ocean": 725.0,
+      "total": 1325.0
+    },
+    "moto_large": {
+      "towing": 600.0,
+      "ocean": 825.0,
+      "total": 1425.0
+    },
+    "atv": {
+      "towing": 600.0,
+      "ocean": 825.0,
+      "total": 1425.0
+    },
+    "jetski": {
+      "towing": 600.0,
+      "ocean": 1500.0,
+      "total": 2100.0
+    },
+    "jetski_trailer": {
+      "towing": 600.0,
+      "ocean": 1575.0,
+      "total": 2175.0
+    }
+  },
+  "MOBILE - Alabama": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 675.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 775.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1000.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 550.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    }
+  },
+  "Minneapolis South - Minnesota": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 350.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "Monticello - New York": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 800.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1050.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 575.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 650.0,
+      "total": 900.0
+    }
+  },
+  "NASHVILLE - Tennessee": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 675.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 775.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1000.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 550.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    }
+  },
+  "NEW CASTLE - Delaware": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 800.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1050.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 575.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 650.0,
+      "total": 900.0
+    }
+  },
+  "NEW ORLEANS - Louisiana": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 750.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1100.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 325.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 700.0,
+      "total": 1100.0
+    }
+  },
+  "NEW ORLEANS EAST - Louisiana": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 750.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1100.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 325.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 400.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 700.0,
+      "total": 1100.0
+    }
+  },
+  "NEWBURGH - New York": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 700.0,
+      "total": 925.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 800.0,
+      "total": 1025.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1050.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 300.0,
+      "total": 475.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 575.0,
+      "total": 800.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 650.0,
+      "total": 875.0
+    }
+  },
+  "NORTH HOLLYWOOD - California": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 1200.0,
+      "total": 1400.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 1450.0,
+      "total": 1650.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1700.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 500.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 1075.0,
+      "total": 1275.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 1150.0,
+      "total": 1350.0
+    }
+  },
+  "NORTHERN NEW JERSEY - New Jersey": {
+    "regular": {
+      "towing": 125.0,
+      "ocean": 700.0,
+      "total": 825.0
+    },
+    "large": {
+      "towing": 125.0,
+      "ocean": 800.0,
+      "total": 925.0
+    },
+    "oversize": {
+      "towing": 125.0,
+      "ocean": 1050.0,
+      "total": 1175.0
+    },
+    "moto": {
+      "towing": 75.0,
+      "ocean": 300.0,
+      "total": 375.0
+    },
+    "moto_large": {
+      "towing": 75.0,
+      "ocean": 375.0,
+      "total": 450.0
+    },
+    "atv": {
+      "towing": 75.0,
+      "ocean": 375.0,
+      "total": 450.0
+    },
+    "jetski": {
+      "towing": 125.0,
+      "ocean": 575.0,
+      "total": 700.0
+    },
+    "jetski_trailer": {
+      "towing": 125.0,
+      "ocean": 650.0,
+      "total": 775.0
+    }
+  },
+  "NORTHERN VIRGINIA - Virginia": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "New Orleans and Louisiana Flood - Louisiana": {
+    "regular": {
+      "towing": 425.0,
+      "ocean": 675.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 425.0,
+      "ocean": 775.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 425.0,
+      "ocean": 1000.0,
+      "total": 1425.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 300.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 375.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 375.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 425.0,
+      "ocean": 550.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 425.0,
+      "ocean": 625.0,
+      "total": 1050.0
+    }
+  },
+  "OKLAHOMA CITY - Oklahoma": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 750.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1100.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 325.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 400.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 400.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 700.0,
+      "total": 1100.0
+    }
+  },
+  "OMAHA - Nebraska": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 350.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "ORLANDO - Florida": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "ORLANDO-NORTH - Florida": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "Omaha South - Nebraska": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 950.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1250.0,
+      "total": 1700.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 350.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 450.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 725.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    }
+  },
+  "PENSACOLA - Florida": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 750.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 850.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1100.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 300.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 700.0,
+      "total": 1100.0
+    }
+  },
+  "PERMIAN BASIN - Texas": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 750.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 850.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1100.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 325.0,
+      "total": 675.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 400.0,
+      "total": 750.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 625.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    }
+  },
+  "PHILADELPHIA - Pennsylvania": {
+    "regular": {
+      "towing": 225.0,
+      "ocean": 700.0,
+      "total": 925.0
+    },
+    "large": {
+      "towing": 225.0,
+      "ocean": 800.0,
+      "total": 1025.0
+    },
+    "oversize": {
+      "towing": 225.0,
+      "ocean": 1050.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 300.0,
+      "total": 475.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 375.0,
+      "total": 550.0
+    },
+    "jetski": {
+      "towing": 225.0,
+      "ocean": 575.0,
+      "total": 800.0
+    },
+    "jetski_trailer": {
+      "towing": 225.0,
+      "ocean": 650.0,
+      "total": 875.0
+    }
+  },
+  "PHOENIX - Arizona": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 1200.0,
+      "total": 1550.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 1450.0,
+      "total": 1800.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1700.0,
+      "total": 2050.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 1075.0,
+      "total": 1425.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 1150.0,
+      "total": 1500.0
+    }
+  },
+  "PITTSBURGH - Pennsylvania": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1050.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 575.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 650.0,
+      "total": 1100.0
+    }
+  },
+  "PITTSBURGH-NORTH - Pennsylvania": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1050.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 575.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 650.0,
+      "total": 1100.0
+    }
+  },
+  "PORT MURRAY - New Jersey": {
+    "regular": {
+      "towing": 175.0,
+      "ocean": 700.0,
+      "total": 875.0
+    },
+    "large": {
+      "towing": 175.0,
+      "ocean": 800.0,
+      "total": 975.0
+    },
+    "oversize": {
+      "towing": 175.0,
+      "ocean": 1050.0,
+      "total": 1225.0
+    },
+    "moto": {
+      "towing": 145.0,
+      "ocean": 300.0,
+      "total": 445.0
+    },
+    "moto_large": {
+      "towing": 145.0,
+      "ocean": 375.0,
+      "total": 520.0
+    },
+    "atv": {
+      "towing": 145.0,
+      "ocean": 375.0,
+      "total": 520.0
+    },
+    "jetski": {
+      "towing": 175.0,
+      "ocean": 575.0,
+      "total": 750.0
+    },
+    "jetski_trailer": {
+      "towing": 175.0,
+      "ocean": 650.0,
+      "total": 825.0
+    }
+  },
+  "PORTAGE - Wisconsin": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 950.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1250.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 350.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 450.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 800.0,
+      "total": 1100.0
+    }
+  },
+  "PORTLAND - GORHAM - Maine": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 700.0,
+      "total": 1200.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1050.0,
+      "total": 1550.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 300.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 375.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 575.0,
+      "total": 1075.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 650.0,
+      "total": 1150.0
+    }
+  },
+  "PORTLAND - Oregon": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 1625.0,
+      "total": 1875.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 1800.0,
+      "total": 2050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 2200.0,
+      "total": 2450.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 725.0,
+      "total": 975.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 825.0,
+      "total": 1075.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 825.0,
+      "total": 1075.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 1500.0,
+      "total": 1750.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 1575.0,
+      "total": 1825.0
+    }
+  },
+  "PORTLAND SOUTH - Oregon": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 1625.0,
+      "total": 1925.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 1800.0,
+      "total": 2100.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 2200.0,
+      "total": 2500.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 725.0,
+      "total": 1025.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 825.0,
+      "total": 1125.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 825.0,
+      "total": 1125.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 1500.0,
+      "total": 1800.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 1575.0,
+      "total": 1875.0
+    }
+  },
+  "PROVIDENCE - Rhode Island": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 800.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1050.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 575.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 650.0,
+      "total": 1000.0
+    }
+  },
+  "PULASKI - Virginia": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 675.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 775.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1000.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 550.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 625.0,
+      "total": 1025.0
+    }
+  },
+  "Portland West - Oregon": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 1625.0,
+      "total": 1875.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 1800.0,
+      "total": 2050.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 2200.0,
+      "total": 2450.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 725.0,
+      "total": 975.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 825.0,
+      "total": 1075.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 825.0,
+      "total": 1075.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 1500.0,
+      "total": 1750.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 1575.0,
+      "total": 1825.0
+    }
+  },
+  "Provo - Utah": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 1200.0,
+      "total": 1850.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 1450.0,
+      "total": 2100.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1700.0,
+      "total": 2350.0
+    },
+    "moto": {
+      "towing": 550.0,
+      "ocean": 500.0,
+      "total": 1050.0
+    },
+    "moto_large": {
+      "towing": 550.0,
+      "ocean": 600.0,
+      "total": 1150.0
+    },
+    "atv": {
+      "towing": 550.0,
+      "ocean": 600.0,
+      "total": 1150.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 1075.0,
+      "total": 1725.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 1150.0,
+      "total": 1800.0
+    }
+  },
+  "RALEIGH - North Carolina": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 675.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 775.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1000.0,
+      "total": 1300.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 550.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    }
+  },
+  "RENO - Nevada": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 1200.0,
+      "total": 1750.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 1450.0,
+      "total": 2000.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1700.0,
+      "total": 2250.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 500.0,
+      "total": 1000.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 600.0,
+      "total": 1100.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 600.0,
+      "total": 1100.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 1075.0,
+      "total": 1625.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 1150.0,
+      "total": 1700.0
+    }
+  },
+  "RICHMOND - Virginia": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 675.0,
+      "total": 925.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 775.0,
+      "total": 1025.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1000.0,
+      "total": 1250.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 550.0,
+      "total": 800.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    }
+  },
+  "ROANOKE - Virginia": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 675.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 775.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1000.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 550.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 625.0,
+      "total": 1000.0
+    }
+  },
+  "ROCHESTER - New York": {
+    "regular": {
+      "towing": 450.0,
+      "ocean": 700.0,
+      "total": 1150.0
+    },
+    "large": {
+      "towing": 450.0,
+      "ocean": 800.0,
+      "total": 1250.0
+    },
+    "oversize": {
+      "towing": 450.0,
+      "ocean": 1050.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 300.0,
+      "total": 650.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 375.0,
+      "total": 725.0
+    },
+    "jetski": {
+      "towing": 450.0,
+      "ocean": 575.0,
+      "total": 1025.0
+    },
+    "jetski_trailer": {
+      "towing": 450.0,
+      "ocean": 650.0,
+      "total": 1100.0
+    }
+  },
+  "ROSEDALE - Maryland": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 675.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 775.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1000.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 325.0,
+      "ocean": 300.0,
+      "total": 625.0
+    },
+    "moto_large": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "atv": {
+      "towing": 325.0,
+      "ocean": 375.0,
+      "total": 700.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 550.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 625.0,
+      "total": 975.0
+    }
+  },
+  "SACRAMENTO - California": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 1200.0,
+      "total": 1600.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 1450.0,
+      "total": 1850.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1700.0,
+      "total": 2100.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 1075.0,
+      "total": 1475.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 1150.0,
+      "total": 1550.0
+    }
+  },
+  "SACRAMENTO WEST - California": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 1200.0,
+      "total": 1675.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 1450.0,
+      "total": 1925.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1700.0,
+      "total": 2175.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 500.0,
+      "total": 900.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 600.0,
+      "total": 1000.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 600.0,
+      "total": 1000.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 1075.0,
+      "total": 1550.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 1150.0,
+      "total": 1625.0
+    }
+  },
+  "SALT LAKE CITY - Utah": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 1200.0,
+      "total": 1750.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 1450.0,
+      "total": 2000.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1700.0,
+      "total": 2250.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 500.0,
+      "total": 1000.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 600.0,
+      "total": 1100.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 600.0,
+      "total": 1100.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 1075.0,
+      "total": 1625.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 1150.0,
+      "total": 1700.0
+    }
+  },
+  "SAN ANTONIO - Texas": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 750.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1100.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 325.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 700.0,
+      "total": 1000.0
+    }
+  },
+  "SAN ANTONIO-SOUTH - Texas": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 750.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 850.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1100.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 325.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 400.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 625.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 700.0,
+      "total": 1000.0
+    }
+  },
+  "SAN BERNARDINO - California": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 1200.0,
+      "total": 1450.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 1450.0,
+      "total": 1700.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1700.0,
+      "total": 1950.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 500.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 600.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 1075.0,
+      "total": 1325.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 1150.0,
+      "total": 1400.0
+    }
+  },
+  "SAN DIEGO - California": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 1200.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 1450.0,
+      "total": 1750.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1700.0,
+      "total": 2000.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 500.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 600.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 1075.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 1150.0,
+      "total": 1450.0
+    }
+  },
+  "SANTA CLARITA - California": {
+    "regular": {
+      "towing": 300.0,
+      "ocean": 1200.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 300.0,
+      "ocean": 1450.0,
+      "total": 1750.0
+    },
+    "oversize": {
+      "towing": 300.0,
+      "ocean": 1700.0,
+      "total": 2000.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 300.0,
+      "ocean": 1075.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 300.0,
+      "ocean": 1150.0,
+      "total": 1450.0
+    }
+  },
+  "SAVANNAH - Georgia": {
+    "regular": {
+      "towing": 125.0,
+      "ocean": 675.0,
+      "total": 800.0
+    },
+    "large": {
+      "towing": 125.0,
+      "ocean": 775.0,
+      "total": 900.0
+    },
+    "oversize": {
+      "towing": 125.0,
+      "ocean": 1000.0,
+      "total": 1125.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 125.0,
+      "ocean": 550.0,
+      "total": 675.0
+    },
+    "jetski_trailer": {
+      "towing": 125.0,
+      "ocean": 625.0,
+      "total": 750.0
+    }
+  },
+  "SCRANTON - Pennsylvania": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 800.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1050.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 300.0,
+      "total": 500.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 375.0,
+      "total": 575.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 575.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 650.0,
+      "total": 925.0
+    }
+  },
+  "SEATTLE - Washington": {
+    "regular": {
+      "towing": 175.0,
+      "ocean": 1625.0,
+      "total": 1800.0
+    },
+    "large": {
+      "towing": 175.0,
+      "ocean": 1800.0,
+      "total": 1975.0
+    },
+    "oversize": {
+      "towing": 175.0,
+      "ocean": 2200.0,
+      "total": 2375.0
+    },
+    "moto": {
+      "towing": 175.0,
+      "ocean": 725.0,
+      "total": 900.0
+    },
+    "moto_large": {
+      "towing": 175.0,
+      "ocean": 825.0,
+      "total": 1000.0
+    },
+    "atv": {
+      "towing": 175.0,
+      "ocean": 825.0,
+      "total": 1000.0
+    },
+    "jetski": {
+      "towing": 175.0,
+      "ocean": 1500.0,
+      "total": 1675.0
+    },
+    "jetski_trailer": {
+      "towing": 175.0,
+      "ocean": 1575.0,
+      "total": 1750.0
+    }
+  },
+  "SHADY SPRING - West Virginia": {
+    "regular": {
+      "towing": 625.0,
+      "ocean": 675.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 625.0,
+      "ocean": 775.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 625.0,
+      "ocean": 1000.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 500.0,
+      "ocean": 300.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "atv": {
+      "towing": 500.0,
+      "ocean": 375.0,
+      "total": 875.0
+    },
+    "jetski": {
+      "towing": 625.0,
+      "ocean": 550.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 625.0,
+      "ocean": 625.0,
+      "total": 1250.0
+    }
+  },
+  "SHREVEPORT - Louisiana": {
+    "regular": {
+      "towing": 315.0,
+      "ocean": 750.0,
+      "total": 1065.0
+    },
+    "large": {
+      "towing": 315.0,
+      "ocean": 850.0,
+      "total": 1165.0
+    },
+    "oversize": {
+      "towing": 315.0,
+      "ocean": 1100.0,
+      "total": 1415.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 325.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 400.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 315.0,
+      "ocean": 625.0,
+      "total": 940.0
+    },
+    "jetski_trailer": {
+      "towing": 315.0,
+      "ocean": 700.0,
+      "total": 1015.0
+    }
+  },
+  "SIOUX FALLS - South Dakota": {
+    "regular": {
+      "towing": 650.0,
+      "ocean": 850.0,
+      "total": 1500.0
+    },
+    "large": {
+      "towing": 650.0,
+      "ocean": 950.0,
+      "total": 1600.0
+    },
+    "oversize": {
+      "towing": 650.0,
+      "ocean": 1250.0,
+      "total": 1900.0
+    },
+    "moto": {
+      "towing": 550.0,
+      "ocean": 350.0,
+      "total": 900.0
+    },
+    "moto_large": {
+      "towing": 550.0,
+      "ocean": 450.0,
+      "total": 1000.0
+    },
+    "atv": {
+      "towing": 550.0,
+      "ocean": 450.0,
+      "total": 1000.0
+    },
+    "jetski": {
+      "towing": 650.0,
+      "ocean": 725.0,
+      "total": 1375.0
+    },
+    "jetski_trailer": {
+      "towing": 650.0,
+      "ocean": 800.0,
+      "total": 1450.0
+    }
+  },
+  "SOUTH BEND - Indiana": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 950.0,
+      "total": 1200.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1250.0,
+      "total": 1500.0
+    },
+    "moto": {
+      "towing": 200.0,
+      "ocean": 350.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 200.0,
+      "ocean": 450.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 200.0,
+      "ocean": 450.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 725.0,
+      "total": 975.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 800.0,
+      "total": 1050.0
+    }
+  },
+  "SOUTHERN NEW JERSEY - New Jersey": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 700.0,
+      "total": 900.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 800.0,
+      "total": 1000.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1050.0,
+      "total": 1250.0
+    },
+    "moto": {
+      "towing": 165.0,
+      "ocean": 300.0,
+      "total": 465.0
+    },
+    "moto_large": {
+      "towing": 165.0,
+      "ocean": 375.0,
+      "total": 540.0
+    },
+    "atv": {
+      "towing": 165.0,
+      "ocean": 375.0,
+      "total": 540.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 575.0,
+      "total": 775.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 650.0,
+      "total": 850.0
+    }
+  },
+  "SPOKANE - Washington": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 1625.0,
+      "total": 1975.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 1800.0,
+      "total": 2150.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 2200.0,
+      "total": 2550.0
+    },
+    "moto": {
+      "towing": 275.0,
+      "ocean": 725.0,
+      "total": 1000.0
+    },
+    "moto_large": {
+      "towing": 275.0,
+      "ocean": 825.0,
+      "total": 1100.0
+    },
+    "atv": {
+      "towing": 275.0,
+      "ocean": 825.0,
+      "total": 1100.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 1500.0,
+      "total": 1850.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 1575.0,
+      "total": 1925.0
+    }
+  },
+  "SPRINGFIELD - Missouri": {
+    "regular": {
+      "towing": 625.0,
+      "ocean": 675.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 625.0,
+      "ocean": 775.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 625.0,
+      "ocean": 1000.0,
+      "total": 1625.0
+    },
+    "moto": {
+      "towing": 425.0,
+      "ocean": 300.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 625.0,
+      "ocean": 550.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 625.0,
+      "ocean": 625.0,
+      "total": 1250.0
+    }
+  },
+  "ST. CLOUD - Minnesota": {
+    "regular": {
+      "towing": 500.0,
+      "ocean": 850.0,
+      "total": 1350.0
+    },
+    "large": {
+      "towing": 500.0,
+      "ocean": 950.0,
+      "total": 1450.0
+    },
+    "oversize": {
+      "towing": 500.0,
+      "ocean": 1250.0,
+      "total": 1750.0
+    },
+    "moto": {
+      "towing": 400.0,
+      "ocean": 350.0,
+      "total": 750.0
+    },
+    "moto_large": {
+      "towing": 400.0,
+      "ocean": 450.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 400.0,
+      "ocean": 450.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 500.0,
+      "ocean": 725.0,
+      "total": 1225.0
+    },
+    "jetski_trailer": {
+      "towing": 500.0,
+      "ocean": 800.0,
+      "total": 1300.0
+    }
+  },
+  "ST. LOUIS - Illinois": {
+    "regular": {
+      "towing": 575.0,
+      "ocean": 675.0,
+      "total": 1250.0
+    },
+    "large": {
+      "towing": 575.0,
+      "ocean": 775.0,
+      "total": 1350.0
+    },
+    "oversize": {
+      "towing": 575.0,
+      "ocean": 1000.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 425.0,
+      "ocean": 300.0,
+      "total": 725.0
+    },
+    "moto_large": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "atv": {
+      "towing": 425.0,
+      "ocean": 375.0,
+      "total": 800.0
+    },
+    "jetski": {
+      "towing": 575.0,
+      "ocean": 550.0,
+      "total": 1125.0
+    },
+    "jetski_trailer": {
+      "towing": 575.0,
+      "ocean": 625.0,
+      "total": 1200.0
+    }
+  },
+  "STOCKTON - California": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 1200.0,
+      "total": 1675.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 1450.0,
+      "total": 1925.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1700.0,
+      "total": 2175.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 500.0,
+      "total": 800.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 600.0,
+      "total": 900.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 1075.0,
+      "total": 1550.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 1150.0,
+      "total": 1625.0
+    }
+  },
+  "SYRACUSE - New York": {
+    "regular": {
+      "towing": 350.0,
+      "ocean": 700.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 350.0,
+      "ocean": 800.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 350.0,
+      "ocean": 1050.0,
+      "total": 1400.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 300.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "jetski": {
+      "towing": 350.0,
+      "ocean": 575.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 350.0,
+      "ocean": 650.0,
+      "total": 1000.0
+    }
+  },
+  "Sayreville - New Jersey": {
+    "regular": {
+      "towing": 150.0,
+      "ocean": 700.0,
+      "total": 850.0
+    },
+    "large": {
+      "towing": 150.0,
+      "ocean": 800.0,
+      "total": 950.0
+    },
+    "oversize": {
+      "towing": 150.0,
+      "ocean": 1050.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 125.0,
+      "ocean": 300.0,
+      "total": 425.0
+    },
+    "moto_large": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "atv": {
+      "towing": 125.0,
+      "ocean": 375.0,
+      "total": 500.0
+    },
+    "jetski": {
+      "towing": 150.0,
+      "ocean": 575.0,
+      "total": 725.0
+    },
+    "jetski_trailer": {
+      "towing": 150.0,
+      "ocean": 650.0,
+      "total": 800.0
+    }
+  },
+  "Suffolk - Virginia": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 675.0,
+      "total": 875.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 775.0,
+      "total": 975.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1000.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 150.0,
+      "ocean": 300.0,
+      "total": 450.0
+    },
+    "moto_large": {
+      "towing": 150.0,
+      "ocean": 375.0,
+      "total": 525.0
+    },
+    "atv": {
+      "towing": 150.0,
+      "ocean": 375.0,
+      "total": 525.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 550.0,
+      "total": 750.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 625.0,
+      "total": 825.0
+    }
+  },
+  "TAMPA - Florida": {
+    "regular": {
+      "towing": 250.0,
+      "ocean": 750.0,
+      "total": 1000.0
+    },
+    "large": {
+      "towing": 250.0,
+      "ocean": 850.0,
+      "total": 1100.0
+    },
+    "oversize": {
+      "towing": 250.0,
+      "ocean": 1100.0,
+      "total": 1350.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 250.0,
+      "ocean": 625.0,
+      "total": 875.0
+    },
+    "jetski_trailer": {
+      "towing": 250.0,
+      "ocean": 700.0,
+      "total": 950.0
+    }
+  },
+  "TAUNTON - Massachusetts": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 700.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 800.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1050.0,
+      "total": 1425.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 575.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 650.0,
+      "total": 1025.0
+    }
+  },
+  "TIDEWATER - Virginia": {
+    "regular": {
+      "towing": 200.0,
+      "ocean": 675.0,
+      "total": 875.0
+    },
+    "large": {
+      "towing": 200.0,
+      "ocean": 775.0,
+      "total": 975.0
+    },
+    "oversize": {
+      "towing": 200.0,
+      "ocean": 1000.0,
+      "total": 1200.0
+    },
+    "moto": {
+      "towing": 150.0,
+      "ocean": 300.0,
+      "total": 450.0
+    },
+    "moto_large": {
+      "towing": 150.0,
+      "ocean": 375.0,
+      "total": 525.0
+    },
+    "atv": {
+      "towing": 150.0,
+      "ocean": 375.0,
+      "total": 525.0
+    },
+    "jetski": {
+      "towing": 200.0,
+      "ocean": 550.0,
+      "total": 750.0
+    },
+    "jetski_trailer": {
+      "towing": 200.0,
+      "ocean": 625.0,
+      "total": 825.0
+    }
+  },
+  "TIFTON - Georgia": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 675.0,
+      "total": 950.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 775.0,
+      "total": 1050.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1000.0,
+      "total": 1275.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 550.0,
+      "total": 825.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    }
+  },
+  "TUCSON - Arizona": {
+    "regular": {
+      "towing": 400.0,
+      "ocean": 1200.0,
+      "total": 1600.0
+    },
+    "large": {
+      "towing": 400.0,
+      "ocean": 1450.0,
+      "total": 1850.0
+    },
+    "oversize": {
+      "towing": 400.0,
+      "ocean": 1700.0,
+      "total": 2100.0
+    },
+    "moto": {
+      "towing": 350.0,
+      "ocean": 500.0,
+      "total": 850.0
+    },
+    "moto_large": {
+      "towing": 350.0,
+      "ocean": 600.0,
+      "total": 950.0
+    },
+    "atv": {
+      "towing": 350.0,
+      "ocean": 600.0,
+      "total": 950.0
+    },
+    "jetski": {
+      "towing": 400.0,
+      "ocean": 1075.0,
+      "total": 1475.0
+    },
+    "jetski_trailer": {
+      "towing": 400.0,
+      "ocean": 1150.0,
+      "total": 1550.0
+    }
+  },
+  "TULSA - Oklahoma": {
+    "regular": {
+      "towing": 475.0,
+      "ocean": 750.0,
+      "total": 1225.0
+    },
+    "large": {
+      "towing": 475.0,
+      "ocean": 850.0,
+      "total": 1325.0
+    },
+    "oversize": {
+      "towing": 475.0,
+      "ocean": 1100.0,
+      "total": 1575.0
+    },
+    "moto": {
+      "towing": 375.0,
+      "ocean": 325.0,
+      "total": 700.0
+    },
+    "moto_large": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "atv": {
+      "towing": 375.0,
+      "ocean": 400.0,
+      "total": 775.0
+    },
+    "jetski": {
+      "towing": 475.0,
+      "ocean": 625.0,
+      "total": 1100.0
+    },
+    "jetski_trailer": {
+      "towing": 475.0,
+      "ocean": 700.0,
+      "total": 1175.0
+    }
+  },
+  "Tampa North - Florida": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 750.0,
+      "total": 1025.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 850.0,
+      "total": 1125.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1100.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 400.0,
+      "total": 650.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 625.0,
+      "total": 900.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    }
+  },
+  "Templeton - Massachusetts": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 700.0,
+      "total": 1075.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 800.0,
+      "total": 1175.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1050.0,
+      "total": 1425.0
+    },
+    "moto": {
+      "towing": 250.0,
+      "ocean": 300.0,
+      "total": 550.0
+    },
+    "moto_large": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "atv": {
+      "towing": 250.0,
+      "ocean": 375.0,
+      "total": 625.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 575.0,
+      "total": 950.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 650.0,
+      "total": 1025.0
+    }
+  },
+  "WEST PALM BEACH - Florida": {
+    "regular": {
+      "towing": 180.0,
+      "ocean": 750.0,
+      "total": 930.0
+    },
+    "large": {
+      "towing": 180.0,
+      "ocean": 850.0,
+      "total": 1030.0
+    },
+    "oversize": {
+      "towing": 180.0,
+      "ocean": 1100.0,
+      "total": 1280.0
+    },
+    "moto": {
+      "towing": 180.0,
+      "ocean": 300.0,
+      "total": 480.0
+    },
+    "moto_large": {
+      "towing": 180.0,
+      "ocean": 400.0,
+      "total": 580.0
+    },
+    "atv": {
+      "towing": 180.0,
+      "ocean": 400.0,
+      "total": 580.0
+    },
+    "jetski": {
+      "towing": 180.0,
+      "ocean": 625.0,
+      "total": 805.0
+    },
+    "jetski_trailer": {
+      "towing": 180.0,
+      "ocean": 700.0,
+      "total": 880.0
+    }
+  },
+  "WICHITA - Kansas": {
+    "regular": {
+      "towing": 550.0,
+      "ocean": 750.0,
+      "total": 1300.0
+    },
+    "large": {
+      "towing": 550.0,
+      "ocean": 850.0,
+      "total": 1400.0
+    },
+    "oversize": {
+      "towing": 550.0,
+      "ocean": 1100.0,
+      "total": 1650.0
+    },
+    "moto": {
+      "towing": 450.0,
+      "ocean": 325.0,
+      "total": 775.0
+    },
+    "moto_large": {
+      "towing": 450.0,
+      "ocean": 400.0,
+      "total": 850.0
+    },
+    "atv": {
+      "towing": 450.0,
+      "ocean": 400.0,
+      "total": 850.0
+    },
+    "jetski": {
+      "towing": 550.0,
+      "ocean": 625.0,
+      "total": 1175.0
+    },
+    "jetski_trailer": {
+      "towing": 550.0,
+      "ocean": 700.0,
+      "total": 1250.0
+    }
+  },
+  "WILMINGTON - North Carolina": {
+    "regular": {
+      "towing": 375.0,
+      "ocean": 675.0,
+      "total": 1050.0
+    },
+    "large": {
+      "towing": 375.0,
+      "ocean": 775.0,
+      "total": 1150.0
+    },
+    "oversize": {
+      "towing": 375.0,
+      "ocean": 1000.0,
+      "total": 1375.0
+    },
+    "moto": {
+      "towing": 300.0,
+      "ocean": 300.0,
+      "total": 600.0
+    },
+    "moto_large": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "atv": {
+      "towing": 300.0,
+      "ocean": 375.0,
+      "total": 675.0
+    },
+    "jetski": {
+      "towing": 375.0,
+      "ocean": 550.0,
+      "total": 925.0
+    },
+    "jetski_trailer": {
+      "towing": 375.0,
+      "ocean": 625.0,
+      "total": 1000.0
+    }
+  },
+  "YORK SPRINGS - Pennsylvania": {
+    "regular": {
+      "towing": 275.0,
+      "ocean": 700.0,
+      "total": 975.0
+    },
+    "large": {
+      "towing": 275.0,
+      "ocean": 800.0,
+      "total": 1075.0
+    },
+    "oversize": {
+      "towing": 275.0,
+      "ocean": 1050.0,
+      "total": 1325.0
+    },
+    "moto": {
+      "towing": 225.0,
+      "ocean": 300.0,
+      "total": 525.0
+    },
+    "moto_large": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "atv": {
+      "towing": 225.0,
+      "ocean": 375.0,
+      "total": 600.0
+    },
+    "jetski": {
+      "towing": 275.0,
+      "ocean": 575.0,
+      "total": 850.0
+    },
+    "jetski_trailer": {
+      "towing": 275.0,
+      "ocean": 650.0,
+      "total": 925.0
+    }
+  },
+  "BZ Trucking - Hawaii": {
+    "regular": {
+      "towing": 2500.0,
+      "ocean": 1200.0,
+      "total": 3700.0
+    },
+    "large": {
+      "towing": 2500.0,
+      "ocean": 1450.0,
+      "total": 3950.0
+    },
+    "oversize": {
+      "towing": 2500.0,
+      "ocean": 1700.0,
+      "total": 4200.0
+    },
+    "jetski": {
+      "towing": 2500.0,
+      "ocean": 1075.0,
+      "total": 3575.0
+    },
+    "jetski_trailer": {
+      "towing": 2500.0,
+      "ocean": 1150.0,
+      "total": 3650.0
+    }
+  },
+  "D&D TOWING INC MAUI - Hawaii": {
+    "regular": {
+      "towing": 2400.0,
+      "ocean": 1200.0,
+      "total": 3600.0
+    },
+    "large": {
+      "towing": 2400.0,
+      "ocean": 1450.0,
+      "total": 3850.0
+    },
+    "oversize": {
+      "towing": 2400.0,
+      "ocean": 1700.0,
+      "total": 4100.0
+    },
+    "jetski": {
+      "towing": 2400.0,
+      "ocean": 1075.0,
+      "total": 3475.0
+    },
+    "jetski_trailer": {
+      "towing": 2400.0,
+      "ocean": 1150.0,
+      "total": 3550.0
+    }
+  },
+  "DC TOWING HILO - Hawaii": {
+    "regular": {
+      "towing": 2350.0,
+      "ocean": 1200.0,
+      "total": 3550.0
+    },
+    "large": {
+      "towing": 2350.0,
+      "ocean": 1450.0,
+      "total": 3800.0
+    },
+    "oversize": {
+      "towing": 2350.0,
+      "ocean": 1700.0,
+      "total": 4050.0
+    },
+    "jetski": {
+      "towing": 2350.0,
+      "ocean": 1075.0,
+      "total": 3425.0
+    },
+    "jetski_trailer": {
+      "towing": 2350.0,
+      "ocean": 1150.0,
+      "total": 3500.0
+    }
+  },
+  "HONOLULU - Hawaii": {
+    "regular": {
+      "towing": 120.0,
+      "ocean": 2250.0,
+      "total": 2370.0
+    },
+    "large": {
+      "towing": 120.0,
+      "ocean": 2450.0,
+      "total": 2570.0
+    },
+    "oversize": {
+      "towing": 120.0,
+      "ocean": 3000.0,
+      "total": 3120.0
+    },
+    "jetski": {
+      "towing": 120.0,
+      "ocean": 2250.0,
+      "total": 2370.0
+    },
+    "jetski_trailer": {
+      "towing": 120.0,
+      "ocean": 2550.0,
+      "total": 2670.0
+    }
+  },
+  "KINDA QUICK TOWING - Hawaii": {
+    "regular": {
+      "towing": 2200.0,
+      "ocean": 2250.0,
+      "total": 4450.0
+    },
+    "large": {
+      "towing": 2200.0,
+      "ocean": 2450.0,
+      "total": 4650.0
+    },
+    "oversize": {
+      "towing": 2200.0,
+      "ocean": 3000.0,
+      "total": 5200.0
+    },
+    "jetski": {
+      "towing": 2200.0,
+      "ocean": 2250.0,
+      "total": 4450.0
+    },
+    "jetski_trailer": {
+      "towing": 2200.0,
+      "ocean": 2550.0,
+      "total": 4750.0
+    }
+  }
+};

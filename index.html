@@ -24,7 +24,13 @@
 
     <!-- Yard selector: searchable combobox -->
     <div class="field">
-      <label id="yard-label" for="yard-input">Площадка Copart</label>
+      <div class="field-head">
+        <label id="yard-label" for="yard-input">Площадка</label>
+        <div class="auction-toggle" role="radiogroup" aria-label="Аукціон">
+          <label><input type="radio" name="auction" value="copart" checked /><span>Copart</span></label>
+          <label><input type="radio" name="auction" value="iaai" /><span>IAAI</span></label>
+        </div>
+      </div>
       <div class="combo">
         <input
           id="yard-input"
@@ -61,7 +67,7 @@
 
     <!-- Copart purchase price + title type -->
     <div class="field">
-      <label for="price-input">Ціна покупки на Copart, $</label>
+      <label for="price-input">Ціна покупки на аукціоні, $</label>
       <div class="stepper">
         <button type="button" id="price-minus" aria-label="Менше">−</button>
         <input id="price-input" class="text-input" type="text" inputmode="numeric" autocomplete="off" placeholder="напр. 5500" />
@@ -123,7 +129,7 @@
     </div>
 
     <div id="moto-group">
-      <div class="field">
+      <div class="field" id="crashedtoys-field">
         <label class="check">
           <input id="crashedtoys" type="checkbox" checked />
           <span>Аукціон CrashedToys</span>
@@ -146,7 +152,7 @@
     </div>
 
     <div id="atv-group">
-      <div class="field">
+      <div class="field" id="atv-crashedtoys-field">
         <label class="check">
           <input id="atv-crashedtoys" type="checkbox" checked />
           <span>Аукціон CrashedToys</span>
