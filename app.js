@@ -240,6 +240,26 @@
   ];
 
   // Live Online Bid Fee (higher than the Proxy Bid Fee).
+  // Buyer fee — Rec Rides (IAA online powersport auction: moto / ATV / jet ski),
+  // Standard Volume (effective Sep 2026). Bid/service/title fees are the same.
+  // Source: iaai.com/marketing/standard-iaa-rec-rides-buyer-fees
+  const IAAI_BUYER_FEE_RECRIDES = [
+    { upTo: 49.99, fee: 30 },    { upTo: 99.99, fee: 45 },
+    { upTo: 199.99, fee: 70 },   { upTo: 299.99, fee: 100 },
+    { upTo: 399.99, fee: 120 },  { upTo: 499.99, fee: 150 },
+    { upTo: 599.99, fee: 170 },  { upTo: 699.99, fee: 195 },
+    { upTo: 799.99, fee: 225 },  { upTo: 899.99, fee: 245 },
+    { upTo: 999.99, fee: 265 },  { upTo: 1199.99, fee: 290 },
+    { upTo: 1399.99, fee: 325 }, { upTo: 1599.99, fee: 350 },
+    { upTo: 1799.99, fee: 375 }, { upTo: 1999.99, fee: 425 },
+    { upTo: 2199.99, fee: 450 }, { upTo: 2499.99, fee: 475 },
+    { upTo: 2999.99, fee: 500 }, { upTo: 3499.99, fee: 575 },
+    { upTo: 3999.99, fee: 600 }, { upTo: 4999.99, fee: 650 },
+    { upTo: 5999.99, fee: 700 }, { upTo: 6999.99, fee: 750 },
+    { upTo: 7999.99, fee: 825 }, { upTo: 8999.99, fee: 900 },
+    { upTo: 9999.99, fee: 975 }, { upTo: Infinity, pct: 0.105 },
+  ];
+
   const IAAI_LIVE_BID_FEE = [
     { upTo: 99.99, fee: 0 },     { upTo: 499.99, fee: 50 },
     { upTo: 999.99, fee: 65 },   { upTo: 1499.99, fee: 85 },
@@ -303,6 +323,7 @@
     batteryKwh: BATT_DEFAULT,           // kWh (electric only)
     year: CURRENT_YEAR - 5,             // year of manufacture (car)
     crashedToys: true,                  // CrashedToys auction (moto/ATV), default on
+    recRides: true,                     // IAAI Rec Rides auction (moto/ATV/jet ski), default on
     bigMoto: false,                     // large motorcycle
     motoCc: CC_DEFAULT,                 // motorcycle displacement (litres)
     atvCc: ATV_CC_DEFAULT,              // ATV displacement (litres)
@@ -318,6 +339,8 @@
   const auctionRadios = document.querySelectorAll('input[name="auction"]');
   const crashedField    = document.getElementById("crashedtoys-field");
   const atvCrashedField = document.getElementById("atv-crashedtoys-field");
+  const recRidesField   = document.getElementById("recrides-field");
+  const recRidesCheck   = document.getElementById("recrides");
   const list       = document.getElementById("yard-list");
   const segment    = document.getElementById("type-segment");
   const priceInput = document.getElementById("price-input");
@@ -411,15 +434,21 @@
   }
 
   // Total IAAI commission (all fees combined), for price > 0.
-  function iaaiCommission(price) {
+  // recRides: powersport unit sold through the Rec Rides auction.
+  function iaaiCommission(price, recRides) {
     if (!(price > 0)) return 0;
-    return tierFee(IAAI_BUYER_FEE, price) + tierFee(IAAI_LIVE_BID_FEE, price) +
+    const buyer = tierFee(recRides ? IAAI_BUYER_FEE_RECRIDES : IAAI_BUYER_FEE, price);
+    return buyer + tierFee(IAAI_LIVE_BID_FEE, price) +
       IAAI_FIXED.service + IAAI_FIXED.titleFee + IAAI_FIXED.ehs;
   }
 
   function auctionData() { return AUCTIONS[state.auction]; }
   // CrashedToys and clean/non-clean title only exist on Copart.
   function isCopart() { return state.auction === "copart"; }
+  // Rec Rides only exists on IAAI, for moto / ATV / jet ski.
+  function recRidesApplies() {
+    return !isCopart() && ["motorcycle", "atv", "jetski"].includes(state.type);
+  }
 
   // ---- Money transfer & customs ----------------------------------
   // Commission for wiring money for (car + Copart fees + delivery to Klaipeda).
@@ -602,8 +631,17 @@
     }
   }
 
+  // Rec Rides checkbox sits at the top of the active powersport group.
+  function placeRecRides() {
+    const group = state.type === "motorcycle" ? motoGroup
+      : state.type === "atv" ? atvGroup
+      : state.type === "jetski" ? jetskiGroup : null;
+    if (group) group.insertBefore(recRidesField, group.firstElementChild);
+  }
+
   function updateControlVisibility() {
     placeCleanTitle();
+    placeRecRides();
     const moto = state.type === "motorcycle";
     const atv = state.type === "atv";
     const jetski = state.type === "jetski";
@@ -622,6 +660,8 @@
     if (jetskiGroup) jetskiGroup.style.display = jetski ? "block" : "none";
     if (crashedField) crashedField.style.display = isCopart() ? "block" : "none";
     if (atvCrashedField) atvCrashedField.style.display = isCopart() ? "block" : "none";
+    if (recRidesField) recRidesField.style.display = recRidesApplies() ? "block" : "none";
+    if (recRidesCheck) recRidesCheck.checked = state.recRides;
     // Sync the body-size and CrashedToys checkboxes with state.
     if (sizeLarge) sizeLarge.checked = state.carSize === "large";
     if (sizeOversize) sizeOversize.checked = state.carSize === "oversize";
@@ -759,11 +799,12 @@
     const hasPrice = state.copartPrice > 0;
     const carUsd = hasPrice ? state.copartPrice : 0;
     const crashedToys = isCopart() && state.crashedToys;
+    const recRides = recRidesApplies() && state.recRides;
     const commissionUsd = isCopart()
       ? copartCommission(state.copartPrice, {
           powersport: isPowersport, crashedToys: crashedToys, clean: state.cleanTitle,
         })
-      : iaaiCommission(state.copartPrice);
+      : iaaiCommission(state.copartPrice, recRides);
 
     const towingUsd = freight.towing;
     const oceanUsd = freight.ocean + (isDangerous ? DANGEROUS_OCEAN_USD : 0);
@@ -797,13 +838,13 @@
       : "введіть ціну покупки";
 
     const powertrain = isPowersport
-      ? (isMoto && state.bigMoto ? " · великий" : "") + (crashedToys ? " · CrashedToys" : "")
-      : isJetski ? (state.jetskiTrailer ? " · з причепом" : "")
+      ? (isMoto && state.bigMoto ? " · великий" : "") + (crashedToys ? " · CrashedToys" : "") + (recRides ? " · Rec Rides" : "")
+      : isJetski ? (state.jetskiTrailer ? " · з причепом" : "") + (recRides ? " · Rec Rides" : "")
       : (isElectric ? " · електро" : (state.hybrid ? " · гібрид" : ""));
     const priceLabel = (isMoto ? "Мотоцикл" : isAtv ? "Квадроцикл" : isJetski ? "Гідроцикл" : "Авто") +
       " (ціна на " + ad.label + ")";
     const commissionLabel = "Аукціонні збори" +
-      (!isCopart() ? " IAAI"
+      (!isCopart() ? " IAAI" + (recRides ? " Rec Rides" : "")
         : isPowersport ? (crashedToys ? " CrashedToys" : " Copart")
         : " Copart" + (state.cleanTitle ? " · clean" : ""));
     const oceanTag = "Морський фрахт до Клайпеди" + (isDangerous ? " (+$150 небезп.)" : "");
@@ -1079,6 +1120,7 @@
   ccInput.addEventListener("blur", () => setCc(parseFloat(ccInput.value.replace(",", "."))));
 
   // ATV: CrashedToys (shared flag), displacement, year of manufacture.
+  recRidesCheck.addEventListener("change", () => { state.recRides = recRidesCheck.checked; render(); });
   atvCrashed.addEventListener("change", () => { state.crashedToys = atvCrashed.checked; updateControlVisibility(); render(); });
   function setAtvCc(v) {
     if (!(v > 0)) v = ATV_CC_DEFAULT;
@@ -1148,7 +1190,7 @@
         copartPrice: state.copartPrice, priceIsDefault: state.priceIsDefault,
         cleanTitle: state.cleanTitle, fuel: state.fuel, hybrid: state.hybrid,
         engineVol: state.engineVol, batteryKwh: state.batteryKwh, year: state.year,
-        crashedToys: state.crashedToys, bigMoto: state.bigMoto, motoCc: state.motoCc,
+        crashedToys: state.crashedToys, recRides: state.recRides, bigMoto: state.bigMoto, motoCc: state.motoCc,
         atvCc: state.atvCc, atvYear: state.atvYear, jetskiTrailer: state.jetskiTrailer,
         hiddenMode: state.hiddenMode,
       }));
@@ -1179,6 +1221,7 @@
     if (num(s.batteryKwh)) state.batteryKwh = clampBatt(s.batteryKwh);
     if (num(s.year)) state.year = clampYear(s.year);
     if (bool(s.crashedToys)) state.crashedToys = s.crashedToys;
+    if (bool(s.recRides)) state.recRides = s.recRides;
     if (bool(s.bigMoto)) state.bigMoto = s.bigMoto;
     if (num(s.motoCc)) state.motoCc = clampCc(s.motoCc);
     if (num(s.atvCc)) state.atvCc = Math.min(ATV_CC_MAX, Math.max(ATV_CC_MIN, s.atvCc));
