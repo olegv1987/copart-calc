@@ -5658,19 +5658,19 @@ const FREIGHT = {
   },
   "MEMPHIS - Tennessee": {
     "regular": {
-      "towing": 500.0,
+      "towing": 475.0,
       "ocean": 675.0,
-      "total": 1175.0
+      "total": 1150.0
     },
     "large": {
-      "towing": 500.0,
+      "towing": 475.0,
       "ocean": 775.0,
-      "total": 1275.0
+      "total": 1250.0
     },
     "oversize": {
-      "towing": 500.0,
+      "towing": 475.0,
       "ocean": 1000.0,
-      "total": 1500.0
+      "total": 1475.0
     },
     "moto": {
       "towing": 450.0,
@@ -5688,14 +5688,14 @@ const FREIGHT = {
       "total": 825.0
     },
     "jetski": {
-      "towing": 500.0,
+      "towing": 475.0,
       "ocean": 550,
-      "total": 1050.0
+      "total": 1025.0
     },
     "jetski_trailer": {
-      "towing": 500.0,
+      "towing": 475.0,
       "ocean": 625,
-      "total": 1125.0
+      "total": 1100.0
     }
   },
   "MENTONE - California": {
@@ -6656,19 +6656,19 @@ const FREIGHT = {
   },
   "NORTH CHARLESTON - South Carolina": {
     "regular": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 675.0,
-      "total": 950.0
+      "total": 925.0
     },
     "large": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 775.0,
-      "total": 1050.0
+      "total": 1025.0
     },
     "oversize": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 1000.0,
-      "total": 1275.0
+      "total": 1250.0
     },
     "moto": {
       "towing": 200.0,
@@ -6686,14 +6686,14 @@ const FREIGHT = {
       "total": 575.0
     },
     "jetski": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 550,
-      "total": 825.0
+      "total": 800.0
     },
     "jetski_trailer": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 625,
-      "total": 900.0
+      "total": 875.0
     }
   },
   "NORTH SEATTLE - Washington": {
@@ -8420,19 +8420,19 @@ const FREIGHT = {
   },
   "SC - COLUMBIA": {
     "regular": {
-      "towing": 275.0,
+      "towing": 225.0,
       "ocean": 675.0,
-      "total": 950.0
+      "total": 900.0
     },
     "large": {
-      "towing": 275.0,
+      "towing": 225.0,
       "ocean": 775.0,
-      "total": 1050.0
+      "total": 1000.0
     },
     "oversize": {
-      "towing": 275.0,
+      "towing": 225.0,
       "ocean": 1000.0,
-      "total": 1275.0
+      "total": 1225.0
     },
     "moto": {
       "towing": 200.0,
@@ -8450,14 +8450,14 @@ const FREIGHT = {
       "total": 575.0
     },
     "jetski": {
-      "towing": 275.0,
+      "towing": 225.0,
       "ocean": 550,
-      "total": 825.0
+      "total": 775.0
     },
     "jetski_trailer": {
-      "towing": 275.0,
+      "towing": 225.0,
       "ocean": 625,
-      "total": 900.0
+      "total": 850.0
     }
   },
   "SCRANTON - Pennsylvania": {
@@ -11916,19 +11916,19 @@ const IAAI_FREIGHT = {
   },
   "CHARLESTON - South Carolina": {
     "regular": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 675.0,
-      "total": 950.0
+      "total": 925.0
     },
     "large": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 775.0,
-      "total": 1050.0
+      "total": 1025.0
     },
     "oversize": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 1000.0,
-      "total": 1275.0
+      "total": 1250.0
     },
     "moto": {
       "towing": 200.0,
@@ -11946,14 +11946,14 @@ const IAAI_FREIGHT = {
       "total": 575.0
     },
     "jetski": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 550.0,
-      "total": 825.0
+      "total": 800.0
     },
     "jetski_trailer": {
-      "towing": 275.0,
+      "towing": 250.0,
       "ocean": 625.0,
-      "total": 900.0
+      "total": 875.0
     }
   },
   "CHARLOTTE - North Carolina": {
@@ -15150,44 +15150,44 @@ const IAAI_FREIGHT = {
   },
   "Lexington - South Carolina": {
     "regular": {
-      "towing": 300.0,
+      "towing": 225.0,
       "ocean": 675.0,
-      "total": 975.0
+      "total": 900.0
     },
     "large": {
-      "towing": 300.0,
+      "towing": 225.0,
       "ocean": 775.0,
-      "total": 1075.0
+      "total": 1000.0
     },
     "oversize": {
-      "towing": 300.0,
+      "towing": 225.0,
       "ocean": 1000.0,
-      "total": 1300.0
+      "total": 1225.0
     },
     "moto": {
-      "towing": 250.0,
+      "towing": 200.0,
       "ocean": 300.0,
-      "total": 550.0
+      "total": 500.0
     },
     "moto_large": {
-      "towing": 250.0,
+      "towing": 200.0,
       "ocean": 375.0,
-      "total": 625.0
+      "total": 575.0
     },
     "atv": {
-      "towing": 250.0,
+      "towing": 200.0,
       "ocean": 375.0,
-      "total": 625.0
+      "total": 575.0
     },
     "jetski": {
-      "towing": 300.0,
+      "towing": 225.0,
       "ocean": 550.0,
-      "total": 850.0
+      "total": 775.0
     },
     "jetski_trailer": {
-      "towing": 300.0,
+      "towing": 225.0,
       "ocean": 625.0,
-      "total": 925.0
+      "total": 850.0
     }
   },
   "Los Angeles South - California": {
@@ -15375,19 +15375,19 @@ const IAAI_FREIGHT = {
       "total": 1500.0
     },
     "moto": {
-      "towing": 450.0,
+      "towing": 425.0,
       "ocean": 300.0,
-      "total": 750.0
+      "total": 725.0
     },
     "moto_large": {
-      "towing": 450.0,
+      "towing": 425.0,
       "ocean": 375.0,
-      "total": 825.0
+      "total": 800.0
     },
     "atv": {
-      "towing": 450.0,
+      "towing": 425.0,
       "ocean": 375.0,
-      "total": 825.0
+      "total": 800.0
     },
     "jetski": {
       "towing": 500.0,
