@@ -477,9 +477,10 @@
     return Math.ceil(base * TRANSFER_PCT + TRANSFER_FIXED);
   }
 
-  // Excise age coefficient: full years since manufacture, clamped to [1, 15].
+  // Excise age coefficient: full calendar years from the year after
+  // manufacture to the current year, clamped to [1, 15].
   function ageCoef(year) {
-    const age = CURRENT_YEAR - year;
+    const age = CURRENT_YEAR - year - 1;
     return Math.min(CUSTOMS.ageMax, Math.max(CUSTOMS.ageMin, age));
   }
 
